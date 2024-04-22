@@ -15,7 +15,7 @@ namespace API.DTO
         [RegularExpression(
             "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$",
             ErrorMessage = "Password must be complex with at least one uppercase letter, one lowercase letter, and either a digit or one of the following special characters: @, #, $, %, ^, & or +"
-        )] //?=.*\\d - represents a numeric symbol usage in password in (.*) any part of password
+        )]
         public string Password { get; set; }
 
         [Required]

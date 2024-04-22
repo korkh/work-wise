@@ -1,0 +1,119 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "./Button";
+import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
+import { Theme } from "@/shared/consts/Theme";
+
+const meta = {
+	title: "shared/Button",
+	component: Button,
+	parameters: {
+		layout: "centered",
+	},
+	tags: ["autodocs"],
+	argTypes: {},
+	args: { children: ">", color: "normal" },
+	decorators: [
+		(Story) => (
+			<ThemeDecorator theme={Theme.LIGHT}>
+				<Story />
+			</ThemeDecorator>
+		),
+	],
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+	args: { children: "TEXT" },
+};
+
+export const Clear: Story = {
+	args: {
+		children: "TEXT",
+		variant: "clear",
+	},
+};
+
+export const Outline: Story = {
+	args: {
+		children: "TEXT",
+		variant: "outline",
+	},
+};
+
+export const OutlineSuccess: Story = {
+	args: {
+		children: "TEXT",
+		variant: "outline",
+		color: "success",
+	},
+};
+
+export const OutlineError: Story = {
+	args: {
+		children: "TEXT",
+		variant: "outline",
+		color: "error",
+	},
+};
+
+export const OutlineInfo: Story = {
+	args: {
+		children: "TEXT",
+		variant: "outline",
+		color: "info",
+	},
+};
+
+export const OutlineSizeL: Story = {
+	args: {
+		children: "TEXT",
+		variant: "outline",
+		size: "l",
+	},
+};
+
+export const FilledSizeL: Story = {
+	args: {
+		children: "TEXT",
+		variant: "filled",
+		size: "l",
+	},
+};
+
+export const ClearSizeL: Story = {
+	args: {
+		children: "TEXT",
+		variant: "clear",
+		size: "l",
+	},
+};
+
+export const OutlineSizeXL: Story = {
+	args: {
+		children: "TEXT",
+		variant: "outline",
+		size: "xl",
+	},
+};
+
+export const OutlineDark: Story = {
+	args: {
+		variant: "outline",
+	},
+	decorators: [
+		(Story) => (
+			<ThemeDecorator theme={Theme.DARK}>
+				<Story />
+			</ThemeDecorator>
+		),
+	],
+};
+
+export const Disabled: Story = {
+	args: {
+		variant: "outline",
+		disabled: true,
+	},
+};

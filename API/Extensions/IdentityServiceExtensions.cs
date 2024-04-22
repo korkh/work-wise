@@ -1,8 +1,11 @@
 using API.Services;
 using Domain;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Storage;
 
 namespace API.Extensions
@@ -15,7 +18,7 @@ namespace API.Extensions
         )
         {
             services
-                .AddIdentityCore<User>(opt =>
+                .AddIdentity<User, Role>(opt =>
                 {
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.SignIn.RequireConfirmedEmail = true;
@@ -29,7 +32,11 @@ namespace API.Extensions
             );
 
             services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(opt =>
                 {
                     opt.TokenValidationParameters = new TokenValidationParameters
@@ -43,6 +50,16 @@ namespace API.Extensions
                     };
                     opt.Events = new JwtBearerEvents
                     {
+                        OnChallenge = context =>
+                        {
+                            context.HandleResponse();
+                            context.Response.StatusCode = 401;
+                            context.Response.ContentType = "application/json";
+                            var result = JsonConvert.SerializeObject(
+                                new { error = "You are not authorized" }
+                            );
+                            return context.Response.WriteAsync(result);
+                        },
                         OnMessageReceived = context =>
                         {
                             var accessToken = context.Request.Query["access_token"];
@@ -59,6 +76,32 @@ namespace API.Extensions
                         }
                     };
                 });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "AccountantsOnly",
+                    policy =>
+                    {
+                        policy.RequireRole("Accountant");
+                    }
+                );
+
+                options.AddPolicy(
+                    "ManagersOnly",
+                    policy =>
+                    {
+                        policy.RequireRole("Manager");
+                    }
+                );
+
+                options.AddPolicy(
+                    "AdminsOnly",
+                    policy =>
+                    {
+                        policy.RequireRole("Admin");
+                    }
+                );
+            });
 
             services.AddScoped<TokenService>();
 

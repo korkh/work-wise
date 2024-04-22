@@ -2,7 +2,7 @@ using System.Security.Claims;
 using System.Text;
 using API.DTO;
 using API.Services;
-using Domain;
+using Domain.Entities;
 using Infrastructure.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,8 +12,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    //[AllowAnonymous] //This will allow to avoid authentication created by policy in program.cs but in some part we will require [Authorize]
-    //so we commenting that on that level and will populate for each particular request we actually need
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -56,7 +54,7 @@ namespace API.Controllers
                 return Unauthorized("Invalid Email");
 
             //Allow to test user Login without emailConfirmation
-            if (user.UserName == "bob")
+            if (user.UserName == "evaldas" || user.UserName == "zivile" || user.UserName == "peter")
                 user.EmailConfirmed = true;
 
             if (!user.EmailConfirmed)
@@ -138,7 +136,6 @@ namespace API.Controllers
             return Ok("Email confirmed - you can login now");
         }
 
-        //If client not get link to verifyEmail
         [AllowAnonymous]
         [HttpGet("resendEmailConfirmationLink")]
         public async Task<IActionResult> ResendEmailConfirmationLink(string email)
@@ -160,7 +157,7 @@ namespace API.Controllers
             return Ok("Email verification link resent");
         }
 
-        [Authorize] //if we have [AllowAnonymous] Authorize will be ignored
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
@@ -168,61 +165,9 @@ namespace API.Controllers
                 .Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
-            await SetRefreshToken(user); //not required here but it can be
+            await SetRefreshToken(user);
             return CreateUserObject(user);
         }
-
-        // [AllowAnonymous]
-        // [HttpPost("fbLogin")]
-        // public async Task<ActionResult<UserDto>> FacebookLogin(string accessToken)
-        // {
-        //     var fbVerifyKeys = _config["Facebook:AppId"] + "|" + _config["Facebook:AppSecret"];
-
-        //     var verifyToken = await _httpClient.GetAsync($"debug_token?input_token={accessToken}&access_token={fbVerifyKeys}");
-
-        //     if (!verifyToken.IsSuccessStatusCode) return Unauthorized();
-
-        //     var fbUrl = $"me?access_token={accessToken}&fields=name,email,picture.width(100).height(100)";
-
-        //     var response = await _httpClient.GetAsync(fbUrl);
-
-        //     if (!response.IsSuccessStatusCode) return Unauthorized();
-
-        //     // var fbInfo = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
-        //     var fbInfo = await _httpClient.GetFromJsonAsync<FacebookDto>(fbUrl);
-
-        //     //var username = fbInfo.Name;
-
-        //     //var user = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == fbInfo.Email);
-        //     var user = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == fbInfo.Email);
-
-        //     if (user != null) return CreateUserObject(user);
-
-        //     user = new User
-        //     {
-        //         DisplayName = fbInfo.Name,
-        //         Email = fbInfo.Email,
-        //         UserName = fbInfo.Email,
-        //         Photos = new List<Photo>
-        //         {
-        //             new Photo
-        //             {
-        //                 Id = "fb_" + fbInfo.Id,
-        //                 Url = fbInfo.Picture.Data.Url,
-        //                 IsMain = true
-        //             }
-        //         },
-        //         //EmailConfirmed = true
-        //     };
-
-        //     var result = await _userManager.CreateAsync(user);
-
-        //     if (!result.Succeeded) return BadRequest("Problem creating user account");
-
-        //     //await SetRefreshToken(user);
-        //     await SetRefreshToken(user);
-        //     return CreateUserObject(user);
-        // }
 
         [Authorize]
         [HttpPost("refreshToken")]
@@ -250,12 +195,12 @@ namespace API.Controllers
         {
             var refreshToken = _tokenService.GenerateRefreshToken();
             user.RefreshTokens.Add(refreshToken);
-            await _userManager.UpdateAsync(user); //saving to database
+            await _userManager.UpdateAsync(user);
 
             //add cookies
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = true, //Our refresh token inaccessible via JavaScript
+                HttpOnly = true,
                 Expires = DateTime.UtcNow.AddDays(7)
             };
 
@@ -268,10 +213,9 @@ namespace API.Controllers
             return new UserDto
             {
                 DisplayName = user.DisplayName,
-                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url, //? is used to return null if no objects found and keeps us save from errors
+                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
                 Token = _tokenService.CreateToken(user),
                 UserName = user.UserName,
-                //Name = user.DisplayName //required for facebook login, when getting response
             };
         }
     }

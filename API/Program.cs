@@ -1,6 +1,6 @@
 using API.Extensions;
 using API.Middleware;
-using Domain;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -68,14 +68,16 @@ app.UseReferrerPolicy(options => options.NoReferrer());
 
 app.UseCors("CorsPolicy");
 
-app.UseAuthentication(); //should be before authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseDefaultFiles(); //searches inside wwwroot and looking for files like index.html etc and serve from Kestrel server
-app.UseStaticFiles();
+// app.UseDefaultFiles();
+
+// app.UseStaticFiles();
 
 app.MapControllers();
-app.MapFallbackToController("Index", "Fallback");
+
+// app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

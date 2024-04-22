@@ -1,6 +1,6 @@
 using Application.Core;
+using Application.Validations;
 using AutoMapper;
-using Domain;
 using FluentValidation;
 using MediatR;
 using Storage;
@@ -11,7 +11,7 @@ namespace Application.Employees
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Employee Employee { get; set; }
+            public EmployeeDto Employee { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>

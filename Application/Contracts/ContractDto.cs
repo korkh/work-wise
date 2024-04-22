@@ -2,7 +2,6 @@ namespace Application.Contracts
 {
     public class ContractDto
     {
-        public Guid Id { get; set; }
         public string Position { get; set; }
         public string ContractNumber { get; set; }
         public DateTime AcceptionDate { get; set; }

@@ -17,74 +17,13 @@ namespace Storage.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
-            modelBuilder.Entity("Domain.Address", b =>
+            modelBuilder.Entity("Domain.Entities.Document", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Address1")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("City")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Zip")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Address");
-                });
-
-            modelBuilder.Entity("Domain.Contract", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("AcceptionDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("AllowedAbsenceDays")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AnnualHolidays")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ContractNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DismissalDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("FatherHolidays")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("TruancyDays")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UnpaidHolidays")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contract");
-                });
-
-            modelBuilder.Entity("Domain.Document", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("EmployeeId")
+                    b.Property<Guid>("EmployeeId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ExpirationDate")
@@ -93,6 +32,11 @@ namespace Storage.Migrations
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
@@ -100,10 +44,10 @@ namespace Storage.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("Domain.Employee", b =>
+            modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,7 +56,7 @@ namespace Storage.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ContractDataId")
+                    b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
@@ -130,19 +74,137 @@ namespace Storage.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RegistrationAddressId")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContractDataId");
-
-                    b.HasIndex("RegistrationAddressId");
 
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Domain.Photo", b =>
+            modelBuilder.Entity("Domain.Entities.Payroll", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("AdditionalCalculation")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Atlyginimas")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("AtlyginimasPagalDS")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Atostogos")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Bankas")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Baudos")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DarboDienu")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DarboValandu")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Dienpinigai")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("IsVisoIsskaityta")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("IsVisoPriskaityta")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Ismoketi")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("KiekTuriGauti")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Liga2d")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Likutis")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("NPD")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PajamuMokestis15")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PajamuMokestis20")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PajamuMokestisOlandija")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PirmaEilesPareigosTaikomasNPD")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Priedas")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PriedasUzPoilsioIrSventines")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.Property<decimal>("SodraIsViso")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Sodra_1")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Sodra_19")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Sodra_3")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SventinesIrPoilsioValandos")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Virsvalandziai")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("VirsvalandziaiPriskaityta")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("WorkingDays")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("WorkingHours")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Payrolls");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Photo", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -153,8 +215,8 @@ namespace Storage.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -163,7 +225,7 @@ namespace Storage.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("Domain.RefreshToken", b =>
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,8 +240,8 @@ namespace Storage.Migrations
                     b.Property<string>("Token")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -188,10 +250,58 @@ namespace Storage.Migrations
                     b.ToTable("RefreshToken");
                 });
 
-            modelBuilder.Entity("Domain.User", b =>
+            modelBuilder.Entity("Domain.Entities.Role", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Accountant",
+                            NormalizedName = "ACCOUNTANT"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
@@ -258,33 +368,7 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,9 +380,8 @@ namespace Storage.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -307,7 +390,7 @@ namespace Storage.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,9 +402,8 @@ namespace Storage.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -330,7 +412,7 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -341,9 +423,8 @@ namespace Storage.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -352,13 +433,13 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -367,10 +448,10 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -386,101 +467,241 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Document", b =>
+            modelBuilder.Entity("Domain.Entities.Document", b =>
                 {
-                    b.HasOne("Domain.Employee", null)
+                    b.HasOne("Domain.Entities.Employee", null)
                         .WithMany("Documents")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Employee", b =>
+            modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("Domain.Contract", "ContractData")
-                        .WithMany()
-                        .HasForeignKey("ContractDataId");
+                    b.OwnsOne("Domain.Entities.Address", "RegistrationAddress", b1 =>
+                        {
+                            b1.Property<Guid>("EmployeeId")
+                                .HasColumnType("TEXT");
 
-                    b.HasOne("Domain.Address", "RegistrationAddress")
-                        .WithMany()
-                        .HasForeignKey("RegistrationAddressId");
+                            b1.Property<string>("Address1")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("City")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Country")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Zip")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("EmployeeId");
+
+                            b1.ToTable("Addresses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmployeeId");
+                        });
+
+                    b.OwnsOne("Domain.Entities.Contract", "ContractData", b1 =>
+                        {
+                            b1.Property<Guid>("EmployeeId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<DateTime>("AcceptionDate")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("AllowedAbsenceDays")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("AnnualHolidays")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("ContractNumber")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<DateTime>("DismissalDate")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("FatherHolidays")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Position")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("TruancyDays")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("UnpaidHolidays")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("EmployeeId");
+
+                            b1.ToTable("Contracts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmployeeId");
+                        });
+
+                    b.OwnsOne("Domain.Entities.TransportInfo", "TransportInfo", b1 =>
+                        {
+                            b1.Property<Guid>("EmployeeId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("DrivingLicenseNumber")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("E_100_CardNumber")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("ExpectedKmPerDay")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("EmployeeId");
+
+                            b1.ToTable("TransportInfo");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmployeeId");
+
+                            b1.OwnsMany("Domain.Entities.Car", "Cars", b2 =>
+                                {
+                                    b2.Property<Guid>("TransportInfoId")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<Guid>("Id")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("BuildYear")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("CarPlateNumber")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("FuelType")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("Manufacturer")
+                                        .HasMaxLength(100)
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("Model")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("Renter")
+                                        .HasColumnType("TEXT");
+
+                                    b2.Property<string>("Transmission")
+                                        .HasColumnType("TEXT");
+
+                                    b2.HasKey("TransportInfoId", "Id");
+
+                                    b2.ToTable("Cars", (string)null);
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("TransportInfoId");
+                                });
+
+                            b1.Navigation("Cars");
+                        });
 
                     b.Navigation("ContractData");
 
                     b.Navigation("RegistrationAddress");
+
+                    b.Navigation("TransportInfo");
                 });
 
-            modelBuilder.Entity("Domain.Photo", b =>
+            modelBuilder.Entity("Domain.Entities.Payroll", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Entities.Employee", "Employee")
+                        .WithMany("Payrolls")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Photo", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
                         .WithMany("Photos")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Domain.RefreshToken", b =>
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("Domain.User", "User")
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Domain.User", null)
+                    b.HasOne("Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Employee", b =>
+            modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
                     b.Navigation("Documents");
+
+                    b.Navigation("Payrolls");
                 });
 
-            modelBuilder.Entity("Domain.User", b =>
+            modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Photos");
 

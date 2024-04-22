@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.json
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -476,3 +476,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.vscode
+.fttemplates

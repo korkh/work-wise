@@ -1,0 +1,151 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"jest": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react/recommended",
+		"plugin:i18next/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"plugins": [
+		"@typescript-eslint",
+		"react",
+		"i18next",
+		"react-hooks",
+		"unused-imports",
+		"fsd-by-korkh"
+	],
+	"rules": {
+		// "indent": ["warn", 2, { "SwitchCase": 1 }],
+		"linebreak-style": ["warn", "windows"],
+		"quotes": "off",
+		"semi": ["error", "always"],
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/no-explicit-any": [
+			"error",
+			{ "fixToUnknown": false, "ignoreRestArgs": false }
+		],
+		"@typescript-eslint/no-unused-vars": [
+			"warn",
+			{ "varsIgnorePattern": "^_+$", "argsIgnorePattern": "^_+$" }
+		],
+		"react/jsx-uses-react": "off",
+		"react/react-in-jsx-scope": "off", //no need import React from "react"
+		"react/prop-types": "off",
+		"react/jsx-uses-vars": "warn",
+		// "react/jsx-indent": ["warn", 2],
+		// "react/jsx-indent-props": ["warn", 2],
+		"react/jsx-filename-extension": [
+			"warn",
+			{ "extensions": [".js", ".jsx", ".tsx"] }
+		],
+		"react/jsx-props-no-spreading": "off",
+		"@typescript-eslint/ban-ts-comment": [
+			"warn",
+			{
+				"ts-expect-error": "allow-with-description",
+				"ts-ignore": true,
+				"ts-check": false,
+				"ts-nocheck": true
+			}
+		],
+		// "arrow-body-style": "off",
+		"i18next/no-literal-string": [
+			"error",
+			{
+				"markupOnly": true,
+				"ignoreAttribute": [
+					"",
+					"to",
+					"className",
+					"styleName",
+					"style",
+					"type",
+					"key",
+					"id",
+					"width",
+					"height",
+					"data-testid",
+					"target",
+					"direction",
+					"justify",
+					"align",
+					"gap",
+					"component",
+					"as",
+					"aria-disabled",
+					"border",
+					"feature",
+					"role",
+					"color",
+					"variant",
+					"size",
+					"wrap"
+				]
+			}
+		],
+		"max-len": [
+			"warn",
+			{
+				"ignoreComments": true,
+				"ignoreUrls": true,
+				"ignorePattern": "^(\\s*import\\s.+\\sfrom\\s.+;|\\s*export\\s\\{.+\\}\\sfrom\\s.+;|\\s*export\\s(?:function\\s\\w+\\(.+\\)\\s*|.+\\sfrom\\s.+;)\\s*)$",
+				"code": 100
+			}
+		],
+		"react-hooks/rules-of-hooks": "error", // checks rules for hooks
+		"react-hooks/exhaustive-deps": "error", // checks effect dependencies
+		"unused-imports/no-unused-imports": "error",
+		"fsd-by-korkh/path-checker": ["error", { "alias": "@" }],
+		"fsd-by-korkh/public-api-imports": [
+			"error",
+			{
+				"alias": "@",
+				"testFilesPatterns": [
+					"**/*.test.*",
+					"**/*.stories.*",
+					"**/StoreDecorator.tsx"
+				]
+			}
+		],
+		"fsd-by-korkh/layer-imports": [
+			"error",
+			{
+				"alias": "@",
+				"ignoreImportPatterns": ["**/StoreProvider", "**/testing"]
+			}
+		]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"globals": {
+		"__IS_DEV__": true,
+		"__API__": true,
+		"__PROJECT__": true
+	},
+	"overrides": [
+		{
+			"files": ["**/src/**/*.{test,stories}.{ts,tsx}"],
+			"rules": {
+				"i18next/no-literal-string": "off",
+				"max-len": "off"
+			}
+		}
+	]
+}

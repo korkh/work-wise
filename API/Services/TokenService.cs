@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Domain;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
@@ -11,10 +13,12 @@ namespace API.Services
     {
         //This object is used to access configuration settings (e.g., TokenKey) from the app settings.
         public readonly IConfiguration _config;
+        private readonly UserManager<User> _userManager;
 
-        public TokenService(IConfiguration config)
+        public TokenService(IConfiguration config, UserManager<User> userManager)
         {
             _config = config;
+            _userManager = userManager;
         }
 
         //The CreateToken method is the core of the class. It takes an AppUser object as a parameter, which likely represents the user for whom the token is being generated.
@@ -24,9 +28,16 @@ namespace API.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
             };
+
+            // Retrieve roles for the user and add each as a role claim
+            var roles = _userManager.GetRolesAsync(user).Result;
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             //Token preparation
             //symmetric is using same key for encryption and for the decription (should be not less than 12 chars)
