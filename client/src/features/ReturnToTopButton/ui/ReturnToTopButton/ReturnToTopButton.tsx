@@ -1,22 +1,38 @@
-import { classNames } from '@/shared/lib/classNames/classNames';
-import cls from './ReturnToTopButton.module.scss';
-import { useTranslation } from "react-i18next";
-import {memo} from "react";
-		
+import { classNames } from "@/shared/lib/classNames/classNames";
+import cls from "./ReturnToTopButton.module.scss";
+import { memo } from "react";
+import { useReturnToTop } from "@/shared/lib/hooks/useReturnToTop/useReturnToTop";
+import { Glyph } from "@/shared/ui/Glyph";
+import ArrowsUpIcon from "@/shared/assets/icons/arrows-up.svg?react";
+
 interface ReturnToTopButtonProps {
-  className?: string;
+	className?: string;
 }
 
-const ReturnToTopButton = (props: ReturnToTopButtonProps) => {
+export const ReturnToTopButton = memo(function ReturnToTopButton(
+	props: ReturnToTopButtonProps
+) {
 	const { className } = props;
-	const { t } = useTranslation();
-		return (
-			<div 
-				className={classNames(cls.returnToTopButton, [className], {})}				  
-			>
-			{t("ReturnToTopButton")}
-			</div>			    
-		);
-};
+	const { isVisible, returnToTop } = useReturnToTop();
 
-export default memo(ReturnToTopButton);
+	const onCLick = () => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
+
+	return (
+		<div
+			className={classNames(cls.ScrollToTopButton, [className], {
+				[cls.visible]: isVisible,
+			})}
+			onClick={returnToTop}
+		>
+			<Glyph
+				SvgImage={ArrowsUpIcon}
+				clickable
+				onClick={onCLick}
+				width={32}
+				height={32}
+			/>
+		</div>
+	);
+});

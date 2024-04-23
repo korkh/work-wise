@@ -1,1 +1,1 @@
-export { ReturnToTopButtonAsync as ReturnToTopButton } from "./ui/ReturnToTopButton/ReturnToTopButton.async";
+export { ReturnToTopButton } from "./ui/ReturnToTopButton/ReturnToTopButton";

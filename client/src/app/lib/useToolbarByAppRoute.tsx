@@ -1,4 +1,5 @@
 import { AppRoutes } from "@/shared/consts/routerConsts";
+import { useRouteChange } from "@/shared/lib/hooks/router/useRouteChange";
 import { SideToolbarScroll } from "@/widgets/SideToolbarScroll";
 import { ReactElement } from "react";
 
