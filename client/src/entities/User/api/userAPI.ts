@@ -1,13 +1,13 @@
 import { rtkApi } from "@/shared/api/rtkApi";
 
-import { Login, Register, User } from "../model/types/User";
+import { SignIn, Register, User } from "../model/types/User";
 
 const userApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
 		getCurrentUser: build.query<User, void>({
 			query: () => "api/account/currentUser",
 		}),
-		loginUser: build.mutation<User, Login>({
+		loginUser: build.mutation<User, SignIn>({
 			query: (credentials) => ({
 				url: "api/account/login",
 				method: "POST",

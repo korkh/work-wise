@@ -10,7 +10,7 @@ export default defineConfig({
 	plugins: [
 		react(),
 		svgr({
-			include: "**/*.svg", // params
+			include: "**/*.svg?react",
 		}),
 	],
 	server: {

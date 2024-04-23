@@ -17,14 +17,19 @@ export const userSlice = createSlice({
 			const claims = JSON.parse(atob(payload.Token.split(".")[1]));
 			const roles =
 				claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+			const email =
+				claims[
+					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+				];
 			state.authData = {
 				...payload,
+				Email: typeof email === "string" ? [email] : email,
 				Roles: typeof roles === "string" ? [roles] : roles,
 			};
 
 			localStorage.setItem(USER_LOCALSTORAGE_KEY, payload.Token);
 		},
-		logout: (state) => {
+		signOut: (state) => {
 			state.authData = null;
 			localStorage.removeItem(USER_LOCALSTORAGE_KEY);
 		},

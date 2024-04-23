@@ -1,4 +1,4 @@
-import { UserSchema } from '@/entities/User';
+import { UserSchema } from "@/entities/User";
 import { rtkApi } from "@/shared/api/rtkApi";
 import {
 	EnhancedStore,
@@ -8,12 +8,16 @@ import {
 } from "@reduxjs/toolkit";
 import { AxiosInstance } from "axios";
 import { CombinedState } from "../types/stateTypes";
+import { UISchema } from "@/features/UI";
+import { SignInSchema } from "@/features/LoginAuth";
 
 export interface StateSchema {
 	user: UserSchema;
+	ui: UISchema;
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
 	//Async reducers
+	signInForm?: SignInSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;
