@@ -1,5 +1,5 @@
 import { memo, useCallback } from "react";
-import cls from "./LoginForm.module.scss";
+import cls from "./SignInForm.module.scss";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { Input } from "@/shared/ui/Input";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { ColumnStack } from "@/shared/ui/Stack";
 import { classNames } from "@/shared/lib/classNames/classNames";
-import { signInActions, signInReducer } from "../../model/slices/signInSlice";
+
 import {
 	getSignInEmail,
 	getSignInError,
@@ -20,6 +20,7 @@ import {
 	getSignInPassword,
 } from "../..";
 import { signInUser } from "../../model/services/signIn/signInUser";
+import { signInActions, signInReducer } from "../../model/slices/signInSlice";
 
 export interface SignInFormProps {
 	className?: string;
@@ -59,7 +60,6 @@ const SignInForm = memo(function SignInForm({
 		const result = await dispatch(signInUser({ email, password }));
 		if (result.meta.requestStatus === "fulfilled") {
 			onSuccess();
-			window.location.reload();
 		}
 	}, [dispatch, email, password, onSuccess]);
 
@@ -67,9 +67,9 @@ const SignInForm = memo(function SignInForm({
 		<DynamicReducerLoader removeAfterUnmount reducers={initialReducers}>
 			<ColumnStack
 				gap="16"
-				className={classNames(cls.LoginForm, [className], {})}
+				className={classNames(cls.signInForm, [className], {})}
 			>
-				<TextHolder title={t("Authorization form")} />
+				<TextHolder title={t("Please sign in here!")} />
 				{error && (
 					<TextHolder
 						text={t("Incorrect login email or password")}
@@ -92,7 +92,7 @@ const SignInForm = memo(function SignInForm({
 					value={password}
 				/>
 				<Button
-					className={cls.loginBtn}
+					className={cls.signInBtn}
 					onClick={onLoginClick}
 					disabled={isLoading}
 				>

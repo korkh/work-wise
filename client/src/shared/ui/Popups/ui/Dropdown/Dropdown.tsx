@@ -32,7 +32,7 @@ export const Dropdown = memo(function Dropdown(props: DropdownProps) {
 	};
 
 	return (
-		<div className={classNames(cls.Dropdown, [className], {})}>
+		<div className={classNames(cls.dropdown, [className, popupCls.popup], {})}>
 			<Button onClick={toggleDropdown} className={cls.trigger}>
 				{trigger}
 			</Button>

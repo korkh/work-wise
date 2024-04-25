@@ -17,7 +17,7 @@ export interface StateSchema {
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
 	//Async reducers
-	signInForm?: SignInSchema;
+	signInForm: SignInSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

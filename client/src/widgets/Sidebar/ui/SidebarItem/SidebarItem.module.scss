@@ -3,10 +3,6 @@
   opacity: 1;
 }
 
-.icon {
-  fill: var(--inverted-primary-color);
-}
-
 .item {
   display: flex;
   align-items: center;
@@ -16,6 +12,7 @@
 
 .collapsed {
   padding: 0 8px;
+  margin: 0;
 
   .link {
     opacity: 0;

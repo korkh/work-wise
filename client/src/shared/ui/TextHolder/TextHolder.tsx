@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { classNames } from "@/shared/lib/classNames/classNames";
-import cls from "./Text.module.scss";
+import cls from "./TextHolder.module.scss";
 
 export type TextHolderVariant = "primary" | "error" | "accent";
 
@@ -52,7 +52,7 @@ export const TextHolder = memo(function TextHolder(props: TextHolderProps) {
 
 	return (
 		<div
-			className={classNames(cls.Text, additionalClasses, { [cls.bold]: bold })}
+			className={classNames(cls.text, additionalClasses, { [cls.bold]: bold })}
 		>
 			{title && (
 				<HeaderTag className={cls.title} data-testid={`${dataTestId}.Header`}>

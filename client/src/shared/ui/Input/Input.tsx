@@ -74,7 +74,7 @@ export const Input = memo(function Input(props: InputProps) {
 	};
 
 	const input = (
-		<div className={classNames(cls.InputWrapper, [className, cls[size]], mods)}>
+		<div className={classNames(cls.inputWrapper, [className, cls[size]], mods)}>
 			<div className={cls.bufferLeft}>{bufferLeft}</div>
 			<input
 				ref={ref}

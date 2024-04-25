@@ -1,7 +1,8 @@
 .menu {
+  margin-top: 20px;
   background: var(--dark-bg);
   position: absolute;
-  z-index: 10000;
+  z-index: var(--dropdown-menu-z-index);
   flex-direction: column;
   display: flex;
 }

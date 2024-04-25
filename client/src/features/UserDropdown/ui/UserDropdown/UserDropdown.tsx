@@ -70,7 +70,7 @@ export const UserDropdown = memo(function UserDropdown(
 			direction="bottom left"
 			className={classNames("", [className], {})}
 			items={items}
-			trigger={<Avatar size={40} src={authData.Image} />}
+			trigger={<Avatar size={40} src={authData.image} />}
 		/>
 	);
 });

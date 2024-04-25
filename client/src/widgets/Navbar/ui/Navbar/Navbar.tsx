@@ -28,8 +28,12 @@ export const Navbar = memo(function Navbar({ className }: NavbarProps) {
 
 	if (authData) {
 		return (
-			<header className={classNames(cls.Navbar, [className], {})}>
+			<header className={classNames(cls.navbar, [className], {})}>
 				<RowStack gap="16" className={cls.actions}>
+					<div>
+						{t("Welcome ")}
+						{authData.displayName}
+					</div>
 					<UserDropdown />
 				</RowStack>
 			</header>
@@ -37,7 +41,7 @@ export const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	}
 
 	return (
-		<header className={classNames(cls.Navbar, [className], {})}>
+		<header className={classNames(cls.navbar, [className], {})}>
 			<Button variant="clear" className={cls.links} onClick={onShowModal}>
 				{t("Sign in")}
 			</Button>

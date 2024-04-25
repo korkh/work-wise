@@ -5,6 +5,8 @@ import { memo } from "react";
 import { SidebarItemType } from "../../model/types/sidebar_types";
 import { AppLink } from "@/shared/ui/AppLink";
 import { Glyph } from "@/shared/ui/Glyph";
+import { useSelector } from "react-redux";
+import { getUserAuthData } from "@/entities/User";
 
 interface SidebarItemProps {
 	item: SidebarItemType;
@@ -14,6 +16,12 @@ interface SidebarItemProps {
 export const SidebarItem = memo(function SidebarItem(props: SidebarItemProps) {
 	const { item, collapsed } = props;
 	const { t } = useTranslation();
+
+	const isAuth = useSelector(getUserAuthData);
+
+	if (item.authOnly && !isAuth) {
+		return null;
+	}
 	return (
 		<AppLink
 			to={item.path}
@@ -22,8 +30,10 @@ export const SidebarItem = memo(function SidebarItem(props: SidebarItemProps) {
 			})}
 			activeClassName={cls.active}
 		>
-			<Glyph SvgImage={item.Icon} />
-			<span className={cls.link}>{t(item.text)}</span>
+			<Glyph width={32} height={32} SvgImage={item.Icon} />
+			{!collapsed && (
+				<span className={classNames(cls.link, [], {})}>{t(item.text)}</span>
+			)}
 		</AppLink>
 	);
 });

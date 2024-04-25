@@ -1,26 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { USER_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
+import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 import { User } from "../types/User";
 import { ThunkConfig } from "@/app/providers/StoreProvider";
-import { getCurrentUserQuery } from "../../api/userAPI";
+import { getCurrentUserMutation } from "../../api/userAPI";
+import { toast } from "react-toastify";
 
 export const initAuthData = createAsyncThunk<User, void, ThunkConfig<string>>(
 	"user/initAuthData",
 	async (_, thunkApi) => {
 		const { rejectWithValue, dispatch } = thunkApi;
 
-		const token = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+		const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
 
 		if (!token) {
-			return rejectWithValue("No token found");
+			toast("User not found!");
+			return rejectWithValue("User not found");
 		}
 
 		try {
-			const response = await dispatch(getCurrentUserQuery()).unwrap();
+			const getUser = await dispatch(getCurrentUserMutation(token)).unwrap();
 
-			return response;
+			console.log(getUser);
+			return getUser;
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			return rejectWithValue("");
 		}
 	}

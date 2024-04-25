@@ -1,25 +1,28 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SignIn, User, userActions } from "@/entities/User";
 import { ThunkConfig } from "@/app/providers/StoreProvider";
+import { loginUserMutation } from "../../../../../entities/User/api/userAPI";
 
 export const signInUser = createAsyncThunk<User, SignIn, ThunkConfig<string>>(
-	"signIn/signInByEmailPassword",
+	"signIn/signInUser",
 	async (authData, thunkApi) => {
-		const { extra, dispatch, rejectWithValue } = thunkApi;
+		const { dispatch, rejectWithValue } = thunkApi;
 
 		try {
-			const response = await extra.api.post<User>("/account/login", authData);
+			const response: User = await dispatch(
+				loginUserMutation(authData)
+			).unwrap();
 
-			if (!response.data) {
+			if (!response) {
 				throw new Error();
 			}
 
-			dispatch(userActions.setAuthData(response.data));
-			return response.data;
-		} catch (error) {
-			const customError: string = error as string;
-			console.log(error);
-			return rejectWithValue(customError);
+			dispatch(userActions.setAuthData(response));
+
+			return response;
+		} catch (e) {
+			console.error(e);
+			return rejectWithValue("");
 		}
 	}
 );

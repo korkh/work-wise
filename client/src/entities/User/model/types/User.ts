@@ -1,13 +1,11 @@
-import { UserRole } from "../consts/UserRole";
-
 export interface User {
 	id: string;
-	DisplayName: string;
-	Token: string;
-	Image?: string;
-	UserName: string;
-	Email: string;
-	Roles?: UserRole[];
+	displayName: string;
+	token: string;
+	image?: string;
+	userName: string;
+	email: string;
+	roles?: string[];
 }
 
 export interface SignIn {

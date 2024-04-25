@@ -38,11 +38,7 @@ export const Modal = memo(function Modal(props: ModalProps) {
 	return (
 		<Portal element={document.getElementById("app") ?? document.body}>
 			<div
-				className={classNames(
-					cls.Modal,
-					[className, theme, "app_modal", cls.modalNew],
-					mods
-				)}
+				className={classNames(cls.modal, [className, theme, "app_modal"], mods)}
 			>
 				<Overlay onClick={close} />
 				<div className={cls.content}>{children}</div>

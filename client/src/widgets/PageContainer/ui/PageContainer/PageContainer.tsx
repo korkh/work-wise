@@ -6,12 +6,13 @@ import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch
 
 import { StateSchema } from "@/app/providers/StoreProvider";
 
-import cls from "./Page.module.scss";
+import cls from "./PageContainer.module.scss";
 
 import { TestingProps } from "@/shared/types/testing";
 import { getUIScrollByPath, uiActions } from "@/features/UI";
 import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
 import { useThrottle } from "@/shared/lib/hooks/useThrottle/useThrottle";
+import { useInfiniteScroll } from "@/shared/lib/hooks/useInfiniteScroll/useInfiniteScroll";
 
 interface PageContainerProps extends TestingProps {
 	className?: string;
@@ -21,7 +22,9 @@ interface PageContainerProps extends TestingProps {
 
 export const PAGE_ID = "PAGE_ID";
 
-const PageContainer = memo(function PageContainer(props: PageContainerProps) {
+export const PageContainer = memo(function PageContainer(
+	props: PageContainerProps
+) {
 	const { className, children, onScrollEnd } = props;
 	const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
 	const triggerRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -30,6 +33,12 @@ const PageContainer = memo(function PageContainer(props: PageContainerProps) {
 	const scrollPosition = useSelector((state: StateSchema) =>
 		getUIScrollByPath(state, pathname)
 	);
+
+	useInfiniteScroll({
+		triggerRef,
+		wrapperRef: undefined,
+		callback: onScrollEnd,
+	});
 
 	useInitEffect(() => {
 		wrapperRef.current.scrollTop = scrollPosition;
@@ -57,5 +66,3 @@ const PageContainer = memo(function PageContainer(props: PageContainerProps) {
 		</main>
 	);
 });
-
-export default PageContainer;

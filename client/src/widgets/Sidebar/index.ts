@@ -1,1 +1,1 @@
-export { SidebarAsync as Sidebar } from "./ui/Sidebar/Sidebar.async";
+export { Sidebar } from "./ui/Sidebar/Sidebar";

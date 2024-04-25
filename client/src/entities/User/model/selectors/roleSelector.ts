@@ -4,7 +4,7 @@ import { UserRole } from "../consts/UserRole";
 
 import { StateSchema } from "@/app/providers/StoreProvider";
 
-export const getUserRoles = (state: StateSchema) => state.user.authData?.Roles;
+export const getUserRoles = (state: StateSchema) => state.user.authData?.roles;
 
 //using reselect we wemoise list of roles and then inside will check if userAdmin or not
 export const isUserAdmin = createSelector(getUserRoles, (roles) =>

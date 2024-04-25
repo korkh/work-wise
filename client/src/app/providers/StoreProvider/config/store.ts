@@ -7,6 +7,7 @@ import { rtkApi } from "@/shared/api/rtkApi";
 import { CombinedState } from "../types/stateTypes";
 import { userReducer } from "@/entities/User";
 import { createReducerManager } from "./reducerManager";
+import { uiReducer } from "@/features/UI";
 
 export function createReduxStore(
 	initialState?: StateSchema,
@@ -15,6 +16,7 @@ export function createReduxStore(
 	const rootReducers: ReducersMapObject<StateSchema> = {
 		...asyncReducers,
 		user: userReducer,
+		ui: uiReducer,
 		[rtkApi.reducerPath]: rtkApi.reducer,
 	};
 

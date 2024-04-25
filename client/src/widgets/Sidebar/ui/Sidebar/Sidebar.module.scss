@@ -1,3 +1,55 @@
 .sidebar {
-  font: inherit;
+  background: var(--light-bg);
+  width: 220px;
+  height: 100%;
+  border-radius: 32px;
+  position: relative;
+
+  .appLogo {
+    padding-top: 20px;
+  }
+
+  .items {
+    margin-top: 40px;
+  }
+
+  .collapseBtn {
+    position: absolute;
+    right: 0;
+    top: 60%;
+    z-index: var(--sidebar-collapseBtn-z-index);
+    transform: rotate(90deg);
+  }
+
+  .switchers {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+  }
+}
+
+
+.collapsed {
+  width: 50px;
+
+  .items {
+    display: flex;
+    align-items: center;
+  }
+
+  .switchers {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lang {
+    margin-left: 0;
+  }
+
+  .collapseBtn {
+    transform: rotate(-90deg);
+  }
 }

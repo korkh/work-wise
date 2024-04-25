@@ -10,6 +10,8 @@ import { AppRouter } from "./router";
 import { Sidebar } from "@/widgets/Sidebar";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { AppLoaderLayout } from "@/shared/layouts/AppLoaderLayout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 	const { theme } = useTheme();
@@ -25,14 +27,14 @@ function App() {
 
 	if (!inited) {
 		return (
-			<div id="app" className={classNames("app_redesigned", [theme], {})}>
+			<div id="app" className={classNames("app", [theme], {})}>
 				<AppLoaderLayout />
 			</div>
 		);
 	}
 
 	return (
-		<div id="app" className={classNames("app_redesigned", [theme], {})}>
+		<div id="app" className={classNames("app", [theme], {})}>
 			<Suspense fallback="">
 				<BaseLayout
 					header={<Navbar />}
@@ -41,6 +43,7 @@ function App() {
 					toolbar={toolbar}
 				/>
 			</Suspense>
+			<ToastContainer position="bottom-right" hideProgressBar theme="colored" />
 		</div>
 	);
 }

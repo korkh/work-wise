@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { SidebarItemType } from "../types/sidebar_types";
 import {
 	getRouteAbout,
+	getRouteDocuments,
 	getRouteEmployees,
 	getRouteMain,
 	getRoutePayrolls,
@@ -13,6 +14,7 @@ import AboutPage from "@/shared/assets/icons/about-page-icon.svg?react";
 import ProfilePage from "@/shared/assets/icons/profile-page-icon.svg?react";
 import Payrolls from "@/shared/assets/icons/payroll.svg?react";
 import Employees from "@/shared/assets/icons/employees.svg?react";
+import Documents from "@/shared/assets/icons/documents.svg?react";
 
 export const useSidebarItems = () => {
 	const userData = useSelector(getUserAuthData);
@@ -29,7 +31,30 @@ export const useSidebarItems = () => {
 		},
 	];
 
-	if (userData) {
+	if (userData && userData.roles?.includes("Accountant")) {
+		sidebarItemsList.push(
+			{
+				path: getRouteProfile(userData.id),
+				Icon: ProfilePage,
+				text: "Profile page",
+				authOnly: true,
+			},
+			{
+				path: getRouteEmployees(),
+				Icon: Employees,
+				text: "Employees page",
+				authOnly: true,
+			},
+			{
+				path: getRoutePayrolls(),
+				Icon: Payrolls,
+				text: "Payrolls page",
+				authOnly: true,
+			}
+		);
+	}
+
+	if (userData && userData.roles?.includes("Admin")) {
 		sidebarItemsList.push(
 			{
 				path: getRouteProfile(userData.id),
@@ -44,9 +69,9 @@ export const useSidebarItems = () => {
 				authOnly: true,
 			},
 			{
-				path: getRoutePayrolls(),
-				Icon: Payrolls,
-				text: "Payrolls",
+				path: getRouteDocuments(),
+				Icon: Documents,
+				text: "Documents",
 				authOnly: true,
 			}
 		);

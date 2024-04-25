@@ -1,0 +1,1 @@
+export { PayrollCreatePageAsync as PayrollCreatePage } from "./ui/PayrollCreatePage/PayrollCreatePage.async";
