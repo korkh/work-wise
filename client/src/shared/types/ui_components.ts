@@ -3,3 +3,9 @@ export type DropdownDirection =
 	| "top right"
 	| "bottom left"
 	| "bottom right";
+
+/** Tables */
+export type Column<T> = {
+	key: keyof T;
+	header: string;
+};

@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SignIn, User, userActions } from "@/entities/User";
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { loginUserMutation } from "../../../../../entities/User/api/userAPI";
+import { toast } from "react-toastify";
 
 export const signInUser = createAsyncThunk<User, SignIn, ThunkConfig<string>>(
 	"signIn/signInUser",
@@ -14,15 +15,18 @@ export const signInUser = createAsyncThunk<User, SignIn, ThunkConfig<string>>(
 			).unwrap();
 
 			if (!response) {
-				throw new Error();
+				toast.error("User authentication failed");
+				throw new Error("User authentication failed");
 			}
 
 			dispatch(userActions.setAuthData(response));
+			// startRefreshTokenTimer(dispatch);
 
 			return response;
 		} catch (e) {
 			console.error(e);
-			return rejectWithValue("");
+			toast.error("Failed to sign in");
+			return rejectWithValue("Failed to sign in");
 		}
 	}
 );

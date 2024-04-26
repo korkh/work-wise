@@ -6,6 +6,7 @@ import {
 	TOKEN_LOCALSTORAGE_KEY,
 	USER_LOCALSTORAGE_KEY,
 } from "@/shared/consts/localStorage";
+import { safeJSONParse } from "@/shared/lib/utils/safeParse/safeParse";
 
 const initialState: SignInSchema = {
 	isLoading: false,
@@ -35,7 +36,13 @@ export const signInSlice = createSlice({
 				signInUser.fulfilled,
 				(state, { payload }: PayloadAction<User>) => {
 					state.isLoading = false;
-					const claims = JSON.parse(atob(payload.token.split(".")[1]));
+					const [parseError, claims] = safeJSONParse(
+						atob(payload.token.split(".")[1])
+					);
+					if (parseError) {
+						console.error("Failed to parse claims from token", parseError);
+						return;
+					}
 					const roles =
 						claims["role"] ||
 						claims[

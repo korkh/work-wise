@@ -1,4 +1,4 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./ReturnToTopButton.module.scss";
 import { memo } from "react";
 import { useReturnToTop } from "@/shared/lib/hooks/useReturnToTop/useReturnToTop";

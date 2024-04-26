@@ -4,7 +4,7 @@ import { NavigateFunction } from "react-router";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import cls from "./ErrorPage.module.scss";
-import { classNames } from "../../../..//shared/lib/classNames/classNames";
+import { classNames } from "../../../../shared/lib/utils/classNames/classNames";
 import { Button } from "../../../..//shared/ui/Button";
 
 interface ErrorPageProps {

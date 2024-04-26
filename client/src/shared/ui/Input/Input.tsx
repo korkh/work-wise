@@ -6,7 +6,7 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { classNames, Mods } from "@/shared/lib/classNames/classNames";
+import { classNames, Mods } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Input.module.scss";
 import { TextHolder } from "../TextHolder";
 import { RowStack } from "../Stack";

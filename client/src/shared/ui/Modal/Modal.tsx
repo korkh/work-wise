@@ -1,4 +1,4 @@
-import { Mods, classNames } from "@/shared/lib/classNames/classNames";
+import { Mods, classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Modal.module.scss";
 import { ReactNode, memo } from "react";
 import { useModal } from "@/shared/lib/hooks/useModal/useModal";

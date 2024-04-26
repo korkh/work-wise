@@ -158,12 +158,22 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("Invalid user data");
+            }
             var user = await _userManager
                 .Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
 
             await SetRefreshToken(user);
             return CreateUserObject(user);
@@ -173,20 +183,31 @@ namespace API.Controllers
         [HttpPost("refreshToken")]
         public async Task<ActionResult<UserDto>> RefreshToken()
         {
-            var refreshTokken = Request.Cookies["refreshToken"];
+            var refreshToken = Request.Cookies["refreshToken"];
+
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                return BadRequest("Refresh token is required");
+            }
             var user = await _userManager
                 .Users.Include(r => r.RefreshTokens)
                 .Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
 
-            //if no user
             if (user == null)
-                return Unauthorized();
+            {
+                return Unauthorized("User not found");
+            }
 
-            var oldToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshTokken);
+            var oldToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken);
 
             if (oldToken != null && !oldToken.IsActive)
-                return Unauthorized();
+            {
+                return Unauthorized("Invalid or expired refresh token");
+            }
+
+            if (oldToken != null)
+                oldToken.Revoked = DateTime.UtcNow;
 
             return CreateUserObject(user);
         }
@@ -201,7 +222,7 @@ namespace API.Controllers
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
+                Expires = DateTime.UtcNow.AddSeconds(15)
             };
 
             Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);

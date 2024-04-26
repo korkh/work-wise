@@ -6,6 +6,7 @@ import {
 	TOKEN_LOCALSTORAGE_KEY,
 	USER_LOCALSTORAGE_KEY,
 } from "@/shared/consts/localStorage";
+import { safeJSONParse } from "@/shared/lib/utils/safeParse/safeParse";
 
 const initialState: UserSchema = {
 	authData: null,
@@ -17,7 +18,13 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setAuthData: (state, { payload }: PayloadAction<User>) => {
-			const claims = JSON.parse(atob(payload.token.split(".")[1]));
+			const [parseError, claims] = safeJSONParse(
+				atob(payload.token.split(".")[1])
+			);
+			if (parseError) {
+				console.error("Failed to parse claims from token", parseError);
+				return;
+			}
 			const roles =
 				claims["role"] ||
 				claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
@@ -50,6 +57,7 @@ export const userSlice = createSlice({
 		signOut: (state) => {
 			state.authData = null;
 			localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+			localStorage.removeItem(TOKEN_LOCALSTORAGE_KEY);
 		},
 	},
 	extraReducers: (builder) => {
@@ -59,7 +67,13 @@ export const userSlice = createSlice({
 		builder.addCase(
 			initAuthData.fulfilled,
 			(state, { payload }: PayloadAction<User>) => {
-				const claims = JSON.parse(atob(payload.token.split(".")[1]));
+				const [parseError, claims] = safeJSONParse(
+					atob(payload.token.split(".")[1])
+				);
+				if (parseError) {
+					console.error("Failed to parse claims from token", parseError);
+					return;
+				}
 				const roles =
 					claims[
 						"http://schemas.microsoft.com/ws/2008/06/identity/claims/role"

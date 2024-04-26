@@ -10,6 +10,7 @@ import { AxiosInstance } from "axios";
 import { CombinedState } from "../types/stateTypes";
 import { UISchema } from "@/features/UI";
 import { SignInSchema } from "@/features/LoginAuth";
+import { EmployeePageSchema } from "@/pages/EmployeesPage";
 
 export interface StateSchema {
 	user: UserSchema;
@@ -18,6 +19,7 @@ export interface StateSchema {
 
 	//Async reducers
 	signInForm: SignInSchema;
+	employeePage?: EmployeePageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

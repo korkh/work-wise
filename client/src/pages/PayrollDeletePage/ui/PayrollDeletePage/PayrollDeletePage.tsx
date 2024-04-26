@@ -1,22 +1,20 @@
-import { classNames } from '@/shared/lib/classNames/classNames';
-import cls from './PayrollDeletePage.module.scss';
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
+import cls from "./PayrollDeletePage.module.scss";
 import { useTranslation } from "react-i18next";
-import {memo} from "react";
-		
+import { memo } from "react";
+
 interface PayrollDeletePageProps {
-  className?: string;
+	className?: string;
 }
 
 const PayrollDeletePage = (props: PayrollDeletePageProps) => {
 	const { className } = props;
 	const { t } = useTranslation();
-		return (
-			<div 
-				className={classNames(cls.payrollDeletePage, [className], {})}				  
-			>
+	return (
+		<div className={classNames(cls.payrollDeletePage, [className], {})}>
 			{t("PayrollDeletePage")}
-			</div>			    
-		);
+		</div>
+	);
 };
 
 export default memo(PayrollDeletePage);

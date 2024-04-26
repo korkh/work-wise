@@ -2,7 +2,7 @@ import {
 	Classes,
 	Mods,
 	classNames,
-} from "../../../shared/lib/classNames/classNames";
+} from "../../lib/utils/classNames/classNames";
 import cls from "./Button.module.scss";
 import {
 	ButtonHTMLAttributes,

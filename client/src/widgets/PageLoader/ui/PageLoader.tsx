@@ -1,4 +1,4 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./PageLoader.module.scss";
 import { PropsWithChildren, memo } from "react";
 import { Loader } from "@/shared/ui/Loader";

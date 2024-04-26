@@ -1,12 +1,13 @@
 import { rtkApi } from "@/shared/api/rtkApi";
 
 import { SignIn, Register, User } from "../model/types/User";
+import { Employee } from "../../../pages/MainPage/ui/MainPage/MainPage";
 
 const userApi = rtkApi.injectEndpoints({
 	endpoints: (build) => ({
-		getCurrentUser: build.mutation<User, string>({
+		getCurrentUser: build.query<User, string>({
 			query: (token) => ({
-				url: "api/account",
+				url: "api/account/currentUser",
 				method: "GET",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -41,10 +42,22 @@ const userApi = rtkApi.injectEndpoints({
 				params: { email },
 			}),
 		}),
-		refreshToken: build.mutation<User, void>({
-			query: () => ({
+		refreshToken: build.mutation<User, string>({
+			query: (token) => ({
 				url: "api/account/refreshToken",
 				method: "POST",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+		}),
+		getEmployees: build.query<Employee[], string>({
+			query: (token) => ({
+				url: "api/employees",
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
 			}),
 		}),
 	}),
@@ -54,6 +67,8 @@ export const loginUserMutation = userApi.endpoints.loginUser.initiate;
 export const registerUserMutation = userApi.endpoints.registerUser.initiate;
 export const verifyEmailMutation = userApi.endpoints.verifyEmail.initiate;
 export const refreshTokenMutation = userApi.endpoints.refreshToken.initiate;
-export const getCurrentUserMutation = userApi.endpoints.getCurrentUser.initiate;
+export const getCurrentUserQuery = userApi.endpoints.getCurrentUser.initiate;
 export const resendEmailConfirmationLinkQuery =
 	userApi.endpoints.resendEmailConfirmationLink.initiate;
+
+export const getEmployeesQuery = userApi.endpoints.getEmployees.initiate;

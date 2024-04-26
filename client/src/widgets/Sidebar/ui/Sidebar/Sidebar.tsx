@@ -1,4 +1,4 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Sidebar.module.scss";
 import { memo, useMemo, useState } from "react";
 import { useSidebarItems } from "../../model/selectors/getSidebarItems";

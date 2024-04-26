@@ -1,5 +1,5 @@
 import AppSvg from "@/shared/assets/icons/app-image.svg?react";
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { memo } from "react";
 import { RowStack } from "../Stack";
 

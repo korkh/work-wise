@@ -11,7 +11,7 @@ import { Button } from "@/shared/ui/Button";
 import { Input } from "@/shared/ui/Input";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { ColumnStack } from "@/shared/ui/Stack";
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 
 import {
 	getSignInEmail,

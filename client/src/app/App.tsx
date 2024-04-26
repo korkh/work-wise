@@ -4,7 +4,7 @@ import { useTheme } from "@/shared/lib/hooks/useTheme/useTheme";
 import { Suspense, memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useToolBarByAppRoute } from "./lib/useToolbarByAppRoute";
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { Navbar } from "@/widgets/Navbar";
 import { AppRouter } from "./router";
 import { Sidebar } from "@/widgets/Sidebar";

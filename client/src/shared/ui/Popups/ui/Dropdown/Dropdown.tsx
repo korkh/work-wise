@@ -1,4 +1,4 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Dropdown.module.scss";
 import { ReactNode, memo, useState } from "react";
 import { DropdownDirection } from "@/shared/types/ui_components";
