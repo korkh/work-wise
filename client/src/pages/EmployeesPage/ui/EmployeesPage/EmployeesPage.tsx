@@ -1,5 +1,4 @@
 import cls from "./EmployeesPage.module.scss";
-import { useTranslation } from "react-i18next";
 import { memo, useCallback } from "react";
 import {
 	DynamicReducerLoader,
@@ -25,7 +24,6 @@ const reducers: ReducersList = {
 
 const EmployeesPage = (props: EmployeesPageProps) => {
 	const { className } = props;
-	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const [searchParams] = useSearchParams();
 

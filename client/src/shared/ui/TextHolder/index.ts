@@ -1,1 +1,1 @@
-export * from "./TextHolder";
+export * from "./ui/TextHolder";
