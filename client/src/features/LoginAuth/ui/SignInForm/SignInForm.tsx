@@ -21,6 +21,7 @@ import {
 } from "../..";
 import { signInUser } from "../../model/services/signIn/signInUser";
 import { signInActions, signInReducer } from "../../model/slices/signInSlice";
+import { getRouteMain } from "@/shared/consts/routerConsts";
 
 export interface SignInFormProps {
 	className?: string;
@@ -60,6 +61,7 @@ const SignInForm = memo(function SignInForm({
 		const result = await dispatch(signInUser({ email, password }));
 		if (result.meta.requestStatus === "fulfilled") {
 			onSuccess();
+			getRouteMain();
 		}
 	}, [dispatch, email, password, onSuccess]);
 

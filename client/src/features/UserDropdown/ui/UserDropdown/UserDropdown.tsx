@@ -18,6 +18,7 @@ import {
 } from "@/shared/consts/routerConsts";
 import { Dropdown } from "@/shared/ui/Popups/ui/Dropdown";
 import { Avatar } from "@/shared/ui/Avatar";
+import { stopRefreshTokenTimer } from "@/shared/lib/utils/url/refreshTokenTimer/refreshTokenTimer";
 
 interface UserDropdownProps {
 	className?: string;
@@ -36,6 +37,7 @@ export const UserDropdown = memo(function UserDropdown(
 	const authData = useSelector(getUserAuthData);
 
 	const onLogout = useCallback(() => {
+		stopRefreshTokenTimer();
 		dispatch(userActions.signOut());
 	}, [dispatch]);
 

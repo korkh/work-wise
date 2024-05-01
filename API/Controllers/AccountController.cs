@@ -161,19 +161,8 @@ namespace API.Controllers
         [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            if (string.IsNullOrEmpty(email))
-            {
-                return Unauthorized("Invalid user data");
-            }
-            var user = await _userManager
-                .Users.Include(p => p.Photos)
+            var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
-
-            if (user == null)
-            {
-                return NotFound("User not found");
-            }
 
             await SetRefreshToken(user);
             return CreateUserObject(user);
@@ -187,7 +176,7 @@ namespace API.Controllers
 
             if (string.IsNullOrEmpty(refreshToken))
             {
-                return BadRequest("Refresh token is required");
+                return BadRequest(new { error = "Refresh token is required" });
             }
             var user = await _userManager
                 .Users.Include(r => r.RefreshTokens)
@@ -206,8 +195,7 @@ namespace API.Controllers
                 return Unauthorized("Invalid or expired refresh token");
             }
 
-            if (oldToken != null)
-                oldToken.Revoked = DateTime.UtcNow;
+            if (oldToken != null) oldToken.Revoked = DateTime.UtcNow;
 
             return CreateUserObject(user);
         }
@@ -222,7 +210,7 @@ namespace API.Controllers
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddSeconds(15)
+                Expires = DateTime.UtcNow.AddDays(7),
             };
 
             Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);

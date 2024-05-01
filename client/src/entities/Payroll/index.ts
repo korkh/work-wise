@@ -1,3 +1,2 @@
-export { PayrollAsync as Payroll } from "./ui/Payroll/Payroll.async";
-
-export { payrollActions, payrollReducer } from "./model/slice/payrollSlice";
+export { PayrollComponent } from "./ui/Payroll/PayrollComponent";
+export type { Payroll } from "./model/types/Payroll";

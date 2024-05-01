@@ -1,1 +1,0 @@
-export { GenericTable } from "./GenericTable";

@@ -6,12 +6,12 @@ import { useSelector } from "react-redux";
 import { useToolBarByAppRoute } from "./lib/useToolbarByAppRoute";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { Navbar } from "@/widgets/Navbar";
-import { AppRouter } from "./router";
 import { Sidebar } from "@/widgets/Sidebar";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { AppLoaderLayout } from "@/shared/layouts/AppLoaderLayout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppRouter } from "./providers/router";
 
 function App() {
 	const { theme } = useTheme();

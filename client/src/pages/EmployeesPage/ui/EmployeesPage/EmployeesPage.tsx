@@ -22,7 +22,7 @@ const reducers: ReducersList = {
 	employeePage: employeesPageReducer,
 };
 
-const EmployeesPage = (props: EmployeesPageProps) => {
+const EmployeesPage = memo(function EmployeesPage(props: EmployeesPageProps) {
 	const { className } = props;
 	const dispatch = useAppDispatch();
 	const [searchParams] = useSearchParams();
@@ -46,6 +46,6 @@ const EmployeesPage = (props: EmployeesPageProps) => {
 			</PageContainer>
 		</DynamicReducerLoader>
 	);
-};
+});
 
-export default memo(EmployeesPage);
+export default EmployeesPage;

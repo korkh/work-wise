@@ -6,7 +6,7 @@ export const $api = axios.create({ withCredentials: true, baseURL: __API__ });
 
 $api.interceptors.request.use((config) => {
 	const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
-	if (token) {
+	if (token && config.headers) {
 		const JwtToken = JSON.parse(token);
 		config.headers.Authorization = `Bearer ${JwtToken}`;
 	}
@@ -26,12 +26,13 @@ $api.interceptors.response.use(
 		) {
 			originalRequest._isRetry = true;
 			try {
-				const res = await axios.get<User>(
-					`https://localhost:5000/api/account/refreshToken`,
-					{
-						withCredentials: true,
-					}
-				);
+				const formerJWT = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
+				const res = await axios.post<User>(`${__API__}/account/refreshToken`, {
+					headers: {
+						Authorization: `Bearer ${formerJWT}`,
+					},
+					withCredentials: true,
+				});
 				const newToken = res.data.token;
 				console.log("Token set in localStorage:", newToken);
 				localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, newToken);
@@ -40,6 +41,13 @@ $api.interceptors.response.use(
 			} catch (error) {
 				console.log("NOT AUTHORIZED!");
 			}
+		}
+		if (
+			error.response &&
+			error.response.data &&
+			error.response.status === 400
+		) {
+			console.error("Error message from server:", error.response.data.error);
 		}
 		return Promise.reject(error);
 	}

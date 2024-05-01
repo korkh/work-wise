@@ -13,6 +13,7 @@ export const rtkApi = createApi({
 			}
 			return headers;
 		},
+		credentials: "include",
 	}),
 	endpoints: () => ({}),
 });

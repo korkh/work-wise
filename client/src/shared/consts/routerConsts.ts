@@ -22,6 +22,7 @@ export enum AppRoutes {
 	ACCOUNTANT_PANEL = "accountant_panel",
 	SETTINGS = "settings",
 	FORBIDDEN = "forbidden",
+	ERROR = "error",
 	NOT_FOUND = "not_found",
 }
 
@@ -48,6 +49,7 @@ export const getRouteManager = () => "/manager";
 export const getRouteAccountant = () => "/accountant";
 export const getRouteSettings = () => "/settings";
 export const getRouteForbidden = () => "/forbidden";
+export const getRouteError = () => "/error";
 export const getRouteNotFound = () => "/not_found";
 
 export const AppRouteByPathPattern: Record<string, AppRoutes> = {
@@ -74,5 +76,6 @@ export const AppRouteByPathPattern: Record<string, AppRoutes> = {
 	[getRouteAccountant()]: AppRoutes.ACCOUNTANT_PANEL,
 	[getRouteSettings()]: AppRoutes.SETTINGS,
 	[getRouteForbidden()]: AppRoutes.FORBIDDEN,
+	[getRouteError()]: AppRoutes.ERROR,
 	[getRouteNotFound()]: AppRoutes.NOT_FOUND,
 };

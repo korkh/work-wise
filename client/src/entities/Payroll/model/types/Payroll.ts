@@ -1,4 +1,4 @@
-export interface PayrollDto {
+export interface Payroll {
 	id: string;
 	rowVersion: Uint8Array;
 	employeeId: string;

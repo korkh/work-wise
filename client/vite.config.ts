@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import path from "path";
+import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({
 	build: {
@@ -12,6 +13,7 @@ export default defineConfig({
 		svgr({
 			include: "**/*.svg?react",
 		}),
+		mkcert(),
 	],
 	server: {
 		port: 3000,
@@ -29,7 +31,7 @@ export default defineConfig({
 	},
 	define: {
 		__IS_DEV__: JSON.stringify(true),
-		__API__: JSON.stringify("https://localhost:5000"),
+		__API__: JSON.stringify("https://localhost:5000/api"),
 		__PROJECT__: JSON.stringify("frontend"),
 		"process.env": {},
 	},

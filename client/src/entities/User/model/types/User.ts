@@ -22,5 +22,6 @@ export interface Register {
 
 export interface UserSchema {
 	authData?: User | null;
+	error?: string;
 	_inited: boolean;
 }
