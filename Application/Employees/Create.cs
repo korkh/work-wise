@@ -1,9 +1,9 @@
 using Application.Contracts;
 using Application.Core;
 using Application.Documents;
+using Application.Payrolls;
 using Application.Validations;
 using AutoMapper;
-using Domain;
 using Domain.Entities;
 using FluentValidation;
 using MediatR;

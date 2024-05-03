@@ -4,7 +4,8 @@ export enum EmployeeView {
 }
 
 export enum EmployeeSortField {
-	LASTNAME = "lastname",
+	FIRSTNAME = "firstName",
+	LASTNAME = "lastName",
 	IS_AVAILABLE = "is_available",
 	IS_FIRED = "is_fired",
 	TWO_MONTH_EXP = "2_month_exp",

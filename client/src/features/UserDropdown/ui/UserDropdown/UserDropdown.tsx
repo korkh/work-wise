@@ -12,6 +12,7 @@ import {
 import {
 	getRouteAccountant,
 	getRouteAdmin,
+	getRouteMain,
 	getRouteManager,
 	getRouteProfile,
 	getRouteSettings,
@@ -19,6 +20,7 @@ import {
 import { Dropdown } from "@/shared/ui/Popups/ui/Dropdown";
 import { Avatar } from "@/shared/ui/Avatar";
 import { stopRefreshTokenTimer } from "@/shared/lib/utils/url/refreshTokenTimer/refreshTokenTimer";
+import { useNavigate } from "react-router-dom";
 
 interface UserDropdownProps {
 	className?: string;
@@ -31,6 +33,7 @@ export const UserDropdown = memo(function UserDropdown(
 	const { t } = useTranslation();
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const isAdmin = useSelector(isUserAdmin);
 	const isAccountant = useSelector(isUserAccountant);
 	const isManager = useSelector(isUserManager);
@@ -39,7 +42,8 @@ export const UserDropdown = memo(function UserDropdown(
 	const onLogout = useCallback(() => {
 		stopRefreshTokenTimer();
 		dispatch(userActions.signOut());
-	}, [dispatch]);
+		navigate(getRouteMain());
+	}, [dispatch, navigate]);
 
 	if (!authData) {
 		return null;

@@ -3,7 +3,7 @@
 }
 
 .menu {
-  border-radius: 18px;
+  border-radius: 15px;
   border: 1px solid var(--accent);
   overflow: hidden;
 }
@@ -18,7 +18,7 @@
 }
 
 .active {
-  background: var(--light-bg);
+  background-color: var(--light-bg);
 }
 
 .bottomLeftOptions {

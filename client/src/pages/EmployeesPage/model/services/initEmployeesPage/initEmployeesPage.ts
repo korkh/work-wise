@@ -2,9 +2,9 @@ import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getEmployeesPageInitited } from "../../selectors/getEmployeesPageSelectors";
 import { employeesPageActions } from "../../slices/employeesPageSlice";
-import { fetchEmployeesList } from "../fetchEmployeesList/fetchEmployeesList";
 import { SortOrder } from "@/shared/types/sort";
 import { EmployeeSortField } from "@/entities/Employee";
+import { fetchEmployeesList } from "../fetchEmployeesList/fetchEmployeesList";
 
 export const initEmployeesPage = createAsyncThunk<
 	void,

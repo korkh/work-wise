@@ -7,6 +7,7 @@ import {
 	getEmployeesPageSort,
 	getEmployeesPageOrder,
 	getEmployeesPageSearch,
+	getEmployeesPagePageNumber,
 } from "../../selectors/getEmployeesPageSelectors";
 import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 
@@ -24,6 +25,7 @@ export const fetchEmployeesList = createAsyncThunk<
 	const pageSize = getEmployeesPageSize(getState());
 	const sort = getEmployeesPageSort(getState());
 	const order = getEmployeesPageOrder(getState());
+	const pageNumber = getEmployeesPagePageNumber(getState());
 	const search = getEmployeesPageSearch(getState());
 
 	try {
@@ -36,12 +38,14 @@ export const fetchEmployeesList = createAsyncThunk<
 			order,
 			search,
 		});
+
 		const response = await extra.api.get<Employee[]>("/employees", {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 			params: {
 				_expand: "user",
+				_pageNumber: pageNumber,
 				_pageSize: pageSize,
 				_sort: sort,
 				_order: order,
@@ -52,7 +56,7 @@ export const fetchEmployeesList = createAsyncThunk<
 		if (!response.data) {
 			throw new Error();
 		}
-
+		console.log("FETCH EMPLOYEE LIST", response.data);
 		return response.data;
 	} catch (e) {
 		return rejectWithValue("No response from server");

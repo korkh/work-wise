@@ -10,8 +10,8 @@ import { createReducerManager } from "./reducerManager";
 import { uiReducer } from "@/features/UI";
 
 export function createReduxStore(
-	initialState?: StateSchema,
-	asyncReducers?: ReducersMapObject<StateSchema>
+	initialState: StateSchema,
+	asyncReducers: ReducersMapObject<StateSchema>
 ) {
 	const rootReducers: ReducersMapObject<StateSchema> = {
 		...asyncReducers,

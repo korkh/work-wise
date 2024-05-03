@@ -12,6 +12,13 @@
   --font-s:
     var(--font-size-s) / var(--font-line-s) var(--font-family-text);
 
+  // small-medium size
+  --font-size-sm: 14px;
+  --font-line-sm: 22px;
+  --font-sm: var(--font-size-sm) / var(--font-line-sm) var(--font-family-main);
+  --font-sm:
+    var(--font-size-sm) / var(--font-line-sm) var(--font-family-text);
+
   // medium size
   --font-size-m: 16px;
   --font-line-m: 24px;

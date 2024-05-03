@@ -15,6 +15,15 @@ namespace Storage
                     DisplayName = "Evaldas",
                     UserName = "evaldas",
                     Email = "evaldas@test.com",
+                    Photos = new List<Photo>
+                    {
+                        new()
+                        {
+                            Id = "evaldas1",
+                            Url = "https://wallpapercave.com/wp/wp2623574.jpg",
+                            IsMain = true,
+                        }
+                    }
                 };
                 await userManager.CreateAsync(manager, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(manager, "Manager");
@@ -23,6 +32,15 @@ namespace Storage
                     DisplayName = "Zivile",
                     UserName = "zivile",
                     Email = "zivile@test.com",
+                    Photos = new List<Photo>
+                    {
+                        new()
+                        {
+                            Id = "1zivile1",
+                            Url = "https://images3.alphacoders.com/690/690494.jpg",
+                            IsMain = true,
+                        }
+                    }
                 };
                 await userManager.CreateAsync(accountant, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(accountant, "Accountant");
@@ -31,6 +49,15 @@ namespace Storage
                     DisplayName = "Peter",
                     UserName = "peter",
                     Email = "peter@test.com",
+                    Photos = new List<Photo>
+                    {
+                        new()
+                        {
+                            Id = "peter1",
+                            Url = "https://i.pinimg.com/736x/4f/67/37/4f6737c7b3f037e6f4ce31e1c2c8b2cc.jpg",
+                            IsMain = true,
+                        }
+                    }
                 };
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(admin, "Admin");

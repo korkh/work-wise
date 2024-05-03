@@ -1,5 +1,6 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { EmployeeSortField } from "@/entities/Employee";
+import { EmployeeSortField, EmployeeView } from "@/entities/Employee";
+
 import { buildSelector } from "@/shared/lib/store";
 
 export const getEmployeesPageIsLoading = (state: StateSchema) =>
@@ -14,6 +15,8 @@ export const getEmployeesPageHasMore = (state: StateSchema) =>
 	state.employeePage?.hasMore;
 export const getEmployeesPageInitited = (state: StateSchema) =>
 	state.employeePage?._inited;
+export const getEmployeesPageView = (state: StateSchema) =>
+	state.employeePage?.view ?? EmployeeView.GRID;
 export const getEmployeesPageOrder = (state: StateSchema) =>
 	state.employeePage?.order ?? "asc";
 export const getEmployeesPageSort = (state: StateSchema) =>

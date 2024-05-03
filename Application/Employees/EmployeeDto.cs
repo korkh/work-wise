@@ -1,15 +1,16 @@
+using System.ComponentModel.DataAnnotations;
 using Application.Addresses;
 using Application.Contracts;
 using Application.Documents;
+using Application.Payrolls;
 using Application.Transports;
-using Domain;
-using Domain.Entities;
 
 namespace Application.Employees
 {
     public class EmployeeDto
     {
         public Guid Id { get; set; }
+        [Timestamp]
         public byte[] RowVersion { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

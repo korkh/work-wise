@@ -59,7 +59,7 @@ export const Dropdown = memo(function Dropdown(props: DropdownProps) {
 									{...(item.disabled ? { disabled: true } : {})}
 									key={`dropdown-key-${index}`}
 								>
-									{content({ active: false })}
+									{content({ active: true })}
 								</AppLink>
 							);
 						}
@@ -69,7 +69,7 @@ export const Dropdown = memo(function Dropdown(props: DropdownProps) {
 								key={`dropdown-key-${index}`}
 								{...(item.disabled ? { disabled: true } : {})}
 							>
-								{content({ active: false })}
+								{content({ active: true })}
 							</div>
 						);
 					})}

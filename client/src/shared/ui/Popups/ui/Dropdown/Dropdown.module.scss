@@ -16,4 +16,9 @@
   outline: none;
   color: var(--text);
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--hint);
+    color: var(--accent);
+  }
 }

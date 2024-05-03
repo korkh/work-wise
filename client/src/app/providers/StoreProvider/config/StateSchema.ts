@@ -19,7 +19,7 @@ export interface StateSchema {
 
 	//Async reducers
 	signInForm: SignInSchema;
-	employeePage?: EmployeePageSchema;
+	employeePage: EmployeePageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

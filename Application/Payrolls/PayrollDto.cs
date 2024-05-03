@@ -1,15 +1,26 @@
-namespace Domain
+using System.ComponentModel.DataAnnotations;
+using Domain.Entities;
+
+namespace Application.Payrolls
 {
     public class PayrollDto
     {
+        [Key]
         public Guid Id { get; set; }
+        [Timestamp]
         public byte[] RowVersion { get; set; }
+        public Employee Employee { get; set; }
         public Guid EmployeeId { get; set; }
-        public string EmployeeFirstName { get; set; }
-        public string EmployeeLastName { get; set; }
+        [Required(ErrorMessage = "Year is required")]
         public int Year { get; set; }
+
+        [Required(ErrorMessage = "Month is required")]
         public int Month { get; set; }
+
+        [Required(ErrorMessage = "Working days are required")]
         public int WorkingDays { get; set; }
+
+        [Required(ErrorMessage = "Working hours are required")]
         public int WorkingHours { get; set; }
         public decimal AtlyginimasPagalDS { get; set; }
         public int DarboDienu { get; set; }
@@ -45,4 +56,6 @@ namespace Domain
         public decimal AdditionalCalculation { get; set; }
         public decimal KiekTuriGauti { get; set; }
     }
+
+
 }

@@ -30,7 +30,7 @@ export const Navbar = memo(function Navbar({ className }: NavbarProps) {
 		return (
 			<header className={classNames(cls.navbar, [className], {})}>
 				<RowStack gap="16" className={cls.actions}>
-					<div>
+					<div style={{ caretColor: "transparent" }}>
 						{t("Welcome ")}
 						{authData.displayName}
 					</div>

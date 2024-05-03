@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure.Email;
 using Infrastructure.Photos;
 using Infrastructure.Security;
+using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -93,9 +94,10 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
 
-            // Photo managing services
+            // Services
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<EmailSender>();
+            services.AddScoped<ISearchExpressionBuilder, SearchExpressionBuilder>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;

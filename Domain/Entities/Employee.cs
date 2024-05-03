@@ -1,12 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Domain.Entities
 {
     public class Employee
     {
         public Guid Id { get; set; }
-
-        [Timestamp]
         public byte[] RowVersion { get; set; }
         public required string FirstName { get; set; }
         public string LastName { get; set; }

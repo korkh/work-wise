@@ -28,7 +28,6 @@ export const initAuthData = createAsyncThunk<User, void, ThunkConfig<string>>(
 			}
 			const user = await dispatch(getCurrentUserQuery(decodedToken)).unwrap();
 			dispatch(userActions.setAuthData(user));
-			console.log("REFRESH TOKEN INITED IN initUserData.ts");
 			startRefreshTokenTimer(dispatch, decodedToken);
 			return user;
 		} catch (error) {

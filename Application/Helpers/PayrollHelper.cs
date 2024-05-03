@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domain;
+using Application.Payrolls;
 using Microsoft.EntityFrameworkCore;
 using Storage;
 
@@ -20,8 +16,8 @@ namespace Application.Helpers
             return await context.Payrolls.AnyAsync(
                 p =>
                     p.EmployeeId == payroll.EmployeeId
-                    && p.Employee.FirstName == payroll.EmployeeFirstName
-                    && p.Employee.LastName == payroll.EmployeeLastName
+                    && p.Employee.FirstName == payroll.Employee.FirstName
+                    && p.Employee.LastName == payroll.Employee.LastName
                     && p.Year == payroll.Year
                     && p.Month == payroll.Month
                     && p.WorkingDays == payroll.WorkingDays

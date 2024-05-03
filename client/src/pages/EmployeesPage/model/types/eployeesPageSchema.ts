@@ -1,4 +1,6 @@
 import { Employee, EmployeeSortField } from "@/entities/Employee";
+import { EmployeeView } from "../../../../entities/Employee/model/consts/employee_consts";
+
 import { SortOrder } from "@/shared/types/sort";
 import { EntityState } from "@reduxjs/toolkit";
 
@@ -12,6 +14,7 @@ export interface EmployeePageSchema extends EntityState<Employee, string> {
 	hasMore: boolean;
 
 	//filters
+	view: EmployeeView;
 	order: SortOrder;
 	sort: EmployeeSortField;
 	search: string;

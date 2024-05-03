@@ -5,11 +5,6 @@
   display: flex;
   align-items: center;
 
-  .bufferLeft svg,
-  .bufferRight svg {
-    color: var(--hint);
-  }
-
   &:hover {
     color: var(--accent);
 
@@ -47,24 +42,36 @@
   background: none;
   border-radius: 34px;
 
-  &:hover {
-    border: 2px solid var(--accent);
-  }
-
   &.normal {
     border: 2px solid var(--icon);
+
+    &:hover {
+      border: 2px solid var(--accent);
+    }
   }
 
   &.error {
     border: 2px solid var(--cancel);
+
+    &:hover {
+      border: 2px solid var(--accent);
+    }
   }
 
   &.success {
     border: 2px solid var(--save);
+
+    &:hover {
+      border: 2px solid var(--accent);
+    }
   }
 
   &.info {
     border: 2px solid var(--info);
+
+    &:hover {
+      border: 2px solid var(--accent);
+    }
   }
 }
 

@@ -8,6 +8,8 @@ import {
 import { EntityAdapterOptions } from "@reduxjs/toolkit/dist/entities/models";
 import { EmployeePageSchema } from "../types/eployeesPageSchema";
 import { SortOrder } from "@/shared/types/sort";
+import { EmployeeView } from "../../../../entities/Employee/model/consts/employee_consts";
+import { EMPLOYEE_VIEW_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 import { fetchEmployeesList } from "../services/fetchEmployeesList/fetchEmployeesList";
 
 const adapterOptions: EntityAdapterOptions<Employee, string> = {
@@ -24,8 +26,11 @@ const initialState: EmployeePageSchema = {
 	...employeesAdapter.getInitialState(),
 	isLoading: false,
 	error: undefined,
+	ids: [],
+	entities: {},
 	pageNumber: 1,
-	pageSize: 10,
+	pageSize: 8,
+	view: EmployeeView.GRID,
 	hasMore: true,
 	order: "asc",
 	sort: EmployeeSortField.LASTNAME,
@@ -37,6 +42,10 @@ const employeesPageSlice = createSlice({
 	name: "pages/employeesPageSlice",
 	initialState,
 	reducers: {
+		setView: (state, action: PayloadAction<EmployeeView>) => {
+			state.view = action.payload;
+			localStorage.setItem(EMPLOYEE_VIEW_LOCALSTORAGE_KEY, action.payload);
+		},
 		setPage: (state, action: PayloadAction<number>) => {
 			state.pageNumber = action.payload;
 		},
@@ -50,7 +59,10 @@ const employeesPageSlice = createSlice({
 			state.search = action.payload;
 		},
 		initState: (state) => {
-			state.pageSize = 10;
+			const view = localStorage.getItem(
+				EMPLOYEE_VIEW_LOCALSTORAGE_KEY
+			) as EmployeeView;
+			state.pageSize = view === EmployeeView.LIST ? 4 : 8;
 			state._inited = true;
 		},
 	},
