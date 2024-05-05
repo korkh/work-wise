@@ -2,10 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { initAuthData } from "../services/initAuthData";
 import { User, UserSchema } from "../types/User";
-import {
-	TOKEN_LOCALSTORAGE_KEY,
-	USER_LOCALSTORAGE_KEY,
-} from "@/shared/consts/localStorage";
+import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 import { safeJSONParse } from "@/shared/lib/utils/safeParse/safeParse";
 
 const initialState: UserSchema = {
@@ -42,13 +39,8 @@ export const userSlice = createSlice({
 				...payload,
 				id: nameId,
 				email: email,
-				roles: typeof roles === "string" ? [roles] : roles,
+				roles: Array.isArray(roles) ? roles : [roles],
 			};
-
-			localStorage.setItem(
-				USER_LOCALSTORAGE_KEY,
-				JSON.stringify(state.authData)
-			);
 			localStorage.setItem(
 				TOKEN_LOCALSTORAGE_KEY,
 				JSON.stringify(state.authData.token)
@@ -56,7 +48,6 @@ export const userSlice = createSlice({
 		},
 		signOut: (state) => {
 			state.authData = null;
-			localStorage.removeItem(USER_LOCALSTORAGE_KEY);
 			localStorage.removeItem(TOKEN_LOCALSTORAGE_KEY);
 		},
 	},

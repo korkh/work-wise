@@ -2,10 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { SignInSchema } from "../..";
 import { signInUser } from "../services/signIn/signInUser";
 import { User } from "@/entities/User";
-import {
-	TOKEN_LOCALSTORAGE_KEY,
-	USER_LOCALSTORAGE_KEY,
-} from "@/shared/consts/localStorage";
+import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 import { safeJSONParse } from "@/shared/lib/utils/safeParse/safeParse";
 
 const initialState: SignInSchema = {
@@ -64,10 +61,6 @@ export const signInSlice = createSlice({
 						email: email,
 						roles: typeof roles === "string" ? [roles] : roles,
 					};
-					localStorage.setItem(
-						USER_LOCALSTORAGE_KEY,
-						JSON.stringify(state.user)
-					);
 					localStorage.setItem(
 						TOKEN_LOCALSTORAGE_KEY,
 						JSON.stringify(state.user.token)

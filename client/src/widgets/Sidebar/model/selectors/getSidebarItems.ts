@@ -1,5 +1,3 @@
-import { getUserAuthData } from "@/entities/User";
-import { useSelector } from "react-redux";
 import { SidebarItemType } from "../types/sidebar_types";
 import {
 	getRouteAbout,
@@ -15,9 +13,12 @@ import ProfilePage from "@/shared/assets/icons/profile-page-icon.svg?react";
 import Payrolls from "@/shared/assets/icons/payroll.svg?react";
 import Employees from "@/shared/assets/icons/employees.svg?react";
 import Documents from "@/shared/assets/icons/documents.svg?react";
+import { useAuthToken } from "@/shared/lib/hooks/useAuthToken/useAuthToken";
 
 export const useSidebarItems = () => {
-	const userData = useSelector(getUserAuthData);
+	const userData = useAuthToken();
+	console.log(userData?.nameid);
+
 	const sidebarItemsList: SidebarItemType[] = [
 		{
 			path: getRouteMain(),
@@ -31,10 +32,10 @@ export const useSidebarItems = () => {
 		},
 	];
 
-	if (userData && userData.roles?.includes("Accountant")) {
+	if (userData && userData.role?.includes("Accountant")) {
 		sidebarItemsList.push(
 			{
-				path: getRouteProfile(userData.id),
+				path: getRouteProfile(userData.nameid),
 				Icon: ProfilePage,
 				text: "Profile page",
 				authOnly: true,
@@ -54,10 +55,10 @@ export const useSidebarItems = () => {
 		);
 	}
 
-	if (userData && userData.roles?.includes("Admin")) {
+	if (userData && userData.role?.includes("Admin")) {
 		sidebarItemsList.push(
 			{
-				path: getRouteProfile(userData.id),
+				path: getRouteProfile(userData.nameid),
 				Icon: ProfilePage,
 				text: "Profile",
 				authOnly: true,

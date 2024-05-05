@@ -41,7 +41,6 @@ export function startRefreshTokenTimer(dispatch: AppDispatch, token: string) {
 			}
 		}, timeout);
 	}
-	console.log({ refreshTokenTimeOut: refreshTokenTimeout });
 }
 
 export function stopRefreshTokenTimer() {

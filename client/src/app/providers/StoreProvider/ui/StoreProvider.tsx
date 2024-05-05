@@ -21,5 +21,3 @@ export function StoreProvider(props: StoreProviderProps) {
 
 	return <Provider store={store}>{children}</Provider>;
 }
-
-// using "as" not good practice but in some configuration files it can be nessesarry
