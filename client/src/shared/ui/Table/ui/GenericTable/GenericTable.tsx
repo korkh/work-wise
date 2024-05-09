@@ -1,53 +1,49 @@
+import { useEffect, useState } from "react";
 import cls from "./GenericTable.module.scss";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { TextHolder } from "../../../TextHolder";
 import { Column } from "@/shared/types/ui_components";
 import { TableCellRenderer } from "../TableCellRenderer/TableCellRenderer";
 import { AppLink } from "../../../../../shared/ui/AppLink";
-import { getRouteEmployeeDetails } from "@/shared/consts/routerConsts";
 import { Input } from "../../../../../shared/ui/Input";
-import { EmployeeSortField } from "../../../../../entities/Employee";
 import SearchIcon from "../../../../assets/icons/search.svg?react";
 import { Glyph } from "../../../../../shared/ui/Glyph";
-import { useEffect, useState } from "react";
 import { SortOrder } from "@/shared/types/sort";
 
 interface Identifiable {
-	id?: string;
+	id?: string | number;
 }
 
-interface TableProps<T extends Identifiable> {
+interface TableProps<T extends Identifiable, _U> {
 	columns: Column<T>[];
 	data: T[];
 	className?: string;
 	title?: string;
+	redirect: (id: string) => string;
 }
 
-export function GenericTable<T extends Identifiable>({
+export function GenericTable<T extends Identifiable, U>({
 	className,
 	columns,
 	data,
 	title,
-}: TableProps<T>) {
+	redirect,
+}: TableProps<T, U>) {
 	const [filteredData, setFilteredData] = useState(data);
 	const [search, setSearch] = useState("");
-	const [sortField, setSortField] = useState<string | null>(null);
+	const [sortField, setSortField] = useState<keyof U | null>(null);
 	const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 
 	useEffect(() => {
 		let filtered = data;
-
-		// Filtering
 		if (search) {
-			filtered = filtered.filter((item) => {
-				return columns.some((column) => {
+			filtered = filtered.filter((item) =>
+				columns.some((column) => {
 					const value = item[column.key as keyof T];
 					return String(value).toLowerCase().includes(search.toLowerCase());
-				});
-			});
+				})
+			);
 		}
-
-		// Sorting
 		if (sortField) {
 			filtered.sort((a, b) => {
 				const aValue = a[sortField as keyof T];
@@ -59,15 +55,12 @@ export function GenericTable<T extends Identifiable>({
 				}
 			});
 		}
-
 		setFilteredData(filtered);
 	}, [data, search, sortField, sortOrder, columns]);
 
 	const handleSearchChange = (value: string) => {
 		setSearch(value);
 	};
-
-	console.log(filteredData);
 
 	return (
 		<table className={classNames(cls.genericTable, [className], {})}>
@@ -85,14 +78,13 @@ export function GenericTable<T extends Identifiable>({
 				<tr>
 					{columns.map((column) => (
 						<th
-							className="th-cell"
 							key={String(column.key)}
 							onClick={() => {
 								const newOrder =
 									sortField === column.key && sortOrder === "asc"
 										? "desc"
 										: "asc";
-								setSortField(column.key as EmployeeSortField);
+								setSortField(column.key as keyof U);
 								setSortOrder(newOrder);
 							}}
 						>
@@ -113,7 +105,7 @@ export function GenericTable<T extends Identifiable>({
 						{columns.map((column) => (
 							<td key={`${index}-${String(column.key)}`}>
 								{row.id && (
-									<AppLink to={getRouteEmployeeDetails(row.id)}>
+									<AppLink to={redirect(String(row.id))}>
 										{column.key === "id"
 											? index + 1
 											: TableCellRenderer(row, column)}

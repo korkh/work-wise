@@ -63,6 +63,7 @@ const SignInForm = memo(function SignInForm({
 		const result = await dispatch(signInUser({ email, password }));
 		if (result.meta.requestStatus === "fulfilled") {
 			onSuccess();
+			window.location.reload();
 			navigate(getRouteMain());
 		}
 	}, [dispatch, email, password, onSuccess, navigate]);

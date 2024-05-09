@@ -10,9 +10,9 @@ import { AxiosInstance } from "axios";
 import { CombinedState } from "../types/stateTypes";
 import { UISchema } from "@/features/UI";
 import { SignInSchema } from "@/features/LoginAuth";
-import { EmployeePageSchema } from "@/pages/EmployeesPage";
+import { EmployeePageSchema } from "@/pages/EmployeesData/EmployeesPage";
 import { EmployeeDetailsSchema } from "@/entities/Employee";
-import { AddressSchema } from "@/features/AddressForm";
+import { DocumentPageSchema } from "@/pages/DocumentsData/DocumentsPage";
 
 export interface StateSchema {
 	user: UserSchema;
@@ -21,9 +21,9 @@ export interface StateSchema {
 
 	//Async reducers
 	signInForm: SignInSchema;
-	addressForm: AddressSchema;
 	employeeDetails: EmployeeDetailsSchema;
 	employeePage: EmployeePageSchema;
+	documentPage: DocumentPageSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

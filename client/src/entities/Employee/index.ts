@@ -12,7 +12,7 @@ export {
 import { Employee } from "./model/types/Employee";
 export { EmployeeDetails } from "./ui/EmployeeDetails/EmployeeDetails";
 export { getEmployeeDetailsData } from "./model/selectors/employeeDetails";
-export { EmployeeList } from "./ui/EmployeeList/EmployeeList";
+export { EmployeeList } from "../../pages/EmployeesData/EmployeeList/EmployeeList";
 
 export type {
 	Employee,

@@ -4,8 +4,10 @@ import { Contract } from "./Contract";
 import { TransportInfo } from "./TransportInfo";
 import { EmployeeDocument } from "../../../../entities/Document/model/types/EmployeeDocument";
 
+export type EmployeeId = string | number;
+
 export interface Employee {
-	id?: string;
+	id: EmployeeId;
 	rowVersion?: Uint8Array;
 	avatar?: string;
 	firstName?: string;

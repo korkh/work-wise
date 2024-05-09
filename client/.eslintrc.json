@@ -103,7 +103,7 @@
 				"ignoreComments": true,
 				"ignoreUrls": true,
 				"ignorePattern": "^(\\s*import\\s.+\\sfrom\\s.+;|\\s*export\\s\\{.+\\}\\sfrom\\s.+;|\\s*export\\s(?:function\\s\\w+\\(.+\\)\\s*|.+\\sfrom\\s.+;)\\s*)$",
-				"code": 100
+				"code": 120
 			}
 		],
 		"react-hooks/rules-of-hooks": "error", // checks rules for hooks

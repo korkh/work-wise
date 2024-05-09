@@ -50,7 +50,7 @@ export const getRouteAccountant = () => "/accountant";
 export const getRouteSettings = () => "/settings";
 export const getRouteForbidden = () => "/forbidden";
 export const getRouteError = () => "/error";
-export const getRouteNotFound = () => "/not_found";
+export const getRouteNotFound = () => "*";
 
 export const AppRouteByPathPattern: Record<string, AppRoutes> = {
 	[getRouteMain()]: AppRoutes.MAIN,
