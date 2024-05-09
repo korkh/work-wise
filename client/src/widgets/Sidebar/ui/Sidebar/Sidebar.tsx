@@ -36,7 +36,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
 				[cls.collapsed]: collapsed,
 			})}
 		>
-			<AppLogo size={collapsed ? 30 : 50} className={cls.appLogo} />
+			<AppLogo size={collapsed ? 40 : 150} className={cls.appLogo} />
 			<ColumnStack role="navigation" gap="16" className={cls.items}>
 				{itemsList}
 			</ColumnStack>

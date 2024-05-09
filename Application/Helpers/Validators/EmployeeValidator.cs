@@ -33,7 +33,7 @@ namespace Application.Validations
                 .Matches(@"^\+?[1-9]\d{1,14}$")
                 .WithMessage("Phone number must be in valid international format.");
 
-            RuleFor(x => x.BirthDate)
+            RuleFor(x => x.BirthDay)
                 .NotEmpty()
                 .WithMessage("Birth date is required.")
                 .LessThan(DateTime.Now.AddYears(-18))

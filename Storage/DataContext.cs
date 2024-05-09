@@ -84,9 +84,9 @@ namespace Storage
                     }
                 );
             });
-            builder.Entity<Document>().Property(d => d.RowVersion).IsRowVersion();
-            builder.Entity<Employee>().Property(d => d.RowVersion).IsRowVersion();
-            builder.Entity<Payroll>().Property(d => d.RowVersion).IsRowVersion();
+            // builder.Entity<Document>().Property(d => d.RowVersion).IsRowVersion();
+            // builder.Entity<Employee>().Property(d => d.RowVersion).IsRowVersion();
+            // builder.Entity<Payroll>().Property(d => d.RowVersion).IsRowVersion();
         }
     }
 }

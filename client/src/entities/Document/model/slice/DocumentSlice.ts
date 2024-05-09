@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Document, DocumentSchema } from "../types/Document";
+import { createSlice } from "@reduxjs/toolkit";
+import { DocumentSchema } from "../types/Document";
 
 const initialState: DocumentSchema = {
   
@@ -11,7 +11,7 @@ export const documentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase()      
+      .addCase();      
   },
 });
 

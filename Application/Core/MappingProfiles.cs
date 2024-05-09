@@ -19,7 +19,9 @@ namespace Application.Core
                     o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url)
                 );
 
-            CreateMap<Employee, EmployeeDto>().ReverseMap();
+            CreateMap<Employee, EmployeeDto>()
+                .ForMember(dest => dest.RegistrationAddress, opt => opt.MapFrom(src => src.RegistrationAddress))
+                .ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
             CreateMap<TransportInfoDto, TransportInfo>().ReverseMap();
             CreateMap<CarDto, Car>().ReverseMap();

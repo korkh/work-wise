@@ -8,6 +8,18 @@
   width: 100%;
 }
 
+.s {
+  height: 32px;
+}
+
+.m {
+  height: 38px;
+}
+
+.l {
+  height: 44px;
+}
+
 .bufferLeft,
 .bufferRight {
   display: flex;
@@ -19,6 +31,7 @@
 
 .focused {
   border: 2px solid var(--accent);
+  caret-color: auto;
 
   .bufferLeft svg,
   .bufferRight svg {
@@ -32,6 +45,7 @@
   width: 100%;
   color: var(--text);
   background: none;
+  font: var(--font-sm);
 
   &::placeholder {
     color: var(--hint);
@@ -40,4 +54,5 @@
 
 .readonly {
   opacity: 0.7;
+  caret-color: transparent;
 }

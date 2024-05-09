@@ -48,6 +48,16 @@
   }
 }
 
+.size_sm {
+  .title {
+    font: var(--font-l);
+  }
+
+  .text {
+    font: var(--font-sm);
+  }
+}
+
 .size_m {
   .title {
     font: var(--font-l);

@@ -14,7 +14,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}")] //     api/employees/asdasdasdd
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployee(Guid id)
         {
             return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
@@ -44,7 +44,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id })); //{Id = id} - object initializer
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }

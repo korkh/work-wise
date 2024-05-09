@@ -1,3 +1,1 @@
-export { DocumentAsync as Document } from "./ui/Document/Document.async";
-
-export { documentActions, documentReducer } from "./model/slice/documentSlice";
+export type { EmployeeDocument } from "./model/types/EmployeeDocument";

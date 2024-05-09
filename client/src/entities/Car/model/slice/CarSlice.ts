@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Car, CarSchema } from "../types/Car";
+import { createSlice } from "@reduxjs/toolkit";
+import { CarSchema } from "../types/Car";
 
 const initialState: CarSchema = {
   
@@ -11,7 +11,7 @@ export const carSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase()      
+      .addCase();      
   },
 });
 

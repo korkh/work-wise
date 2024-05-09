@@ -1,8 +1,8 @@
-import { Car } from "@/entities/Car";
+import { Car } from "../../../../entities/Car/model/types/Car";
 
 export interface TransportInfo {
 	drivingLicenseNumber: string;
-	e100CardNumber: string;
+	e_100_CardNumber: string;
 	cars: Car[];
-	expectedKmPerDay: number;
+	expectedKmPerDay: string;
 }

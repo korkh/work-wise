@@ -11,7 +11,7 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240502191524_InitialCreate")]
+    [Migration("20240509073432_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,11 +35,6 @@ namespace Storage.Migrations
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
-
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
@@ -56,7 +51,7 @@ namespace Storage.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime>("BirthDay")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -76,11 +71,6 @@ namespace Storage.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
 
                     b.HasKey("Id");
 
@@ -164,11 +154,6 @@ namespace Storage.Migrations
 
                     b.Property<decimal>("PriedasUzPoilsioIrSventines")
                         .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
 
                     b.Property<decimal>("SodraIsViso")
                         .HasColumnType("TEXT");
@@ -493,9 +478,6 @@ namespace Storage.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Country")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<Guid>("Id")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Zip")

@@ -72,7 +72,7 @@ namespace Storage
                     {
                         FirstName = "Ahad",
                         LastName = "Hamidov",
-                        BirthDate = new DateTime(1990, 1, 15),
+                        BirthDay = new DateTime(1990, 1, 15),
                         RegistrationAddress = new Address
                         {
                             Address1 = "123 Future St",
@@ -216,7 +216,7 @@ namespace Storage
                     {
                         FirstName = "Bjørn",
                         LastName = "Peterson",
-                        BirthDate = new DateTime(1995, 1, 15),
+                        BirthDay = new DateTime(1995, 1, 15),
                         RegistrationAddress = new Address
                         {
                             Address1 = "222 Main St",
@@ -360,7 +360,7 @@ namespace Storage
                     {
                         FirstName = "Peter",
                         LastName = "Smith",
-                        BirthDate = new DateTime(1985, 5, 20),
+                        BirthDay = new DateTime(1985, 5, 20),
                         RegistrationAddress = new Address
                         {
                             Address1 = "456 Elmith St",
@@ -485,7 +485,7 @@ namespace Storage
                     {
                         FirstName = "Bob",
                         LastName = "Johnson",
-                        BirthDate = new DateTime(1978, 10, 10),
+                        BirthDay = new DateTime(1978, 10, 10),
                         RegistrationAddress = new Address
                         {
                             Address1 = "454 Palm St",

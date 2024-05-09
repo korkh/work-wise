@@ -3,7 +3,6 @@ import { classNames, Mods } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Avatar.module.scss";
 
 import UserIcon from "../../assets/icons/user-blank.svg?react";
-
 import { Skeleton } from "../Skeleton";
 import { Glyph } from "../Glyph";
 import { AppImage } from "../AppImage";

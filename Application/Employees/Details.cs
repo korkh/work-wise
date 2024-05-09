@@ -23,25 +23,33 @@ namespace Application.Employees
 
             public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
-                this._userAccessor = userAccessor;
-                this._mapper = mapper;
+                _userAccessor = userAccessor;
+                _mapper = mapper;
                 _context = context;
             }
 
-            public async Task<Result<EmployeeDto>> Handle(
-                Query request,
-                CancellationToken cancellationToken
-            )
+            public async Task<Result<EmployeeDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var training = await _context
-                    .Employees.ProjectTo<EmployeeDto>(
-                        _mapper.ConfigurationProvider,
-                        new { currentUsername = _userAccessor.GetUserName() }
-                    )
-                    .FirstOrDefaultAsync(x => x.Id == request.Id);
+                try
+                {
+                    var employee = await _context.Employees
+                        .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUserName() })
+                        .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                return Result<EmployeeDto>.Success(training);
+                    if (employee == null)
+                    {
+                        return Result<EmployeeDto>.Failure("Employee not found.");
+                    }
+
+                    return Result<EmployeeDto>.Success(employee);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("PAYROLL OBJECT AFTER EDITING:", ex);
+                    return Result<EmployeeDto>.Failure("Failed to fetch employee data.");
+                }
             }
+
         }
     }
 }

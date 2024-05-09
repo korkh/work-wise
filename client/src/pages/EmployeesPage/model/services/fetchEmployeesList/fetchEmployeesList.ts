@@ -56,7 +56,7 @@ export const fetchEmployeesList = createAsyncThunk<
 		if (!response.data) {
 			throw new Error();
 		}
-		console.log("FETCH EMPLOYEE LIST", response.data);
+
 		return response.data;
 	} catch (e) {
 		return rejectWithValue("No response from server");

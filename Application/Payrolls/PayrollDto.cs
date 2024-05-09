@@ -7,8 +7,6 @@ namespace Application.Payrolls
     {
         [Key]
         public Guid Id { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
         public Employee Employee { get; set; }
         public Guid EmployeeId { get; set; }
         [Required(ErrorMessage = "Year is required")]

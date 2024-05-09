@@ -11,6 +11,8 @@ import { CombinedState } from "../types/stateTypes";
 import { UISchema } from "@/features/UI";
 import { SignInSchema } from "@/features/LoginAuth";
 import { EmployeePageSchema } from "@/pages/EmployeesPage";
+import { EmployeeDetailsSchema } from "@/entities/Employee";
+import { AddressSchema } from "@/features/AddressForm";
 
 export interface StateSchema {
 	user: UserSchema;
@@ -19,6 +21,8 @@ export interface StateSchema {
 
 	//Async reducers
 	signInForm: SignInSchema;
+	addressForm: AddressSchema;
+	employeeDetails: EmployeeDetailsSchema;
 	employeePage: EmployeePageSchema;
 }
 

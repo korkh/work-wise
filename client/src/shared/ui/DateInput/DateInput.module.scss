@@ -1,0 +1,45 @@
+// DateInput.module.scss
+
+.dateInput {
+  display: flex;
+  flex-direction: column; // Align children (label and input) in a column
+  align-items: start; // Align items to the start of the container
+  border-radius: 48px;
+  padding: 8px 16px;
+  border: 2px solid var(--icon);
+  width: 100%;
+
+  .label {
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .input {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: var(--text);
+    background: none;
+
+    &::placeholder {
+      color: var(--hint);
+    }
+  }
+
+  &.focused .input {
+    border: 2px solid var(--accent);
+    caret-color: auto;
+
+    svg {
+      color: var(--accent);
+    }
+  }
+
+  &.readonly {
+    opacity: 0.7;
+
+    .input {
+      pointer-events: none;
+    }
+  }
+}

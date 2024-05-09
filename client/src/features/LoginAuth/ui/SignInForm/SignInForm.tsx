@@ -22,6 +22,7 @@ import {
 import { signInUser } from "../../model/services/signIn/signInUser";
 import { signInActions, signInReducer } from "../../model/slices/signInSlice";
 import { getRouteMain } from "@/shared/consts/routerConsts";
+import { useNavigate } from "react-router-dom";
 
 export interface SignInFormProps {
 	className?: string;
@@ -38,6 +39,7 @@ const SignInForm = memo(function SignInForm({
 }: SignInFormProps) {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const email = useSelector(getSignInEmail);
 	const password = useSelector(getSignInPassword);
 	const isLoading = useSelector(getSignInLoading);
@@ -61,9 +63,9 @@ const SignInForm = memo(function SignInForm({
 		const result = await dispatch(signInUser({ email, password }));
 		if (result.meta.requestStatus === "fulfilled") {
 			onSuccess();
-			getRouteMain();
+			navigate(getRouteMain());
 		}
-	}, [dispatch, email, password, onSuccess]);
+	}, [dispatch, email, password, onSuccess, navigate]);
 
 	return (
 		<DynamicReducerLoader removeAfterUnmount reducers={initialReducers}>

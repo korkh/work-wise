@@ -6,6 +6,9 @@ namespace Application.Employees
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Birthday { get; set; }
+        public string Position { get; set; }
+        public string RegistratioAddress { get; set; }
         public bool IsAvailable { get; set; }
         public bool IsFired { get; set; }
         public bool HasDocumentExpiringInTwoMonths { get; set; }

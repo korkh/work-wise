@@ -10,6 +10,7 @@ import { classNames, Mods } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Input.module.scss";
 import { TextHolder } from "../TextHolder";
 import { RowStack } from "../Stack";
+import { FlexGapProps, FlexJustifyProps } from "../Stack/Flex/Flex";
 
 type HTMLInputProps = Omit<
 	InputHTMLAttributes<HTMLInputElement>,
@@ -28,6 +29,9 @@ interface InputProps extends HTMLInputProps {
 	bufferLeft?: ReactNode;
 	bufferRight?: ReactNode;
 	size?: InputSize;
+	gap?: FlexGapProps;
+	width?: string;
+	justify?: FlexJustifyProps;
 }
 
 export const Input = memo(function Input(props: InputProps) {
@@ -43,8 +47,12 @@ export const Input = memo(function Input(props: InputProps) {
 		bufferRight,
 		label,
 		size = "m",
+		gap = "8",
+		width,
+		justify,
 		...otherProps
 	} = props;
+
 	const ref = useRef<HTMLInputElement>(null);
 	const [isFocused, setIsFocused] = useState(false);
 
@@ -73,8 +81,13 @@ export const Input = memo(function Input(props: InputProps) {
 		[cls.withBuffer]: Boolean(bufferLeft) || Boolean(bufferRight),
 	};
 
+	const dynamicStyle = width ? { width } : {};
+
 	const input = (
-		<div className={classNames(cls.inputWrapper, [className, cls[size]], mods)}>
+		<div
+			className={classNames(cls.inputWrapper, [className, cls[size]], mods)}
+			style={dynamicStyle}
+		>
 			<div className={cls.bufferLeft}>{bufferLeft}</div>
 			<input
 				ref={ref}
@@ -94,7 +107,7 @@ export const Input = memo(function Input(props: InputProps) {
 
 	if (label) {
 		return (
-			<RowStack max gap="8">
+			<RowStack max gap={gap} justify={justify}>
 				<TextHolder text={label} />
 				{input}
 			</RowStack>

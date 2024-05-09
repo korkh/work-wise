@@ -1,6 +1,6 @@
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Dropdown.module.scss";
-import { ReactNode, memo, useState } from "react";
+import { ReactNode, memo, useEffect, useRef, useState } from "react";
 import { DropdownDirection } from "@/shared/types/ui_components";
 import { mapDirectionClass } from "../../styles/popup_consts";
 import popupCls from "../../styles/popup.module.scss";
@@ -24,6 +24,7 @@ interface DropdownProps {
 export const Dropdown = memo(function Dropdown(props: DropdownProps) {
 	const { className, trigger, items, direction = "bottom right" } = props;
 	const [isOpen, setIsOpen] = useState(false);
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const menuClasses = [mapDirectionClass[direction], popupCls.menu];
 
@@ -31,8 +32,27 @@ export const Dropdown = memo(function Dropdown(props: DropdownProps) {
 		setIsOpen((prevState) => !prevState);
 	};
 
+	const handleClickOutside = (event: MouseEvent) => {
+		if (
+			dropdownRef.current &&
+			!dropdownRef.current.contains(event.target as Node)
+		) {
+			setIsOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+
 	return (
-		<div className={classNames(cls.dropdown, [className, popupCls.popup], {})}>
+		<div
+			className={classNames(cls.dropdown, [className, popupCls.popup], {})}
+			ref={dropdownRef}
+		>
 			<Button onClick={toggleDropdown} className={cls.trigger}>
 				{trigger}
 			</Button>

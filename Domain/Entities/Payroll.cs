@@ -3,7 +3,6 @@ namespace Domain.Entities
     public class Payroll
     {
         public Guid Id { get; set; }
-        public byte[] RowVersion { get; set; }
         public Employee Employee { get; set; }
         public Guid EmployeeId { get; set; }
         public int Year { get; set; }

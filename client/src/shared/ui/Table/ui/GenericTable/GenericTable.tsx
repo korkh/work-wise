@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { SortOrder } from "@/shared/types/sort";
 
 interface Identifiable {
-	id: string;
+	id?: string;
 }
 
 interface TableProps<T extends Identifiable> {
@@ -63,6 +63,12 @@ export function GenericTable<T extends Identifiable>({
 		setFilteredData(filtered);
 	}, [data, search, sortField, sortOrder, columns]);
 
+	const handleSearchChange = (value: string) => {
+		setSearch(value);
+	};
+
+	console.log(filteredData);
+
 	return (
 		<table className={classNames(cls.genericTable, [className], {})}>
 			<caption>
@@ -71,7 +77,7 @@ export function GenericTable<T extends Identifiable>({
 					className={classNames(cls.searchInput, [], {})}
 					placeholder="Search..."
 					value={search}
-					onChange={setSearch}
+					onChange={handleSearchChange}
 					bufferLeft={<Glyph SvgImage={SearchIcon} />}
 				/>
 			</caption>
@@ -79,6 +85,7 @@ export function GenericTable<T extends Identifiable>({
 				<tr>
 					{columns.map((column) => (
 						<th
+							className="th-cell"
 							key={String(column.key)}
 							onClick={() => {
 								const newOrder =
@@ -105,11 +112,13 @@ export function GenericTable<T extends Identifiable>({
 					<tr key={index}>
 						{columns.map((column) => (
 							<td key={`${index}-${String(column.key)}`}>
-								<AppLink to={getRouteEmployeeDetails(row.id)}>
-									{column.key === "id"
-										? index + 1
-										: TableCellRenderer(row, column)}
-								</AppLink>
+								{row.id && (
+									<AppLink to={getRouteEmployeeDetails(row.id)}>
+										{column.key === "id"
+											? index + 1
+											: TableCellRenderer(row, column)}
+									</AppLink>
+								)}
 							</td>
 						))}
 					</tr>

@@ -9,6 +9,7 @@ import { GenericTable } from "@/shared/ui/Table";
 import { Column } from "@/shared/types/ui_components";
 import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
 import { booleanToYesNo } from "@/shared/lib/utils/table/booleanConverter/booleanConverter";
+import { ExportToExcel } from "../../../../features/ExportToExcel";
 
 interface EmployeeListProps {
 	className?: string;
@@ -27,8 +28,8 @@ export const EmployeeList = memo(function EmployeeList(
 		{ key: "firstName", header: "First Name" },
 		{ key: "lastName", header: "Last Name" },
 		{
-			key: "birthDate",
-			header: "Birth Date",
+			key: "birthDay",
+			header: "Birthday",
 			render: (value) => formatDate(value as string),
 		},
 		{ key: "contractData", header: "Capacity", nestedKeys: ["position"] },
@@ -46,6 +47,10 @@ export const EmployeeList = memo(function EmployeeList(
 		},
 	];
 
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
 	if (!isLoading && !employees.length) {
 		return (
 			<div className={classNames(cls.employeeList, [className], {})}>
@@ -55,10 +60,17 @@ export const EmployeeList = memo(function EmployeeList(
 	}
 
 	return (
-		<GenericTable<Employee>
-			title="List of employees"
-			columns={tableColumns}
-			data={employees}
-		></GenericTable>
+		<>
+			<GenericTable<Employee>
+				title="List of employees"
+				columns={tableColumns}
+				data={employees}
+			></GenericTable>
+			<ExportToExcel
+				data={employees}
+				isLoading={isLoading}
+				fileName="Employees"
+			/>
+		</>
 	);
 });

@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Theme } from "app/providers/ThemeProvider";
-import StoreDecorator from "shared/config/storybook/StoreDecorator/StoreDecorator";
-import ThemeDecorator from "shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import Car from "./Car";
+import { Theme } from "@/shared/const/Theme";
+import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
+import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
+import {RegistrationAddress} from "./RegistrationAddress";
 
 const meta = {
-  title: "features/Car",
-  component: Car,
+  title: "shared/RegistrationAddress",
+  component: RegistrationAddress,
   parameters: {
     layout: "fullscreen",
   },
@@ -22,7 +22,7 @@ const meta = {
       </StoreDecorator>
     ),
   ],
-} satisfies Meta<typeof Car>;
+} satisfies Meta<typeof RegistrationAddress>;
 
 export default meta;
 

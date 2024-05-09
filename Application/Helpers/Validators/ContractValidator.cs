@@ -12,9 +12,7 @@ namespace Application.Validations
 
             RuleFor(x => x.ContractNumber)
                 .NotEmpty()
-                .WithMessage("Contract number cannot be empty.")
-                .Matches("^[A-Za-z0-9]+$")
-                .WithMessage("Contract number must be alphanumeric.");
+                .WithMessage("Contract number cannot be empty.");
 
             RuleFor(x => x.AcceptionDate)
                 .LessThan(x => x.DismissalDate)

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Application.Addresses;
 using Application.Contracts;
 using Application.Documents;
@@ -10,11 +9,9 @@ namespace Application.Employees
     public class EmployeeDto
     {
         public Guid Id { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime BirthDay { get; set; }
         public AddressDto RegistrationAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }

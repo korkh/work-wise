@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Payroll, PayrollSchema } from "../types/Payroll";
+import { createSlice } from "@reduxjs/toolkit";
+import { PayrollSchema } from "../types/Payroll";
 
 const initialState: PayrollSchema = {
   
@@ -11,7 +11,7 @@ export const payrollSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase()      
+      .addCase();      
   },
 });
 

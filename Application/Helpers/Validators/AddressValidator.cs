@@ -10,7 +10,6 @@ public class AddressValidator : AbstractValidator<AddressDto>
         RuleFor(x => x.Country).NotEmpty().WithMessage("Country is required.");
         RuleFor(x => x.Zip)
             .NotEmpty()
-            .Matches(@"^\d{5}(-\d{4})?$")
-            .WithMessage("Zip code is not valid.");
+            .WithMessage("Zip code is required.");
     }
 }

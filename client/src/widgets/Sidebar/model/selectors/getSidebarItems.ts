@@ -17,7 +17,6 @@ import { useAuthToken } from "@/shared/lib/hooks/useAuthToken/useAuthToken";
 
 export const useSidebarItems = () => {
 	const userData = useAuthToken();
-	console.log(userData?.nameid);
 
 	const sidebarItemsList: SidebarItemType[] = [
 		{

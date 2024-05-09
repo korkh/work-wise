@@ -3,6 +3,8 @@ using Application.Validations;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Storage;
 
 namespace Application.Employees
@@ -26,11 +28,13 @@ namespace Application.Employees
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
+            private readonly ILogger<Handler> _logger;
 
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(DataContext context, IMapper mapper, ILogger<Handler> logger)
             {
                 _mapper = mapper;
                 _context = context;
+                _logger = logger;
             }
 
             public async Task<Result<Unit>> Handle(
@@ -40,17 +44,31 @@ namespace Application.Employees
             {
                 var Employee = await _context.Employees.FindAsync(request.Employee.Id);
 
-                // Training.Title = request.Training.Title ?? Training.Title;
-                //instead of type each property we will use AutoMapper.Extension from NuGet to map all
-
                 _mapper.Map(request.Employee, Employee);
 
-                var result = await _context.SaveChangesAsync() > 0;
+                try
+                {
+                    var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result)
-                    return Result<Unit>.Failure("Failed to update Training");
+                    if (!result)
+                        return Result<Unit>.Failure("Failed to update Employee");
 
-                return Result<Unit>.Success(Unit.Value); //Notofocation to API that work has completed
+                    return Result<Unit>.Success(Unit.Value);
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    _logger.LogError(ex, "A concurrency update error occurred on employee edit.");
+                    return Result<Unit>.Failure(
+                        "A conflict occurred. Please reload the entity and try again."
+                    );
+                }
+                catch (DbUpdateException ex)
+                {
+                    _logger.LogError(ex, "Failed to update employee due to a database error.");
+                    return Result<Unit>.Failure(
+                        "Failed to update employee. Database error encountered."
+                    );
+                }
             }
         }
     }

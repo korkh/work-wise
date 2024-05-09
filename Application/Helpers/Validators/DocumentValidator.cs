@@ -18,29 +18,8 @@ namespace Application.Documents
                 .WithMessage("Issue date must be in the past.");
 
             RuleFor(document => document.ExpirationDate)
-                .GreaterThan(d => d.IssueDate)
+                .NotEmpty()
                 .WithMessage("Expiration date must be after the issue date.");
-
-            RuleFor(document => document.ExpirationDate)
-                .Must((doc, expirationDate) => expirationDate > DateTime.UtcNow.AddMonths(2))
-                .When(doc => doc.HasTwoMonthWarning)
-                .WithMessage(
-                    "Expiration date should be at least two months in the future when 'HasTwoMonthWarning' is true."
-                );
-
-            RuleFor(document => document.ExpirationDate)
-                .Must((doc, expirationDate) => expirationDate > DateTime.UtcNow.AddMonths(3))
-                .When(doc => doc.HasThreeMonthWarning)
-                .WithMessage(
-                    "Expiration date should be at least three months in the future when 'HasThreeMonthWarning' is true."
-                );
-
-            RuleFor(document => document.ExpirationDate)
-                .Must((doc, expirationDate) => expirationDate > DateTime.UtcNow.AddMonths(6))
-                .When(doc => doc.HasSixMonthWarning)
-                .WithMessage(
-                    "Expiration date should be at least six months in the future when 'HasSixMonthWarning' is true."
-                );
         }
     }
 }

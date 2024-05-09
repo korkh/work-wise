@@ -34,7 +34,7 @@ namespace Application.Validations
             RuleFor(x => x.FuelType)
                 .NotEmpty()
                 .WithMessage("Fuel type is required.")
-                .Must(x => x == "Petrol" || x == "Diesel" || x == "Electric" || x == "Hybrid")
+                .Must(x => x == "Petrol" || x == "Bensin" || x == "Diesel" || x == "Electric" || x == "Hybrid")
                 .WithMessage("Fuel type must be 'Petrol', 'Diesel', 'Electric', or 'Hybrid'.");
 
             RuleFor(x => x.CarPlateNumber)
