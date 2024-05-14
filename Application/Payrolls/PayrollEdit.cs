@@ -9,7 +9,7 @@ using Storage;
 
 namespace Application.Payrolls
 {
-    public class Edit
+    public class PayrollEdit
     {
         public class Command : IRequest<Result<Unit>>
         {

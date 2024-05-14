@@ -6,7 +6,7 @@ using Storage;
 
 namespace Application.Payrolls
 {
-    public class List
+    public class PayrollList
     {
         public class Query : IRequest<Result<PagedList<PayrollDto>>>
         {

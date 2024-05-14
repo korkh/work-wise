@@ -15,7 +15,7 @@ namespace Application.Helpers
         {
             return await context.Payrolls.AnyAsync(
                 p =>
-                    p.EmployeeId == payroll.EmployeeId
+                    p.Employee.Id == payroll.Employee.Id
                     && p.Employee.FirstName == payroll.Employee.FirstName
                     && p.Employee.LastName == payroll.Employee.LastName
                     && p.Year == payroll.Year

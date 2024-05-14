@@ -11,7 +11,7 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240509073432_InitialCreate")]
+    [Migration("20240514092620_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -457,11 +457,13 @@ namespace Storage.Migrations
 
             modelBuilder.Entity("Domain.Entities.Document", b =>
                 {
-                    b.HasOne("Domain.Entities.Employee", null)
+                    b.HasOne("Domain.Entities.Employee", "Employee")
                         .WithMany("Documents")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>

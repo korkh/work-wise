@@ -1,8 +1,6 @@
 using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain;
-using Domain.Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +9,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class Details
+    public class DocumentDetails
     {
         public class Query : IRequest<Result<DocumentDto>>
         {

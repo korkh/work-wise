@@ -2,10 +2,7 @@ import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./EmployeeList.module.scss";
 import { useTranslation } from "react-i18next";
 import { Employee } from "../../../entities/Employee/model/types/Employee";
-import {
-	EmployeeSortField,
-	EmployeeView,
-} from "../../../entities/Employee/model/consts/employee_consts";
+import { EmployeeSortField } from "../../../entities/Employee/model/consts/employee_consts";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { memo } from "react";
 import { GenericTable } from "@/shared/ui/Table";
@@ -19,7 +16,6 @@ interface EmployeeListProps {
 	className?: string;
 	employees: Employee[];
 	isLoading: boolean;
-	view?: EmployeeView;
 }
 export const EmployeeList = memo(function EmployeeList(
 	props: EmployeeListProps
@@ -70,12 +66,13 @@ export const EmployeeList = memo(function EmployeeList(
 				columns={tableColumns}
 				data={employees}
 				redirect={getRouteEmployeeDetails}
-			></GenericTable>
-			<ExportToExcel
-				data={employees}
-				isLoading={isLoading}
-				fileName="Employees"
-			/>
+			>
+				<ExportToExcel
+					data={employees}
+					isLoading={isLoading}
+					fileName="Employees"
+				/>
+			</GenericTable>
 		</>
 	);
 });

@@ -19,7 +19,7 @@ export const fetchDocumentsList = createAsyncThunk<
 	EmployeeDocument[],
 	FetchDocumentsListProps,
 	ThunkConfig<string>
->("employeesPage/fetchEmployeesLost", async (_, thunkApi) => {
+>("employeesPage/fetchDocumenstList", async (_, thunkApi) => {
 	const { extra, rejectWithValue, getState } = thunkApi;
 	const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
 	const pageSize = getDocumentsPageSize(getState());

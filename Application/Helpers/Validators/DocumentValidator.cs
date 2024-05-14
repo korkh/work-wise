@@ -7,6 +7,7 @@ namespace Application.Documents
     {
         public DocumentValidator()
         {
+            RuleFor(x => x.Employee.Id).NotEmpty().WithMessage("Employee ID is required.");
             RuleFor(document => document.Title)
                 .NotEmpty()
                 .WithMessage("Title is required.")

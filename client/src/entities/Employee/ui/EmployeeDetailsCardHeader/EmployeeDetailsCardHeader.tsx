@@ -11,6 +11,7 @@ import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch
 import { employeeDetailsActions } from "../../model/slices/employeeDetailsSlice";
 import { updateEmployeeData } from "../../model/services/updateEmployeeData/updateEmployeeData";
 import { Button } from "@/shared/ui/Button";
+import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
 
 interface EmployeeDetailsCardHeaderProps {
 	className?: string;
@@ -24,6 +25,7 @@ export const EmployeeDetailsCardHeader = memo(
 		const allowedToEdit = userData?.role.includes("Admin");
 		const readonly = useSelector(getEmployeeReadonly);
 		const dispatch = useAppDispatch();
+		const forceUpdate = useForceUpdate();
 
 		const onEdit = useCallback(() => {
 			dispatch(employeeDetailsActions.setReadonly(false));
@@ -35,7 +37,8 @@ export const EmployeeDetailsCardHeader = memo(
 
 		const onSave = useCallback(() => {
 			dispatch(updateEmployeeData());
-		}, [dispatch]);
+			forceUpdate();
+		}, [dispatch, forceUpdate]);
 
 		return (
 			<Section padding="24" max border="partial">

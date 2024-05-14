@@ -27,6 +27,11 @@ namespace Storage
                 .HasOne(p => p.Employee)
                 .WithMany(e => e.Payrolls)
                 .HasForeignKey(p => p.EmployeeId);
+            builder
+                .Entity<Document>()
+                .HasOne(p => p.Employee)
+                .WithMany(e => e.Documents)
+                .HasForeignKey(p => p.EmployeeId);
 
             builder
                 .Entity<Role>()

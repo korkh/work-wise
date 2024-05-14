@@ -1,19 +1,32 @@
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./PayrollsPage.module.scss";
-import { useTranslation } from "react-i18next";
 import { memo } from "react";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { useSearchParams } from "react-router-dom";
+import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
+import {
+	DynamicReducerLoader,
+	ReducersList,
+} from "@/shared/lib/DynamicReducerLoader/DynamicReducerLoader";
+import { payrollsPageReducer } from "../../model/slices/payrollPageSlice";
+import { initPayrollPage } from "../../model/services/initPayrollPage/initPayrollPage";
+import { PayroLLsPageBaseList } from "../PayrollsPageBaseList/PayrollsPageBaseList";
 
-interface PayrollsPageProps {
-	className?: string;
-}
+const reducers: ReducersList = {
+	payrollPage: payrollsPageReducer,
+};
 
-const PayrollsPage = (props: PayrollsPageProps) => {
-	const { className } = props;
-	const { t } = useTranslation();
+const PayrollsPage = () => {
+	const dispatch = useAppDispatch();
+	const [searchParams] = useSearchParams();
+
+	useInitEffect(() => {
+		dispatch(initPayrollPage(searchParams));
+	});
+
 	return (
-		<div className={classNames(cls.payrollsPage, [className], {})}>
-			{t("PayrollsPage")}
-		</div>
+		<DynamicReducerLoader reducers={reducers} removeAfterUnmount={false}>
+			<PayroLLsPageBaseList className={cls.list} />
+		</DynamicReducerLoader>
 	);
 };
 

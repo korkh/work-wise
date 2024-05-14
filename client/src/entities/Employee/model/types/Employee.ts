@@ -8,18 +8,17 @@ export type EmployeeId = string | number;
 
 export interface Employee {
 	id: EmployeeId;
-	rowVersion?: Uint8Array;
-	avatar?: string;
-	firstName?: string;
-	lastName?: string;
-	birthDay?: Date | null;
-	registrationAddress?: Address;
-	phoneNumber?: string;
-	email?: string;
-	isAvailable?: boolean;
-	isFired?: boolean;
-	transportInfo?: TransportInfo;
-	contractData?: Contract;
-	documents?: EmployeeDocument[];
+	avatar: string;
+	firstName: string;
+	lastName: string;
+	birthDay: Date | null;
+	registrationAddress: Address;
+	phoneNumber: string;
+	email: string;
+	isAvailable: boolean;
+	isFired: boolean;
+	transportInfo: TransportInfo;
+	contractData: Contract;
+	documents: EmployeeDocument[];
 	payrolls?: Payroll[];
 }

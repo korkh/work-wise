@@ -14,11 +14,8 @@ const adapterOptions: EntityAdapterOptions<EmployeeDocument, string> = {
 	selectId: (doc: EmployeeDocument) => doc.id,
 };
 
-const documentsAdapter = createEntityAdapter<EmployeeDocument>(adapterOptions);
-
-export const getDocuments = documentsAdapter.getSelectors<StateSchema>(
-	(state) => state.documentPage || documentsAdapter.getInitialState()
-);
+export const documentsAdapter =
+	createEntityAdapter<EmployeeDocument>(adapterOptions);
 
 const initialState: DocumentPageSchema = {
 	...documentsAdapter.getInitialState(),
@@ -27,13 +24,19 @@ const initialState: DocumentPageSchema = {
 	ids: [],
 	entities: {},
 	pageNumber: 1,
-	pageSize: 8,
+	pageSize: 10,
 	hasMore: true,
 	order: "asc",
 	sort: DocumentSortField.TITLE,
 	search: "",
 	_inited: false,
 };
+
+export const selectDocumentPageState = (state: StateSchema) =>
+	state.documentPage || initialState;
+
+export const { selectAll: selectAllDocuments, selectById: selectDocumentById } =
+	documentsAdapter.getSelectors(selectDocumentPageState);
 
 const documentsPageSlice = createSlice({
 	name: "pages/documentPageSlice",
@@ -52,7 +55,7 @@ const documentsPageSlice = createSlice({
 			state.search = action.payload;
 		},
 		initState: (state) => {
-			state.pageSize === 8;
+			state.pageSize = 8;
 			state._inited = true;
 		},
 	},
@@ -68,11 +71,13 @@ const documentsPageSlice = createSlice({
 			.addCase(fetchDocumentsList.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.hasMore = action.payload.length >= state.pageSize;
-
+				const documents = action.payload.filter(
+					(item: EmployeeDocument) => item.employeeId
+				);
 				if (action.meta.arg.replace) {
-					documentsAdapter.setAll(state, action.payload);
+					documentsAdapter.setAll(state, documents);
 				} else {
-					documentsAdapter.addMany(state, action.payload);
+					documentsAdapter.addMany(state, documents);
 				}
 			})
 			.addCase(fetchDocumentsList.rejected, (state, action) => {

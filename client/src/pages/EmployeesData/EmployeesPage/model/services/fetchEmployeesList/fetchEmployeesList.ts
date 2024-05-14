@@ -19,7 +19,7 @@ export const fetchEmployeesList = createAsyncThunk<
 	Employee[],
 	FetchEmployeesListProps,
 	ThunkConfig<string>
->("employeesPage/fetchEmployeesLost", async (_, thunkApi) => {
+>("employeesPage/fetchEmployeesList", async (_, thunkApi) => {
 	const { extra, rejectWithValue, getState } = thunkApi;
 	const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
 	const pageSize = getEmployeesPageSize(getState());
@@ -56,7 +56,6 @@ export const fetchEmployeesList = createAsyncThunk<
 		if (!response.data) {
 			throw new Error();
 		}
-
 		return response.data;
 	} catch (e) {
 		return rejectWithValue("No response from server");

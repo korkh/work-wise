@@ -1,8 +1,3 @@
-export enum EmployeeView {
-	LIST = "LIST",
-	GRID = "GRID",
-}
-
 export enum EmployeeSortField {
 	FIRSTNAME = "firstName",
 	LASTNAME = "lastName",

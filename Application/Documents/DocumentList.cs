@@ -1,7 +1,6 @@
 using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class List
+    public class DocumentList
     {
         public class Query : IRequest<Result<PagedList<DocumentDto>>>
         {
@@ -49,6 +48,11 @@ namespace Application.Documents
                 if (!string.IsNullOrEmpty(request.Params.Title))
                 {
                     query = query.Where(d => d.Title.Contains(request.Params.Title));
+                }
+
+                if (!string.IsNullOrEmpty(request.Params.Lastname))
+                {
+                    query = query.Where(d => d.Employee.LastName.Contains(request.Params.Lastname));
                 }
 
                 if (request.Params.HasDocumentExpiringInTwoMonths)

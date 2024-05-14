@@ -14,7 +14,7 @@ export function TableCellRenderer<T>(
 	}
 
 	// Handle nested properties dynamically
-	if (nestedKeys && typeof value === "object" && value !== null) {
+	if (value && nestedKeys && typeof value === "object") {
 		const formattedValues = nestedKeys
 			.map((k) => value[k]) // Access the value[k] dynamically
 			.filter((v) => v != null) // Filter out null or undefined
@@ -23,7 +23,7 @@ export function TableCellRenderer<T>(
 	}
 
 	// Default rendering for other types
-	if (typeof value === "object" && value !== null) {
+	if (value && typeof value === "object") {
 		return JSON.stringify(value);
 	}
 

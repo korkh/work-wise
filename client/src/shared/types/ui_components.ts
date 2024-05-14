@@ -10,9 +10,11 @@ type RenderFunction<T, K extends keyof T> = (
 	item: T
 ) => React.ReactNode;
 
+export type NestedKeys = string[];
+
 export interface Column<T, K extends keyof T = keyof T> {
 	key: K;
 	header: string;
 	render?: RenderFunction<T, K>;
-	nestedKeys?: string[]; // List of keys to use in rendering if value is an object
+	nestedKeys?: NestedKeys;
 }

@@ -27,11 +27,13 @@ namespace Application.Core
             CreateMap<CarDto, Car>().ReverseMap();
             CreateMap<ContractDto, Contract>().ReverseMap();
             CreateMap<DocumentDto, Document>()
-                .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.EmployeeId))
+                .ForPath(dest => dest.Employee.Id, opt => opt.MapFrom(src => src.EmployeeId))
                 .ReverseMap();
 
             CreateMap<PayrollDto, Payroll>()
-                .ForPath(dest => dest.Employee.FirstName, opt => opt.MapFrom(src => src.Employee.FirstName)).ForPath(dest => dest.Employee.LastName, opt => opt.MapFrom(src => src.Employee.LastName)).ReverseMap();
+                .ForPath(dest => dest.Employee.Id, opt => opt.MapFrom(src => src.EmployeeId))
+                .ReverseMap();
+
         }
     }
 }

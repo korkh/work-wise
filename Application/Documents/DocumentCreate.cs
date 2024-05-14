@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Employees;
 using AutoMapper;
 using Domain.Entities;
 using FluentValidation;
@@ -9,12 +10,12 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class Create
+    public class DocumentCreate
     {
         public class Command : IRequest<Result<Unit>>
         {
             public DocumentDto Document { get; set; }
-            public Guid EmployeeId { get; set; } // Assuming you want to attach the document to an employee
+            public Guid EmployeeId { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -22,7 +23,7 @@ namespace Application.Documents
             public CommandValidator()
             {
                 RuleFor(x => x.Document).SetValidator(new DocumentValidator());
-                RuleFor(x => x.EmployeeId).NotEmpty().WithMessage("Employee ID is required.");
+
             }
         }
 
@@ -57,7 +58,7 @@ namespace Application.Documents
 
                 // Map the DTO to a new Document object
                 var document = _mapper.Map<Document>(request.Document);
-                document.EmployeeId = request.EmployeeId;
+                document.Employee.Id = request.EmployeeId;
 
                 _context.Documents.Add(document);
                 try

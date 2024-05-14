@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Employees;
 using AutoMapper;
 using Domain.Entities;
 using FluentValidation;
@@ -8,7 +9,7 @@ using Storage;
 
 namespace Application.Payrolls
 {
-    public class Create
+    public class PayrollCreate
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -48,7 +49,7 @@ namespace Application.Payrolls
 
                 bool payrollExists = await _context.Payrolls.AnyAsync(
                     p =>
-                        p.EmployeeId == request.EmployeeId
+                        p.Employee.Id == request.EmployeeId
                         && p.Year == request.Payroll.Year
                         && p.Month == request.Payroll.Month,
                     cancellationToken
@@ -62,7 +63,7 @@ namespace Application.Payrolls
                 }
 
                 var payroll = _mapper.Map<Payroll>(request.Payroll);
-                payroll.EmployeeId = request.EmployeeId;
+                payroll.Employee.Id = request.EmployeeId;
 
                 _context.Payrolls.Add(payroll);
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;

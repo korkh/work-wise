@@ -6,27 +6,27 @@ import {
 	getDocumentsPageIsLoading,
 	getDocumentsPageError,
 } from "../../model/selectors/getDocumentsPageSelectors";
-import { getDocuments } from "../../model/slices/documentPageSlice";
 import { DocumentsList } from "../DocumentsList/DocumentsList";
+import { selectAllDocuments } from "../../model/slices/documentPageSlice";
 
 interface DocumentInfiniteListProps {
 	className?: string;
 }
 
-export const DocumentInfiniteList = memo(function EmployeeInfiniteList(
+export const DocumentInfiniteList = memo(function DocumentInfiniteList(
 	props: DocumentInfiniteListProps
 ) {
 	const { className } = props;
 	const { t } = useTranslation();
 
-	const documents = useSelector(getDocuments.selectAll);
+	const documents = useSelector(selectAllDocuments);
 	const isLoading = useSelector(getDocumentsPageIsLoading);
 	const error = useSelector(getDocumentsPageError);
 
 	const [documentsLoaded, setDocumentsLoaded] = useState(false);
 
 	useEffect(() => {
-		if (documents) {
+		if (documents && documents.length > 0) {
 			setDocumentsLoaded(true);
 		}
 	}, [documents]);

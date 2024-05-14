@@ -6,14 +6,17 @@ import { ThemeProvider } from "./app/providers/ThemeProvider";
 import { BrowserRouter } from "react-router-dom";
 import { StoreProvider } from "./app/providers/StoreProvider";
 import ErrorBoundary from "./app/providers/ErrorBoundary/ui/ErrorBoundary";
+import { ForceUpdateProvider } from "./shared/lib/forceUpdateRender/foreceUpdateRender";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<BrowserRouter>
 		<StoreProvider>
 			<ErrorBoundary>
-				<ThemeProvider>
-					<App />
-				</ThemeProvider>
+				<ForceUpdateProvider>
+					<ThemeProvider>
+						<App />
+					</ThemeProvider>
+				</ForceUpdateProvider>
 			</ErrorBoundary>
 		</StoreProvider>
 	</BrowserRouter>

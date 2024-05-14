@@ -1,15 +1,25 @@
 using Application.Core;
+using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Storage;
 
-namespace Application.Payrolls
+namespace Application.Documents
 {
-    public class Delete
+    public class DocumentDelete
     {
         public class Command : IRequest<Result<Unit>>
         {
             public Guid Id { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Id).NotEmpty().WithMessage("Document ID is required.");
+            }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -28,31 +38,36 @@ namespace Application.Payrolls
                 CancellationToken cancellationToken
             )
             {
-                var payroll = await _context.Payrolls.FindAsync(request.Id);
+                var document = await _context.Documents.FindAsync(request.Id);
 
-                if (payroll == null)
+                if (document == null)
                 {
                     _logger.LogWarning(
-                        "Attempt to delete a non-existent payroll with ID: {PayrollId}",
+                        "Attempt to delete a non-existent document with ID: {DocumentId}",
                         request.Id
                     );
-                    return Result<Unit>.Failure("Payroll not found");
+                    return Result<Unit>.Failure("Document not found");
                 }
 
-                _context.Payrolls.Remove(payroll);
+                _context.Documents.Remove(document);
 
                 try
                 {
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
                     if (!result)
-                        return Result<Unit>.Failure("Failed to delete payroll");
-
+                    {
+                        return Result<Unit>.Failure("Failed to delete the document");
+                    }
                     return Result<Unit>.Success(Unit.Value);
                 }
-                catch (Exception ex)
+                catch (DbUpdateException ex)
                 {
-                    _logger.LogError(ex, "Error deleting payroll with ID: {PayrollId}", request.Id);
-                    return Result<Unit>.Failure("An error occurred while deleting the payroll");
+                    _logger.LogError(
+                        ex,
+                        "Error deleting document with ID: {DocumentId}",
+                        request.Id
+                    );
+                    return Result<Unit>.Failure("An error occurred while deleting the document");
                 }
             }
         }

@@ -1,9 +1,8 @@
+import { Employee } from "@/entities/Employee";
+
 export interface Payroll {
 	id: string;
-	rowVersion: Uint8Array;
-	employeeId: string;
-	employeeFirstName: string;
-	employeeLastName: string;
+	employee: Employee;
 	year: number;
 	month: number;
 	workingDays: number;
@@ -14,7 +13,7 @@ export interface Payroll {
 	virsvalandziai: number;
 	sventinesIrPoilsioValandos: number;
 	pirmaEilesPareigosTaikomasNPD: number;
-	NPD: number;
+	npd: number;
 
 	// PRISKAITYTA
 	atlyginimas: number;

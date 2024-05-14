@@ -9,7 +9,7 @@ using Storage;
 
 namespace Application.Payrolls
 {
-    public class Details
+    public class PayrollDetails
     {
         public class Query : IRequest<Result<PayrollDto>>
         {

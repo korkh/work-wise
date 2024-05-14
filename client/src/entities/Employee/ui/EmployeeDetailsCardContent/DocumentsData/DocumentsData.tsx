@@ -1,133 +1,72 @@
 import { memo } from "react";
-import { DateInput } from "@/shared/ui/DateInput";
-import { Input } from "@/shared/ui/Input";
 import { RowStack, ColumnStack } from "@/shared/ui/Stack";
 import { TextHolder } from "@/shared/ui/TextHolder";
-import { t } from "i18next";
-
-interface DocumentsDataProps {
-	className?: string;
-}
+import { EmployeeDetailsCardProps } from "../../EmployeeDetailsCard";
+import { toast } from "react-toastify";
+import { EmployeeDocument } from "@/entities/Document";
+import { Input } from "@/shared/ui/Input";
+import { useTranslation } from "react-i18next";
+import { DateInput } from "@/shared/ui/DateInput";
 
 export const DocumentsData = memo(function DocumentsData(
-	props: DocumentsDataProps
+	props: EmployeeDetailsCardProps
 ) {
-	const { className } = props;
+	const {
+		data,
+		readonly,
+		onChangeDocumentTitle,
+		onChangeDocumentIssueDate,
+		onChangeDocumentExpirationDate,
+	} = props;
+
+	const { t } = useTranslation();
+	if (!data && data !== undefined) {
+		toast.error("NO DOCUMENTS FOUND. TRY AGAIN LATER");
+		return <TextHolder title="NO DOCUMENTS FOUND!" />;
+	}
 	return (
-		<RowStack max gap="24">
+		<RowStack gap="24" max>
 			<ColumnStack gap="16" max>
-				<TextHolder title={"Contract details"} />
-				<Input
-					size="s"
-					value={data?.contractData?.position}
-					label={t("Capacity")}
-					onChange={onChangePosition}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.position"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.contractNumber}
-					label={t("Contract number")}
-					onChange={onChangeContractNumber}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.contractNumber"
-				/>
-				<DateInput
-					gap="8"
-					width="70%"
-					justify="between"
-					selected={data?.contractData?.acceptionDate}
-					onChange={onChangeAcceptionDate || ((_, _event) => {})}
-					label={t("Accepted on")}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.acceptionDate"
-				/>
-				<DateInput
-					gap="8"
-					width="70%"
-					justify="between"
-					selected={data?.contractData?.dismissalDate}
-					onChange={onChangeDismissalDate || ((_, _event) => {})}
-					label={t("Dismissal date")}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.dismissalDate"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.annualHolidays}
-					label={t("Annual holidays")}
-					onChange={onChangeeAnnualHolidays}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.annualHolidays"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.fatherHolidays?.toString()}
-					label={t("Father holidays")}
-					onChange={onChangeFatherHolidays}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.fatherHolidays"
-				/>
-			</ColumnStack>
-			<ColumnStack gap="16" max>
-				<Input
-					size="s"
-					type="number"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.employmentDays?.toString()}
-					label={t("Employment days")}
-					onChange={onChangeEmployementDays}
-					readonly={true}
-					data-testid="EmployeeDetailsCard.employmentDays"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.unpaidHolidays}
-					label={t("Unpaid holidays")}
-					onChange={onChangeUnpaidHolidays}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.unpaidHolidays"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.truancyDays}
-					label={t("Truancy days")}
-					onChange={onChangeTruancyDays}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.truancyDays"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.allowedAbsenceDays}
-					label={t("Allowed absence days")}
-					onChange={onChangeAllowedAbsenceDays}
-					readonly={readonly}
-					data-testid="EmployeeDetailsCard.allowedAbsenceDays"
-				/>
-				<Input
-					size="s"
-					width="70%"
-					justify="between"
-					value={data?.contractData?.unusedHolidays}
-					label={t("Unused holidays")}
-					onChange={onChangeUnusedHolidays}
-					readonly={true}
-					data-testid="EmployeeDetailsCard.unusedHolidays"
-				/>
+				<TextHolder title={"Employee's documents"} />
+				{data?.documents?.map((doc: EmployeeDocument, index) => (
+					<>
+						<Input
+							size="s"
+							width="97%"
+							value={doc.title}
+							label={t("Title")}
+							onChange={(newTitle) =>
+								onChangeDocumentTitle && onChangeDocumentTitle(index, newTitle)
+							}
+							readonly={readonly}
+							data-testid="DocumentsData.title"
+						/>
+						<DateInput
+							gap="8"
+							width="93%"
+							label={t("Issue date")}
+							selected={doc.issueDate}
+							onChange={(newDate, event) =>
+								onChangeDocumentIssueDate &&
+								onChangeDocumentIssueDate(index, newDate, event)
+							}
+							readonly={readonly}
+							data-testid="DocumentsData.issueDate"
+						/>
+						<DateInput
+							gap="8"
+							width="92%"
+							selected={doc.expirationDate}
+							onChange={(newDate, event) =>
+								onChangeDocumentExpirationDate &&
+								onChangeDocumentExpirationDate(index, newDate, event)
+							}
+							label={t("Expire date")}
+							readonly={readonly}
+							data-testid="DocumentsData.expirationDate"
+						/>
+					</>
+				))}
 			</ColumnStack>
 		</RowStack>
 	);

@@ -8,7 +8,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class Edit
+    public class DocumentEdit
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -20,7 +20,7 @@ namespace Application.Documents
             public CommandValidator()
             {
                 RuleFor(x => x.Document).SetValidator(new DocumentValidator());
-                RuleFor(x => x.Document.EmployeeId)
+                RuleFor(x => x.Document.Employee.Id)
                     .NotEmpty()
                     .WithMessage("Employee ID is required.");
             }
@@ -45,14 +45,14 @@ namespace Application.Documents
             )
             {
                 var employeeExists = await _context.Employees.AnyAsync(
-                    e => e.Id == request.Document.EmployeeId,
+                    e => e.Id == request.Document.Employee.Id,
                     cancellationToken
                 );
                 if (!employeeExists)
                 {
                     _logger.LogWarning(
                         "Attempted to edit a document for a non-existent employee with ID: {EmployeeId}",
-                        request.Document.EmployeeId
+                        request.Document.Employee.Id
                     );
                     return Result<Unit>.Failure("Employee not found");
                 }

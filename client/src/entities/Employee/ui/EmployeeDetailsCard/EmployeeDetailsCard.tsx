@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { ValidateEmployeeError } from "../../model/consts/validateEmployeeError";
-import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
 import { fetchEmployeeByID } from "../../model/services/fetchEmployeeById/fetchEmployeeById";
 import {
 	employeeDetailsActions,
@@ -27,7 +26,7 @@ import {
 	DynamicReducerLoader,
 	ReducersList,
 } from "@/shared/lib/DynamicReducerLoader/DynamicReducerLoader";
-
+import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
 export interface EmployeeDetailsCardProps {
 	className?: string;
 	data?: Employee;
@@ -67,6 +66,17 @@ export interface EmployeeDetailsCardProps {
 	onChangeTruancyDays?: (value?: string) => void;
 	onChangeAllowedAbsenceDays?: (value?: string) => void;
 	onChangeUnusedHolidays?: (value?: string) => void;
+	onChangeDocumentTitle?: (index: number, title?: string) => void;
+	onChangeDocumentIssueDate?: (
+		index: number,
+		value?: Date | null,
+		event?: React.SyntheticEvent<unknown, Event>
+	) => void;
+	onChangeDocumentExpirationDate?: (
+		index: number,
+		value?: Date | null,
+		event?: React.SyntheticEvent<unknown, Event>
+	) => void;
 }
 
 const reducers: ReducersList = {
@@ -464,6 +474,65 @@ export const EmployeeDetailsCard = memo(function EmployeeDetailsCard(
 		[dispatch, formData]
 	);
 
+	// -------DOCUMENTS
+	const onChangeDocumentTitle = useCallback(
+		(index: number, title?: string) => {
+			if (formData && formData.documents && formData.documents[index]) {
+				const updatedDocuments = [...formData.documents];
+				updatedDocuments[index] = {
+					...updatedDocuments[index],
+					title: title || "",
+				};
+				dispatch(
+					employeeDetailsActions.updateEmployee({ documents: updatedDocuments })
+				);
+			}
+		},
+		[dispatch, formData]
+	);
+
+	const onChangeDocumentIssueDate = useCallback(
+		(
+			index: number,
+			date?: Date | null,
+			event?: React.SyntheticEvent<unknown, Event>
+		) => {
+			if (!event) return;
+			if (formData && formData.documents && formData.documents[index]) {
+				const updatedDocuments = [...formData.documents];
+				updatedDocuments[index] = {
+					...updatedDocuments[index],
+					issueDate: date || null,
+				};
+				dispatch(
+					employeeDetailsActions.updateEmployee({ documents: updatedDocuments })
+				);
+			}
+		},
+		[dispatch, formData]
+	);
+
+	const onChangeDocumentExpirationDate = useCallback(
+		(
+			index: number,
+			date?: Date | null,
+			event?: React.SyntheticEvent<unknown, Event>
+		) => {
+			if (!event) return;
+			if (formData && formData.documents && formData.documents[index]) {
+				const updatedDocuments = [...formData.documents];
+				updatedDocuments[index] = {
+					...updatedDocuments[index],
+					expirationDate: date || null,
+				};
+				dispatch(
+					employeeDetailsActions.updateEmployee({ documents: updatedDocuments })
+				);
+			}
+		},
+		[dispatch, formData]
+	);
+
 	return (
 		<DynamicReducerLoader reducers={reducers}>
 			<ColumnStack gap="8" max className={classNames("", [className], {})}>
@@ -506,6 +575,9 @@ export const EmployeeDetailsCard = memo(function EmployeeDetailsCard(
 					onChangeTruancyDays={onChangeTruancyDays}
 					onChangeAllowedAbsenceDays={onChangeAllowedAbsenceDays}
 					onChangeUnusedHolidays={onChangeUnusedHolidays}
+					onChangeDocumentTitle={onChangeDocumentTitle}
+					onChangeDocumentIssueDate={onChangeDocumentIssueDate}
+					onChangeDocumentExpirationDate={onChangeDocumentExpirationDate}
 				/>
 			</ColumnStack>
 		</DynamicReducerLoader>

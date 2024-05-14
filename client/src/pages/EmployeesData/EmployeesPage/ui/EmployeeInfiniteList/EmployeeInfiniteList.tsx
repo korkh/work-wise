@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getEmployees } from "../../model/slices/employeesPageSlice";
+import { TextHolder } from "@/shared/ui/TextHolder";
+import { EmployeeList } from "@/entities/Employee";
 import {
 	getEmployeesPageError,
 	getEmployeesPageIsLoading,
 } from "../../model/selectors/getEmployeesPageSelectors";
-import { TextHolder } from "@/shared/ui/TextHolder";
-import { EmployeeList } from "@/entities/Employee";
+import { selectAllEmployees } from "../../model/slices/employeesPageSlice";
 
 interface EmployeeInfiniteListProps {
 	className?: string;
@@ -19,7 +19,7 @@ export const EmployeeInfiniteList = memo(function EmployeeInfiniteList(
 	const { className } = props;
 	const { t } = useTranslation();
 
-	const employees = useSelector(getEmployees.selectAll);
+	const employees = useSelector(selectAllEmployees);
 	const isLoading = useSelector(getEmployeesPageIsLoading);
 	const error = useSelector(getEmployeesPageError);
 

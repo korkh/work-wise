@@ -23,6 +23,7 @@ import { signInUser } from "../../model/services/signIn/signInUser";
 import { signInActions, signInReducer } from "../../model/slices/signInSlice";
 import { getRouteMain } from "@/shared/consts/routerConsts";
 import { useNavigate } from "react-router-dom";
+import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
 
 export interface SignInFormProps {
 	className?: string;
@@ -44,6 +45,7 @@ const SignInForm = memo(function SignInForm({
 	const password = useSelector(getSignInPassword);
 	const isLoading = useSelector(getSignInLoading);
 	const error = useSelector(getSignInError);
+	const forceUpdate = useForceUpdate();
 
 	const onChangeUsername = useCallback(
 		(value: string) => {
@@ -63,10 +65,10 @@ const SignInForm = memo(function SignInForm({
 		const result = await dispatch(signInUser({ email, password }));
 		if (result.meta.requestStatus === "fulfilled") {
 			onSuccess();
-			window.location.reload();
+			forceUpdate();
 			navigate(getRouteMain());
 		}
-	}, [dispatch, email, password, onSuccess, navigate]);
+	}, [dispatch, email, password, onSuccess, forceUpdate, navigate]);
 
 	return (
 		<DynamicReducerLoader removeAfterUnmount reducers={initialReducers}>

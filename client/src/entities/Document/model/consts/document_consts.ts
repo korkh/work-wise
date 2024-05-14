@@ -1,7 +1,6 @@
-type Enum = Record<string, string | number>;
-
 export enum DocumentSortField {
 	ID = "id",
+	EMPLOYEE = "lastName",
 	EMPLOYEE_ID = "employeeId",
 	TITLE = "title",
 	ISSUE_DATE = "issueDate",
@@ -10,5 +9,3 @@ export enum DocumentSortField {
 	HAS_THREE_MONTH_WARNING = "hasThreeMonthWarning",
 	HAS_SIX_MONTH_WARNING = "hasSixMonthWarning",
 }
-
-export const documentSortField: Enum = DocumentSortField;

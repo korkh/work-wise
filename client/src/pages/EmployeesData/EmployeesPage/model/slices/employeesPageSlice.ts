@@ -8,19 +8,18 @@ import {
 import { EntityAdapterOptions } from "@reduxjs/toolkit/dist/entities/models";
 import { EmployeePageSchema } from "../types/eployeesPageSchema";
 import { SortOrder } from "@/shared/types/sort";
-import { EmployeeView } from "../../../../../entities/Employee/model/consts/employee_consts";
-import { EMPLOYEE_VIEW_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 import { fetchEmployeesList } from "../services/fetchEmployeesList/fetchEmployeesList";
 
 const adapterOptions: EntityAdapterOptions<Employee, string | number> = {
-	selectId: (employee: Employee) => employee.id || "",
+	selectId: (employee: Employee) => employee.id,
 };
 
 const employeesAdapter = createEntityAdapter<Employee>(adapterOptions);
 
-export const getEmployees = employeesAdapter.getSelectors<StateSchema>(
-	(state) => state.employeePage || employeesAdapter.getInitialState()
-);
+export const { selectAll: selectAllEmployees } =
+	employeesAdapter.getSelectors<StateSchema>(
+		(state) => state.employeePage || initialState
+	);
 
 const initialState: EmployeePageSchema = {
 	...employeesAdapter.getInitialState(),
@@ -30,7 +29,6 @@ const initialState: EmployeePageSchema = {
 	entities: {},
 	pageNumber: 1,
 	pageSize: 8,
-	view: EmployeeView.GRID,
 	hasMore: true,
 	order: "asc",
 	sort: EmployeeSortField.LASTNAME,
@@ -42,10 +40,6 @@ const employeesPageSlice = createSlice({
 	name: "pages/employeesPageSlice",
 	initialState,
 	reducers: {
-		setView: (state, action: PayloadAction<EmployeeView>) => {
-			state.view = action.payload;
-			localStorage.setItem(EMPLOYEE_VIEW_LOCALSTORAGE_KEY, action.payload);
-		},
 		setPage: (state, action: PayloadAction<number>) => {
 			state.pageNumber = action.payload;
 		},
@@ -59,10 +53,7 @@ const employeesPageSlice = createSlice({
 			state.search = action.payload;
 		},
 		initState: (state) => {
-			const view = localStorage.getItem(
-				EMPLOYEE_VIEW_LOCALSTORAGE_KEY
-			) as EmployeeView;
-			state.pageSize = view === EmployeeView.LIST ? 4 : 8;
+			state.pageSize = 10;
 			state._inited = true;
 		},
 	},
@@ -78,11 +69,11 @@ const employeesPageSlice = createSlice({
 			.addCase(fetchEmployeesList.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.hasMore = action.payload.length >= state.pageSize;
-
+				const employees = action.payload.filter((item: Employee) => item.id);
 				if (action.meta.arg.replace) {
-					employeesAdapter.setAll(state, action.payload);
+					employeesAdapter.setAll(state, employees);
 				} else {
-					employeesAdapter.addMany(state, action.payload);
+					employeesAdapter.addMany(state, employees);
 				}
 			})
 			.addCase(fetchEmployeesList.rejected, (state, action) => {

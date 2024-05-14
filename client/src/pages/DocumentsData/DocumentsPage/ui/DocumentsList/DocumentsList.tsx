@@ -25,7 +25,7 @@ export const DocumentsList = memo(function DocumentsList(
 
 	const tableColumns: Column<EmployeeDocument>[] = [
 		{ key: "id", header: "No." },
-		{ key: "employeeId", header: "EmployeeId" },
+		{ key: "employee", nestedKeys: ["lastName"], header: "Lastname" },
 		{ key: "title", header: "Title" },
 		{
 			key: "issueDate",
@@ -73,12 +73,13 @@ export const DocumentsList = memo(function DocumentsList(
 				columns={tableColumns}
 				data={documents}
 				redirect={getRouteDocumentDetails}
-			></GenericTable>
-			<ExportToExcel
-				data={documents}
-				isLoading={isLoading}
-				fileName="Documents"
-			/>
+			>
+				<ExportToExcel
+					data={documents}
+					isLoading={isLoading}
+					fileName="Documents"
+				/>
+			</GenericTable>
 		</>
 	);
 });
