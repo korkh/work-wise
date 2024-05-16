@@ -4,23 +4,17 @@ import cls from "./BaseLayout.module.scss";
 
 interface BaseLayoutProps {
 	className?: string;
-	header: ReactElement;
+	navbar: ReactElement;
 	content: ReactElement;
-	sidebar: ReactElement;
-	toolbar?: ReactElement;
 }
 
 export const BaseLayout = (props: BaseLayoutProps) => {
-	const { className, content, toolbar, header, sidebar } = props;
+	const { className, content, navbar } = props;
 
 	return (
 		<div className={classNames(cls.baseLayout, [className], {})}>
-			<div className={cls.content}>{content}</div>
-			<div className={cls.sidebar}>{sidebar}</div>
-			<div className={cls.rightbar}>
-				<div className={cls.header}>{header}</div>
-				<div className={cls.toolbar}>{toolbar}</div>
-			</div>
+			<header className={cls.navbar}>{navbar}</header>
+			<main className={cls.content}>{content}</main>
 		</div>
 	);
 };

@@ -1,12 +1,19 @@
 .navbar {
-  padding: 16px;
-}
+  background: var(--light-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: var(--navbar-z-index);
 
-.links,
-.actions {
-  margin-left: auto;
-}
+  .appLogo {
+    padding: 5px 20px;
+  }
 
-.mainLink {
-  margin-right: 15px;
+  .actions {
+    margin-left: 20px;
+  }
+
+  .links {
+    margin-left: auto;
+  }
 }

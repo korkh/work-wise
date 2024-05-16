@@ -1,0 +1,24 @@
+.item {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-l);
+}
+
+.active {
+  background: linear-gradient(89.97deg, rgba(94, 211, 243, 0.3) 1.15%, rgba(94, 211, 243, 0) 99.97%);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    left: 0;
+    background: var(--accent);
+    height: 100%;
+  }
+}
+
+.link {
+  margin-left: 10px;
+  font: var(--font-m);
+}

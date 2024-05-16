@@ -11,6 +11,7 @@ import { Glyph } from "../../../../../shared/ui/Glyph";
 import { SortOrder } from "@/shared/types/sort";
 import { Pagination } from "../Pagination";
 import { RowStack } from "../../../../../shared/ui/Stack";
+import { sortValues } from "@/shared/lib/utils/table/sorting/sorting_filtering";
 
 interface Identifiable {
 	id?: string | number;
@@ -23,6 +24,7 @@ interface TableProps<T extends Identifiable, _U> {
 	title?: string;
 	redirect: (id: string) => string;
 	children?: ReactNode;
+	verticalHeaders?: boolean;
 }
 
 export function GenericTable<T extends Identifiable, U>({
@@ -32,6 +34,7 @@ export function GenericTable<T extends Identifiable, U>({
 	title,
 	children,
 	redirect,
+	verticalHeaders = false,
 }: TableProps<T, U>) {
 	const [filteredData, setFilteredData] = useState(data);
 	const [search, setSearch] = useState("");
@@ -71,11 +74,7 @@ export function GenericTable<T extends Identifiable, U>({
 			filtered.sort((a, b) => {
 				const aValue = a[sortField as keyof T];
 				const bValue = b[sortField as keyof T];
-				if (sortOrder === "asc") {
-					return String(aValue).localeCompare(String(bValue));
-				} else {
-					return String(bValue).localeCompare(String(aValue));
-				}
+				return sortValues(aValue, bValue, sortOrder);
 			});
 		}
 		setFilteredData(filtered);
@@ -106,6 +105,9 @@ export function GenericTable<T extends Identifiable, U>({
 						{columns.map((column) => (
 							<th
 								key={String(column.key)}
+								className={classNames("", [className], {
+									[cls.verticalHeader]: verticalHeaders,
+								})}
 								onClick={() => {
 									const newOrder =
 										sortField === column.key && sortOrder === "asc"

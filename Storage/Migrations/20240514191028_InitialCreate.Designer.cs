@@ -11,7 +11,7 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240514092620_InitialCreate")]
+    [Migration("20240514191028_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -49,6 +49,9 @@ namespace Storage.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Avatar")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("BirthDay")

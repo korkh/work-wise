@@ -7,9 +7,9 @@ import { memo } from "react";
 export const AppLoaderLayout = memo(function AppLoaderLayout() {
 	return (
 		<BaseLayout
-			header={
+			navbar={
 				<RowStack className={cls.header}>
-					<Skeleton width={40} height={40} border="50%" />
+					<Skeleton width={"100%"} height={40} border="50%" />
 				</RowStack>
 			}
 			content={
@@ -22,7 +22,6 @@ export const AppLoaderLayout = memo(function AppLoaderLayout() {
 					<Skeleton width="80%" height="40%" border="16px" />
 				</ColumnStack>
 			}
-			sidebar={<Skeleton border="32px" width={220} height="100%" />}
 		/>
 	);
 });

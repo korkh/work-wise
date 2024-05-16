@@ -70,6 +70,7 @@ namespace Storage
                 {
                     new()
                     {
+                        Avatar = "https://i.pinimg.com/originals/26/e5/e0/26e5e02218aa21654bb17829cd5c7229.jpg",
                         FirstName = "Ahad",
                         LastName = "Hamidov",
                         BirthDay = new DateTime(1990, 1, 15),
@@ -214,6 +215,7 @@ namespace Storage
                     },
                     new()
                     {
+                        Avatar = "https://www.meme-arsenal.com/memes/77dfdbd947fb563006dcc4315a13b971.jpg",
                         FirstName = "Bjørn",
                         LastName = "Peterson",
                         BirthDay = new DateTime(1995, 1, 15),
@@ -358,6 +360,7 @@ namespace Storage
                     },
                     new()
                     {
+                        Avatar = "https://i.pinimg.com/originals/1a/5b/d0/1a5bd09226035a1fcaf9836af44330eb.jpg",
                         FirstName = "Peter",
                         LastName = "Smith",
                         BirthDay = new DateTime(1985, 5, 20),
@@ -483,6 +486,7 @@ namespace Storage
                     },
                     new()
                     {
+                        Avatar = "https://i.pinimg.com/originals/71/cd/b1/71cdb14248d0f90d983e595f458dd2a0.png",
                         FirstName = "Bob",
                         LastName = "Johnson",
                         BirthDay = new DateTime(1978, 10, 10),

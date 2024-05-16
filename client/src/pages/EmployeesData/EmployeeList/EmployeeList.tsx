@@ -25,6 +25,7 @@ export const EmployeeList = memo(function EmployeeList(
 
 	const tableColumns: Column<Employee>[] = [
 		{ key: "id", header: "No." },
+		{ key: "avatar", header: "Photo" },
 		{ key: "firstName", header: "First Name" },
 		{ key: "lastName", header: "Last Name" },
 		{

@@ -1,4 +1,3 @@
-import cls from "./PayrollsPage.module.scss";
 import { memo } from "react";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useSearchParams } from "react-router-dom";
@@ -25,7 +24,7 @@ const PayrollsPage = () => {
 
 	return (
 		<DynamicReducerLoader reducers={reducers} removeAfterUnmount={false}>
-			<PayroLLsPageBaseList className={cls.list} />
+			<PayroLLsPageBaseList />
 		</DynamicReducerLoader>
 	);
 };

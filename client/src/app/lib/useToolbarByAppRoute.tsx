@@ -9,6 +9,8 @@ export const useToolBarByAppRoute = () => {
 	const toolbarsByAppRoute: OptionalRecord<AppRoutes, ReactElement> = {
 		[AppRoutes.EMPLOYEES]: <SideToolbarScroll />,
 		[AppRoutes.EMPLOYEE_DETAILS]: <SideToolbarScroll />,
+		[AppRoutes.PAYROLLS]: <SideToolbarScroll />,
+		[AppRoutes.PAYROLL_DETAILS]: <SideToolbarScroll />,
 	};
 
 	return toolbarsByAppRoute[appRoute];

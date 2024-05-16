@@ -3,10 +3,8 @@ import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch
 import { useTheme } from "@/shared/lib/hooks/useTheme/useTheme";
 import { Suspense, memo, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useToolBarByAppRoute } from "./lib/useToolbarByAppRoute";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { Navbar } from "@/widgets/Navbar";
-import { Sidebar } from "@/widgets/Sidebar";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { AppLoaderLayout } from "@/shared/layouts/AppLoaderLayout";
 import { ToastContainer } from "react-toastify";
@@ -17,7 +15,6 @@ function App() {
 	const { theme } = useTheme();
 	const dispatch = useAppDispatch();
 	const inited = useSelector(getUserInited);
-	const toolbar = useToolBarByAppRoute();
 
 	useEffect(() => {
 		if (!inited) {
@@ -36,12 +33,7 @@ function App() {
 	return (
 		<div id="app" className={classNames("app", [theme], {})}>
 			<Suspense fallback="">
-				<BaseLayout
-					header={<Navbar />}
-					content={<AppRouter />}
-					sidebar={<Sidebar />}
-					toolbar={toolbar}
-				/>
+				<BaseLayout navbar={<Navbar />} content={<AppRouter />} />
 			</Suspense>
 			<ToastContainer position="bottom-right" hideProgressBar theme="colored" />
 		</div>

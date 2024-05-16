@@ -1,40 +1,19 @@
 .baseLayout {
   min-height: 100vh;
-  display: grid;
-  grid-template-areas: "sidebar content rightbar";
-  grid-template-columns: min-content 1fr 120px;
 }
 
-.sidebar {
-  grid-area: sidebar;
-  padding: 16px;
-  max-width: 200px;
+.navbar {
+  width: 100%;
+  background: var(--light-bg);
+  caret-color: transparent;
+  position: sticky;
+  top: 0;
+  z-index: var(--navbar-z-index);
 }
 
 .content {
-  grid-area: content;
-  max-width: 1200px;
-  justify-self: center;
+  flex: 1;
+  max-width: 100vmax;
   padding: 32px;
-  width: 100%;
-}
-
-.rightbar {
-  grid-area: rightbar;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  caret-color: transparent;
-}
-
-.rightbar,
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-}
-
-.toolbar {
-  height: 100%;
   width: 100%;
 }

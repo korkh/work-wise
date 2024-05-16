@@ -48,6 +48,9 @@ namespace Storage.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("TEXT");
 

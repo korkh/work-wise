@@ -8,11 +8,15 @@ import cls from "./AppLogo.module.scss";
 interface AppLogoProps {
 	className?: string;
 	size?: number;
+	width?: number;
+	height?: number;
 }
 
 export const AppLogo = memo(function AppLogo({
 	className,
 	size = 50,
+	width,
+	height,
 }: AppLogoProps) {
 	return (
 		<RowStack
@@ -21,8 +25,8 @@ export const AppLogo = memo(function AppLogo({
 			className={classNames(cls.appLogoWrapper, [className], {})}
 		>
 			<AppSvg
-				width={size}
-				height={size}
+				width={width ? width : size}
+				height={height ? height : size}
 				color="black"
 				className={cls.appLogo}
 			/>
