@@ -10,7 +10,7 @@ export interface ExportToExcelProps<T extends object> {
 	data: T[];
 	fileName: string;
 	department?: string;
-	isLoading: boolean;
+	isLoading?: boolean;
 }
 
 export const ExportToExcel = memo(function ExportToExcel<T extends object>(

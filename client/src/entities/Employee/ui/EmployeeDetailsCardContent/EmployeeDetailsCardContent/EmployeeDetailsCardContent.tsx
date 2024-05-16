@@ -15,11 +15,7 @@ export const EmployeeDetailsCardContent = memo(
 		return (
 			<Section max padding="16" className={className} border="partial">
 				<ColumnStack gap="32" max>
-					{data?.avatar ? (
-						<RowStack justify="center" max>
-							<Avatar size={200} src={data?.avatar} />
-						</RowStack>
-					) : (
+					{data?.avatar && (
 						<RowStack justify="center" max>
 							<Avatar size={200} src={data?.avatar} />
 						</RowStack>

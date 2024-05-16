@@ -17,4 +17,9 @@ export interface Column<T, K extends keyof T = keyof T> {
 	header: string;
 	render?: RenderFunction<T, K>;
 	nestedKeys?: NestedKeys;
+	uniqueId?: string;
+}
+
+export interface Identifiable {
+	id?: string | number;
 }

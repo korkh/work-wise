@@ -2,13 +2,8 @@ import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	getUserAuthData,
-	isUserAccountant,
-	isUserAdmin,
-	isUserManager,
-	userActions,
-} from "@/entities/User";
+import cls from "./UserDropdown.module.scss";
+import { getUserAuthData, userActions } from "@/entities/User";
 import {
 	getRouteAccountant,
 	getRouteAdmin,
@@ -21,6 +16,7 @@ import { Dropdown } from "@/shared/ui/Popups/ui/Dropdown";
 import { Avatar } from "@/shared/ui/Avatar";
 import { stopRefreshTokenTimer } from "@/shared/lib/utils/url/refreshTokenTimer/refreshTokenTimer";
 import { useNavigate } from "react-router-dom";
+import { useAuthToken } from "@/shared/lib/hooks/useAuthToken/useAuthToken";
 
 interface UserDropdownProps {
 	className?: string;
@@ -34,9 +30,7 @@ export const UserDropdown = memo(function UserDropdown(
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const isAdmin = useSelector(isUserAdmin);
-	const isAccountant = useSelector(isUserAccountant);
-	const isManager = useSelector(isUserManager);
+	const userData = useAuthToken();
 	const authData = useSelector(getUserAuthData);
 
 	const onLogout = useCallback(() => {
@@ -50,11 +44,13 @@ export const UserDropdown = memo(function UserDropdown(
 	}
 
 	const items = [
-		...(isAdmin ? [{ content: t("Admin panel"), href: getRouteAdmin() }] : []),
-		...(isManager
+		...(userData && userData.role?.includes("Admin")
+			? [{ content: t("Admin panel"), href: getRouteAdmin() }]
+			: []),
+		...(userData && userData.role?.includes("Manager")
 			? [{ content: t("Manager panel"), href: getRouteManager() }]
 			: []),
-		...(isAccountant
+		...(userData && userData.role?.includes("Accountant")
 			? [{ content: t("Accountant panel"), href: getRouteAccountant() }]
 			: []),
 		{
@@ -74,7 +70,7 @@ export const UserDropdown = memo(function UserDropdown(
 	return (
 		<Dropdown
 			direction="bottom left"
-			className={classNames("", [className], {})}
+			className={classNames(cls.dropdown, [className], {})}
 			items={items}
 			trigger={<Avatar size={40} src={authData.image} />}
 		/>

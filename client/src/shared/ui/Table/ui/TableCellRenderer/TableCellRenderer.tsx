@@ -1,31 +1,44 @@
-import { Column } from "@/shared/types/ui_components";
 import React from "react";
+import { Column } from "@/shared/types/ui_components";
+import { Avatar } from "../../../../../shared/ui/Avatar";
 
 export function TableCellRenderer<T>(
 	item: T,
 	column: Column<T>
 ): React.ReactNode {
-	const { key, render, nestedKeys } = column;
+	const { key, nestedKeys } = column;
+
+	// Traverse nested keys to get the final value
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const value: any = item[key];
+	const getNestedValue = (obj: any, keys: string[]): any => {
+		return keys.reduce(
+			(value, k) => (value && value[k] !== undefined ? value[k] : null),
+			obj
+		);
+	};
 
-	if (render) {
-		return render(value, item);
+	const value = nestedKeys ? getNestedValue(item[key], nestedKeys) : item[key];
+
+	if (key === "avatar") {
+		return <Avatar src={String(value)} size={50} alt="Avatar" />;
 	}
 
-	// Handle nested properties dynamically
-	if (value && nestedKeys && typeof value === "object") {
-		const formattedValues = nestedKeys
-			.map((k) => value[k]) // Access the value[k] dynamically
-			.filter((v) => v != null) // Filter out null or undefined
-			.join(", "); // Join values with a comma
-		return formattedValues || JSON.stringify(value); // Fallback to stringify if empty
-	}
-
-	// Default rendering for other types
 	if (value && typeof value === "object") {
 		return JSON.stringify(value);
 	}
 
-	return String(value);
+	const stringValue = String(value);
+
+	return (
+		<div style={{ position: "relative" }}>
+			<span>
+				{stringValue.length > 20
+					? `${stringValue.substring(0, 20)}...`
+					: stringValue}
+			</span>
+			{stringValue.length > 20 && (
+				<span className="tooltip">{stringValue}</span>
+			)}
+		</div>
+	);
 }

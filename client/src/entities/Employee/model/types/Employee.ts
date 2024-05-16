@@ -8,7 +8,7 @@ export type EmployeeId = string | number;
 
 export interface Employee {
 	id: EmployeeId;
-	avatar: string;
+	avatar?: string;
 	firstName: string;
 	lastName: string;
 	birthDay: Date | null;

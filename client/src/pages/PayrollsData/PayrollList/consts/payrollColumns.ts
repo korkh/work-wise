@@ -5,8 +5,8 @@ export const payrollColumns: Column<Payroll>[] = [
 	{ key: "id", header: "No." },
 	{
 		key: "employee",
-		header: "Full name",
-		nestedKeys: ["firstName", "lastName"],
+		header: "Last name",
+		nestedKeys: ["lastName"],
 	},
 	{ key: "year", header: "Year" },
 	{ key: "month", header: "Month" },

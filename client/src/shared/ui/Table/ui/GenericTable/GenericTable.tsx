@@ -1,8 +1,8 @@
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import cls from "./GenericTable.module.scss";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { TextHolder } from "../../../TextHolder";
-import { Column } from "@/shared/types/ui_components";
+import { Column, Identifiable } from "@/shared/types/ui_components";
 import { TableCellRenderer } from "../TableCellRenderer/TableCellRenderer";
 import { AppLink } from "../../../../../shared/ui/AppLink";
 import { Input } from "../../../../../shared/ui/Input";
@@ -13,16 +13,12 @@ import { Pagination } from "../Pagination";
 import { RowStack } from "../../../../../shared/ui/Stack";
 import { sortValues } from "@/shared/lib/utils/table/sorting/sorting_filtering";
 
-interface Identifiable {
-	id?: string | number;
-}
-
 interface TableProps<T extends Identifiable, _U> {
 	columns: Column<T>[];
 	data: T[];
 	className?: string;
 	title?: string;
-	redirect: (id: string) => string;
+	redirect?: (id: string) => string;
 	children?: ReactNode;
 	verticalHeaders?: boolean;
 }
@@ -104,7 +100,7 @@ export function GenericTable<T extends Identifiable, U>({
 					<tr>
 						{columns.map((column) => (
 							<th
-								key={String(column.key)}
+								key={String(column.uniqueId || column.key)}
 								className={classNames("", [className], {
 									[cls.verticalHeader]: verticalHeaders,
 								})}
@@ -133,13 +129,19 @@ export function GenericTable<T extends Identifiable, U>({
 					{paginatedData.map((row, index) => (
 						<tr key={index}>
 							{columns.map((column) => (
-								<td key={`${index}-${String(column.key)}`}>
+								<td key={`${index}-${String(column.uniqueId || column.key)}`}>
 									{row.id && row.id !== undefined ? (
-										<AppLink to={redirect(String(row.id))}>
-											{column.key === "id"
-												? index + 1
-												: TableCellRenderer(row, column)}
-										</AppLink>
+										redirect ? (
+											<AppLink to={redirect(String(row.id))}>
+												{column.key === "id"
+													? index + 1
+													: TableCellRenderer(row, column)}
+											</AppLink>
+										) : column.key === "id" ? (
+											index + 1
+										) : (
+											TableCellRenderer(row, column)
+										)
 									) : null}
 								</td>
 							))}

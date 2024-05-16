@@ -6,7 +6,7 @@ import { Column } from "@/shared/types/ui_components";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
-import { getRouteDocumentDetails } from "@/shared/consts/routerConsts";
+import { getRoutePayrollDetails } from "@/shared/consts/routerConsts";
 import { Payroll } from "@/entities/Payroll";
 import { PayrollSortField } from "../../../../../pages/PayrollsData";
 import { payrollColumns } from "../../consts/payrollColumns";
@@ -43,7 +43,7 @@ export const PayrollList = memo(function DocumentsList(
 				title="List of payrolls"
 				columns={tableColumns}
 				data={payrolls}
-				redirect={getRouteDocumentDetails}
+				redirect={getRoutePayrollDetails}
 				verticalHeaders
 			>
 				<ExportToExcel
