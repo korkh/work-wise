@@ -1,7 +1,8 @@
 import React from "react";
 import { Column } from "@/shared/types/ui_components";
 import { Avatar } from "../../../../../shared/ui/Avatar";
-
+import cls from "./TableCellRenderer.module.scss";
+import { truncateString } from "@/shared/lib/utils/table/truncateString/truncateString";
 export function TableCellRenderer<T>(
 	item: T,
 	column: Column<T>
@@ -28,16 +29,12 @@ export function TableCellRenderer<T>(
 	}
 
 	const stringValue = String(value);
-
+	const maxLength = 20;
 	return (
-		<div style={{ position: "relative" }}>
-			<span>
-				{stringValue.length > 20
-					? `${stringValue.substring(0, 20)}...`
-					: stringValue}
-			</span>
-			{stringValue.length > 20 && (
-				<span className="tooltip">{stringValue}</span>
+		<div className={cls.cellWithTooltip}>
+			<span>{truncateString(stringValue, maxLength)}</span>
+			{stringValue.length > maxLength && (
+				<span className={cls.tooltip}>{stringValue}</span>
 			)}
 		</div>
 	);

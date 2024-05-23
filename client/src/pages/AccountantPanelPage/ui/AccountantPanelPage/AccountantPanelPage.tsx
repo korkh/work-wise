@@ -7,7 +7,6 @@ import { Ntry, XmlReader } from "@/features/XmlReader";
 import { ColumnStack, RowStack } from "@/shared/ui/Stack";
 import { GenericTable } from "@/shared/ui/Table";
 import { ntryColumns } from "../../consts/ntryColumns";
-import { PageContainer } from "@/widgets/PageContainer";
 import { ExportToExcel } from "@/features/ExportToExcel";
 
 interface AccountantPanelPageProps {
@@ -24,32 +23,30 @@ const AccountantPanelPage = (props: AccountantPanelPageProps) => {
 	};
 
 	return (
-		<PageContainer>
-			<RowStack max justify="center">
-				<ColumnStack
-					gap="32"
-					className={classNames(cls.accountantPanelPage, [className], {})}
-				>
-					<XmlReader onDataParsed={handleDataParsed} />
-					{data.length > 0 && (
-						<GenericTable<Ntry, keyof Ntry>
-							title="List of XML Entries"
-							columns={ntryColumns}
-							data={data}
-							verticalHeaders
-						>
-							<ExportToExcel data={data} fileName="Employees" />
-						</GenericTable>
-					)}
-					<TextHolder
-						variant="error"
-						size="m"
-						text={t("Acceess granted only for accountants! Welcome!")}
-						className={cls.welcome}
-					/>
-				</ColumnStack>
-			</RowStack>
-		</PageContainer>
+		<RowStack max justify="center">
+			<ColumnStack
+				gap="32"
+				className={classNames(cls.accountantPanelPage, [className], {})}
+			>
+				<XmlReader onDataParsed={handleDataParsed} />
+				{data.length > 0 && (
+					<GenericTable<Ntry, keyof Ntry>
+						title="List of XML Entries"
+						columns={ntryColumns}
+						data={data}
+						verticalHeaders
+					>
+						<ExportToExcel data={data} fileName="Employees" />
+					</GenericTable>
+				)}
+				<TextHolder
+					variant="error"
+					size="m"
+					text={t("Acceess granted only for accountants! Welcome!")}
+					className={cls.welcome}
+				/>
+			</ColumnStack>
+		</RowStack>
 	);
 };
 

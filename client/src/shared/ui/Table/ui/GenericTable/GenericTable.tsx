@@ -127,7 +127,7 @@ export function GenericTable<T extends Identifiable, U>({
 				</thead>
 				<tbody>
 					{paginatedData.map((row, index) => (
-						<tr key={index}>
+						<tr key={row.id}>
 							{columns.map((column) => (
 								<td key={`${index}-${String(column.uniqueId || column.key)}`}>
 									{row.id && row.id !== undefined ? (

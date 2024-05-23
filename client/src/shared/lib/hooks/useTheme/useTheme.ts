@@ -17,9 +17,12 @@ export function useTheme(): UseThemeResult {
 				newTheme = Theme.LIGHT;
 				break;
 			case Theme.LIGHT:
-				newTheme = Theme.ORANGE;
+				newTheme = Theme.VIOLET;
 				break;
-			case Theme.ORANGE:
+			case Theme.VIOLET:
+				newTheme = Theme.BLUE;
+				break;
+			case Theme.BLUE:
 				newTheme = Theme.DARK;
 				break;
 			default:
@@ -27,7 +30,7 @@ export function useTheme(): UseThemeResult {
 		}
 		setTheme?.(newTheme);
 
-		saveAction?.(newTheme); //f.ex. to localStorage
+		saveAction?.(newTheme); // f.ex. to localStorage
 	};
 
 	return {

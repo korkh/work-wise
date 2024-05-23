@@ -5,15 +5,14 @@ import { AdminPanelPage } from "@/pages/AdminPanelPage";
 import {
 	DocumentsPage,
 	DocumentCreatePage,
-	DocumentEditPage,
 	DocumentDeletePage,
 	DocumentDetailsPage,
 } from "@/pages/DocumentsData";
+import { EmployeeTimeTablePage } from "@/pages/EmployeeTimeCardPage";
 import {
 	EmployeesPage,
 	EmployeeDetailsPage,
 	EmployeeCreatePage,
-	EmployeeEditPage,
 	EmployeeDeletePage,
 } from "@/pages/EmployeesData";
 import { ErrorPage } from "@/pages/ErrorPage";
@@ -26,7 +25,6 @@ import {
 	PayrollsPage,
 	PayrollDetailsPage,
 	PayrollCreatePage,
-	PayrollEditPage,
 	PayrollDeletePage,
 } from "@/pages/PayrollsData";
 import { ProfilePage } from "@/pages/Profiles";
@@ -40,12 +38,11 @@ import {
 	getRouteDocumentCreate,
 	getRouteDocumentDelete,
 	getRouteDocumentDetails,
-	getRouteDocumentEdit,
 	getRouteDocuments,
 	getRouteEmployeeCreate,
 	getRouteEmployeeDelete,
 	getRouteEmployeeDetails,
-	getRouteEmployeeEdit,
+	getRouteEmployeeTimeCard,
 	getRouteEmployees,
 	getRouteError,
 	getRouteForbidden,
@@ -55,7 +52,6 @@ import {
 	getRoutePayrollCreate,
 	getRoutePayrollDelete,
 	getRoutePayrollDetails,
-	getRoutePayrollEdit,
 	getRoutePayrolls,
 	getRouteProfile,
 	getRouteSettings,
@@ -91,17 +87,17 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 		authOnly: true,
 		roles: [UserRole.ADMIN],
 	},
-	[AppRoutes.EMPLOYEE_EDIT]: {
-		path: getRouteEmployeeEdit(":id"),
-		element: <EmployeeEditPage />,
-		authOnly: true,
-		roles: [UserRole.ADMIN],
-	},
 	[AppRoutes.EMPLOYEE_DELETE]: {
 		path: getRouteEmployeeDelete(":id"),
 		element: <EmployeeDeletePage />,
 		authOnly: true,
 		roles: [UserRole.ADMIN],
+	},
+	[AppRoutes.EMPLOYEE_TIME_CARD]: {
+		path: getRouteEmployeeTimeCard(),
+		element: <EmployeeTimeTablePage />,
+		authOnly: true,
+		roles: [UserRole.ACCOUNTANT],
 	},
 	[AppRoutes.DOCUMENTS]: {
 		path: getRouteDocuments(),
@@ -118,12 +114,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.DOCUMENT_CREATE]: {
 		path: getRouteDocumentCreate(),
 		element: <DocumentCreatePage />,
-		authOnly: true,
-		roles: [UserRole.ADMIN],
-	},
-	[AppRoutes.DOCUMENT_EDIT]: {
-		path: getRouteDocumentEdit(":id"),
-		element: <DocumentEditPage />,
 		authOnly: true,
 		roles: [UserRole.ADMIN],
 	},
@@ -148,12 +138,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.PAYROLL_CEREATE]: {
 		path: getRoutePayrollCreate(),
 		element: <PayrollCreatePage />,
-		authOnly: true,
-		roles: [UserRole.ACCOUNTANT],
-	},
-	[AppRoutes.PAYROLL_EDIT]: {
-		path: getRoutePayrollEdit(":id"),
-		element: <PayrollEditPage />,
 		authOnly: true,
 		roles: [UserRole.ACCOUNTANT],
 	},

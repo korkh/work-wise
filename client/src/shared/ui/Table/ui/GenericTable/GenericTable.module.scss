@@ -13,9 +13,10 @@
   th,
   td {
     padding: 5px;
+    max-width: 10vw;
     color: var(--text);
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--text-table);
 
     &:last-child {
       border-right: none;
@@ -30,9 +31,6 @@
     background-color: var(--icon, #f4f4f4);
     color: var(--text-table);
     font-weight: bold;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     user-select: none;
   }
@@ -40,6 +38,10 @@
   tr {
     &:hover {
       background-color: var(--hint);
+
+      th {
+        background-color: var(--icon, #f4f4f4);
+      }
     }
   }
 
@@ -53,4 +55,5 @@
     text-align: left;
     white-space: nowrap;
   }
+
 }

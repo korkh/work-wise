@@ -14,10 +14,12 @@ import { EmployeeDetailsSchema } from "@/entities/Employee";
 import { PayrollPageSchema } from "@/pages/PayrollsData";
 import { EmployeePageSchema } from "@/pages/EmployeesData";
 import { DocumentPageSchema } from "@/pages/DocumentsData";
+import { EmployeeTimeCardSchema } from "@/pages/EmployeeTimeCardPage";
 
 export interface StateSchema {
 	user: UserSchema;
 	ui: UISchema;
+	employeeTimeCard: EmployeeTimeCardSchema;
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
 	//Async reducers

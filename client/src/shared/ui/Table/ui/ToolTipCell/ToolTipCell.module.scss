@@ -1,0 +1,40 @@
+.cellTooltip {
+  position: relative;
+  display: inline-block;
+
+  .tooltipText {
+    visibility: hidden;
+    background-color: var(--dark-bg);
+    color: var(--text-table);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: auto;
+    word-wrap: break-word;
+    white-space: nowrap;
+    writing-mode: horizontal-tb;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--dark-bg) transparent transparent transparent;
+    }
+  }
+
+  &:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+  }
+}
