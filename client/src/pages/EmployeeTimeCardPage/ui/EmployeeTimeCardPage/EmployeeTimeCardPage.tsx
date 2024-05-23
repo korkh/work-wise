@@ -39,6 +39,9 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	const selectedMonth = useSelector(getEmployeeTiemCardSelectedMonth);
 	const [startDate, setStartDate] = useState(new Date());
 	const [holidays, setHolidays] = useState<number[]>([]);
+	const [adjustedWorkingHours, setAdjustedWorkingHours] = useState<{
+		[id: number]: number;
+	}>({});
 
 	const daysInMonth = (year: number, month: number) => {
 		return new Date(year, month + 1, 0).getDate();
@@ -49,37 +52,37 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 			{
 				id: 1,
 				fullName: "John Doe",
-				availableWorkingDaysPerMonth: 0,
+				availableWorkingHoursPerMonth: 0,
 				workingState: {},
 			},
 			{
 				id: 2,
 				fullName: "Peter Johnson",
-				availableWorkingDaysPerMonth: 0,
+				availableWorkingHoursPerMonth: 0,
 				workingState: {},
 			},
 			{
 				id: 3,
 				fullName: "Nadir Abduhadi",
-				availableWorkingDaysPerMonth: 0,
+				availableWorkingHoursPerMonth: 0,
 				workingState: {},
 			},
 			{
 				id: 4,
 				fullName: "John Doe",
-				availableWorkingDaysPerMonth: 0,
+				availableWorkingHoursPerMonth: 0,
 				workingState: {},
 			},
 			{
 				id: 5,
 				fullName: "Peter Johnson",
-				availableWorkingDaysPerMonth: 0,
+				availableWorkingHoursPerMonth: 0,
 				workingState: {},
 			},
 			{
 				id: 6,
 				fullName: "Nadir Abduhadi",
-				availableWorkingDaysPerMonth: 0,
+				availableWorkingHoursPerMonth: 0,
 				workingState: {},
 			},
 		];
@@ -121,6 +124,36 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 			dispatch(employeeTimeCardActions.updateAvailableWorkingDays(newHolidays));
 			return newHolidays;
 		});
+	};
+
+	const incrementWorkingHours = () => {
+		data &&
+			setAdjustedWorkingHours((prev) =>
+				data.reduce(
+					(acc, emp) => {
+						const currentHours =
+							prev[emp.id] ?? emp.availableWorkingHoursPerMonth ?? 0;
+						acc[emp.id] = currentHours + 1;
+						return acc;
+					},
+					{} as { [id: number]: number }
+				)
+			);
+	};
+
+	const decrementWorkingHours = () => {
+		data &&
+			setAdjustedWorkingHours((prev) =>
+				data.reduce(
+					(acc, emp) => {
+						const currentHours =
+							prev[emp.id] ?? emp.availableWorkingHoursPerMonth ?? 0;
+						acc[emp.id] = currentHours - 1;
+						return acc;
+					},
+					{} as { [id: number]: number }
+				)
+			);
 	};
 
 	const renderDaysHeaders = () => {
@@ -176,7 +209,10 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				(acc, state) => {
 					if (
 						typeof state === "string" &&
-						(state.startsWith("P/") || state.startsWith("S/"))
+						(state.startsWith("P/") ||
+							state.startsWith("PK/") ||
+							state.startsWith("S/") ||
+							state.startsWith("SK/"))
 					) {
 						const hours = parseInt(state.split("/")[1], 10);
 						return acc + (isNaN(hours) ? 0 : hours);
@@ -186,15 +222,12 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				0
 			);
 
-			const komandirovkaHours = Object.values(
-				employee.workingState
-			).reduce<number>((acc, state) => {
-				if (typeof state === "string" && state.startsWith("K/")) {
-					const hours = parseInt(state.split("/")[1], 10);
-					return acc + (isNaN(hours) ? 0 : hours);
-				}
-				return acc;
-			}, 0);
+			const komandirovkaDays = Object.values(employee.workingState).filter(
+				(state) =>
+					state === WorkingInits.K ||
+					(typeof state === "string" && state.startsWith("PK")) ||
+					(typeof state === "string" && state.startsWith("SK"))
+			).length;
 
 			const illnessDays = Object.values(employee.workingState).filter(
 				(state) => state === WorkingInits.L
@@ -204,14 +237,25 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				(state) => state === WorkingInits.A
 			).length;
 
-			const absenceDaysNoReason = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.NA || state === WorkingInits.PV
+			const notPaidHolidays = Object.values(employee.workingState).filter(
+				(state) => state === WorkingInits.NA
+			).length;
+
+			const idleDays = Object.values(employee.workingState).filter(
+				(state) => state === WorkingInits.PV
+			).length;
+
+			const truancyDays = Object.values(employee.workingState).filter(
+				(state) => state === WorkingInits.PB
 			).length;
 
 			const totalAbsenceHours = Object.values(
 				employee.workingState
 			).reduce<number>((acc, state) => {
-				if (typeof state === "string" && state !== WorkingInits.L) {
+				if (
+					(typeof state === "string" && state === WorkingInits.NA) ||
+					state === WorkingInits.PB
+				) {
 					return acc + 8;
 				}
 				return acc;
@@ -219,6 +263,9 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 
 			const [year, month] = selectedMonth.split("-").map(Number);
 			const days = daysInMonth(year, month - 1);
+			const availableWorkingHours =
+				adjustedWorkingHours[employee.id] ??
+				employee.availableWorkingHoursPerMonth;
 
 			return (
 				<tr key={employee.id}>
@@ -226,7 +273,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 					<td className={cls.fullNameColumn}>
 						<ToolTipCell str={employee.fullName} num={20} />
 					</td>
-					<td>{employee.availableWorkingHoursPerMonth}</td>
+					<td>{availableWorkingHours}</td>
 					{Array.from({ length: days }, (_, day) => {
 						const date = new Date(year, month - 1, day + 1);
 						const isWeekend = date.getDay() === 0 || date.getDay() === 6;
@@ -263,9 +310,11 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 					<td>{totalWorkingHours}</td>
 					<td>{overtimeHours}</td>
 					<td>{overtimePS}</td>
-					<td>{komandirovkaHours}</td>
+					<td>{komandirovkaDays}</td>
 					<td>{absenceDaysReason}</td>
-					<td>{absenceDaysNoReason}</td>
+					<td>{notPaidHolidays}</td>
+					<td>{idleDays}</td>
+					<td>{truancyDays}</td>
 					<td>{illnessDays}</td>
 					<td>{totalAbsenceHours}</td>
 				</tr>
@@ -281,20 +330,26 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 			<th className={cls.verticalHeader}>
 				<ToolTipCell str={t("Working Hours")} num={10} />
 			</th>
-			<th className={cls.verticalHeader}>{t("Overtime")}</th>
+			<th className={cls.verticalHeader}>{t("Overtime / hours")}</th>
 			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("Overtime P & S")} num={10} />
+				<ToolTipCell str={t("Overtime P & S / hours")} num={10} />
 			</th>
 			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("K")} num={10} />
+				<ToolTipCell str={t("K / days")} num={10} />
 			</th>
 			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("A")} num={10} />
+				<ToolTipCell str={t("A / days")} num={10} />
 			</th>
 			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("NA & PV")} num={10} />
+				<ToolTipCell str={t("NA / days")} num={10} />
 			</th>
-			<th className={cls.verticalHeader}>{t("Illness Days")}</th>
+			<th className={cls.verticalHeader}>
+				<ToolTipCell str={t("PV / days")} num={10} />
+			</th>
+			<th className={cls.verticalHeader}>
+				<ToolTipCell str={t("PB / days")} num={10} />
+			</th>
+			<th className={cls.verticalHeader}>{t("L / days")}</th>
 			<th className={cls.verticalHeader}>{t("Absence Hours")}</th>
 		</>
 	);
@@ -345,18 +400,12 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				return acc + empOvertimePS;
 			}, 0) || 0;
 
-		const totalKomandirovkaHours =
+		const totalKomandirovkaDays =
 			data?.reduce((acc, emp) => {
-				const empKomandirovkaHours = Object.values(
-					emp.workingState
-				).reduce<number>((empAcc, state) => {
-					if (typeof state === "string" && state.startsWith("K/")) {
-						const hours = parseInt(state.split("/")[1], 10);
-						return empAcc + (isNaN(hours) ? 0 : hours);
-					}
-					return empAcc;
-				}, 0);
-				return acc + empKomandirovkaHours;
+				const empKomandirovkaDays = Object.values(emp.workingState).filter(
+					(state) => state === WorkingInits.K
+				).length;
+				return acc + empKomandirovkaDays;
 			}, 0) || 0;
 
 		const totalIllnessDays =
@@ -375,19 +424,38 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				return acc + empAbsenceDaysReason;
 			}, 0) || 0;
 
-		const totalAbsenceDaysNoReason =
+		const totalNotPaidHolidays =
 			data?.reduce((acc, emp) => {
-				const empAbsenceDaysNoReason = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.NA || state === WorkingInits.PV
+				const empNotPaidHolidays = Object.values(emp.workingState).filter(
+					(state) => state === WorkingInits.NA
 				).length;
-				return acc + empAbsenceDaysNoReason;
+				return acc + empNotPaidHolidays;
+			}, 0) || 0;
+
+		const totalIddleDays =
+			data?.reduce((acc, emp) => {
+				const empIdleDays = Object.values(emp.workingState).filter(
+					(state) => state === WorkingInits.PV
+				).length;
+				return acc + empIdleDays;
+			}, 0) || 0;
+
+		const totalTruancyDays =
+			data?.reduce((acc, emp) => {
+				const empTruancyDays = Object.values(emp.workingState).filter(
+					(state) => state === WorkingInits.PB
+				).length;
+				return acc + empTruancyDays;
 			}, 0) || 0;
 
 		const totalAbsenceHours =
 			data?.reduce((acc, emp) => {
 				const empAbsenceHours = Object.values(emp.workingState).reduce<number>(
 					(empAcc, state) => {
-						if (typeof state === "string" && state === WorkingInits.NA) {
+						if (
+							(typeof state === "string" && state === WorkingInits.NA) ||
+							state === WorkingInits.PB
+						) {
 							return empAcc + 8;
 						}
 						return empAcc;
@@ -415,9 +483,11 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				<td>{totalWorkingHours}</td>
 				<td>{totalOvertimeHours}</td>
 				<td>{totalOvertimePS}</td>
-				<td>{totalKomandirovkaHours}</td>
+				<td>{totalKomandirovkaDays}</td>
 				<td>{totalAbsenceDaysReason}</td>
-				<td>{totalAbsenceDaysNoReason}</td>
+				<td>{totalNotPaidHolidays}</td>
+				<td>{totalIddleDays}</td>
+				<td>{totalTruancyDays}</td>
 				<td>{totalIllnessDays}</td>
 				<td>{totalAbsenceHours}</td>
 			</tr>
@@ -442,7 +512,13 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						<tr>
 							<th>#</th>
 							<th className={cls.fullNameColumn}>{t("Full Name")}</th>
-							<th className={cls.verticalHeader}>{t("Hours / month")}</th>
+							<th className={cls.verticalHeader}>
+								{t("Hrs / month ")}
+								<>
+									<button onClick={() => incrementWorkingHours()}>+</button>
+									<button onClick={() => decrementWorkingHours()}>-</button>
+								</>
+							</th>
 							{renderDaysHeaders()}
 							{renderSummaryHeaders()}
 						</tr>

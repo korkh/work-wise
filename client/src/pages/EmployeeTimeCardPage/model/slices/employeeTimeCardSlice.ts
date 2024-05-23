@@ -72,6 +72,16 @@ const employeeTimeCardSlice = createSlice({
 				);
 			});
 		},
+		adjustWorkingHoursPerDay(state, action: PayloadAction<number>) {
+			const adjustment = action.payload;
+			const [year, month] = state.selectedMonth.split("-").map(Number);
+			const holidays: number[] = [];
+			const workingHours =
+				calculateAvailableWorkingHours(year, month - 1, holidays) + adjustment;
+			state.data?.forEach((employee) => {
+				employee.availableWorkingHoursPerMonth = Math.max(0, workingHours);
+			});
+		},
 	},
 });
 
