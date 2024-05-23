@@ -3,7 +3,7 @@ export type WorkingState = Record<number, string | number>;
 export interface EmployeeTimeCard {
 	id: number;
 	fullName: string;
-	availableWorkingDaysPerMonth?: number;
+	availableWorkingHoursPerMonth?: number;
 	workingState: WorkingState;
 }
 

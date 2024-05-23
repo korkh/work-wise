@@ -12,7 +12,7 @@ const initialState: EmployeeTimeCardSchema = {
 	error: undefined,
 };
 
-const calculateAvailableWorkingDays = (
+const calculateAvailableWorkingHours = (
 	year: number,
 	month: number,
 	holidays: number[]
@@ -29,7 +29,7 @@ const calculateAvailableWorkingDays = (
 		}
 	}
 
-	return availableDays;
+	return availableDays * 8;
 };
 
 const employeeTimeCardSlice = createSlice({
@@ -59,16 +59,13 @@ const employeeTimeCardSlice = createSlice({
 					employee.workingState = {};
 				}
 				employee.workingState[day] = workingState;
-				console.log(
-					`Updated state for employee ${id} on day ${day} to ${workingState}`
-				);
 			}
 		},
 		updateAvailableWorkingDays(state, action: PayloadAction<number[]>) {
 			const holidays = action.payload;
 			const [year, month] = state.selectedMonth.split("-").map(Number);
 			state.data?.forEach((employee) => {
-				employee.availableWorkingDaysPerMonth = calculateAvailableWorkingDays(
+				employee.availableWorkingHoursPerMonth = calculateAvailableWorkingHours(
 					year,
 					month - 1,
 					holidays

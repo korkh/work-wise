@@ -6,12 +6,14 @@ export enum WorkingInits {
 	L = "L",
 	P = "P",
 	S = "S",
+	PB = "PB",
 }
 
 //K komandirovka
 // A otpusk
 // NA neoplach.otpusk
 // PV prostoi
+// PB progul
 // L bolezn
 // P weekend
 // S holiday

@@ -64,6 +64,24 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 				availableWorkingDaysPerMonth: 0,
 				workingState: {},
 			},
+			{
+				id: 4,
+				fullName: "John Doe",
+				availableWorkingDaysPerMonth: 0,
+				workingState: {},
+			},
+			{
+				id: 5,
+				fullName: "Peter Johnson",
+				availableWorkingDaysPerMonth: 0,
+				workingState: {},
+			},
+			{
+				id: 6,
+				fullName: "Nadir Abduhadi",
+				availableWorkingDaysPerMonth: 0,
+				workingState: {},
+			},
 		];
 		dispatch(employeeTimeCardActions.setEmployeeData(initialData));
 	}, [dispatch]);
@@ -183,7 +201,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 			).length;
 
 			const absenceDaysReason = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.A || state === WorkingInits.K
+				(state) => state === WorkingInits.A
 			).length;
 
 			const absenceDaysNoReason = Object.values(employee.workingState).filter(
@@ -208,7 +226,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 					<td className={cls.fullNameColumn}>
 						<ToolTipCell str={employee.fullName} num={20} />
 					</td>
-					<td>{employee.availableWorkingDaysPerMonth}</td>
+					<td>{employee.availableWorkingHoursPerMonth}</td>
 					{Array.from({ length: days }, (_, day) => {
 						const date = new Date(year, month - 1, day + 1);
 						const isWeekend = date.getDay() === 0 || date.getDay() === 6;
@@ -424,9 +442,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						<tr>
 							<th>#</th>
 							<th className={cls.fullNameColumn}>{t("Full Name")}</th>
-							<th className={cls.verticalHeader}>
-								{t("Working Days / month")}
-							</th>
+							<th className={cls.verticalHeader}>{t("Hours / month")}</th>
 							{renderDaysHeaders()}
 							{renderSummaryHeaders()}
 						</tr>
