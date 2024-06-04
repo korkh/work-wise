@@ -34,9 +34,6 @@ export const TimeCardRows = memo(function TimeCardRows(
 	} = props;
 	const { t } = useTranslation();
 
-	const [year, month] = selectedMonth.split("-").map(Number);
-	const days = daysInMonth(year, month - 1);
-
 	if (!form || form.length === 0)
 		return (
 			<tr>
@@ -134,6 +131,9 @@ export const TimeCardRows = memo(function TimeCardRows(
 			0
 		);
 
+		const [year, month] = selectedMonth.split("-").map(Number);
+		const days = daysInMonth(year, month - 1);
+
 		const availableWorkingHours =
 			adjustedWorkingHours[timecard.id] ??
 			timecard.availableWorkingHoursPerMonth;
@@ -159,8 +159,8 @@ export const TimeCardRows = memo(function TimeCardRows(
 						<td
 							key={day + 1}
 							className={classNames(cls.inputCell, [], {
-								[cls.weekend]: isWeekend,
-								[cls.holiday]: isHoliday,
+								[cls.wEnd]: isWeekend,
+								[cls.hDay]: isHoliday,
 							})}
 						>
 							<input
@@ -175,8 +175,8 @@ export const TimeCardRows = memo(function TimeCardRows(
 									);
 								}}
 								className={classNames("", [], {
-									[cls.weekend]: isWeekend,
-									[cls.holiday]: isHoliday,
+									[cls.wEnd]: isWeekend,
+									[cls.hDay]: isHoliday,
 								})}
 							/>
 						</td>
