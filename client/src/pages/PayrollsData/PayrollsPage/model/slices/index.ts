@@ -1,0 +1,1 @@
+export { payrollsPageReducer } from "./payrollPageSlice";

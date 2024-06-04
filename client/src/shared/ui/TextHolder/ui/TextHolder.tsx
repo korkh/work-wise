@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { CSSProperties, memo } from "react";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./TextHolder.module.scss";
 
@@ -17,6 +17,7 @@ interface TextHolderProps {
 	size?: TextHolderSize;
 	bold?: boolean;
 	"data-testid"?: string;
+	style?: CSSProperties;
 }
 
 type HeaderTagType = "h1" | "h2" | "h3" | "h4";
@@ -45,6 +46,7 @@ export const TextHolder = memo(function TextHolder(props: TextHolderProps) {
 		size = "sm",
 		bold,
 		"data-testid": dataTestId = "Text",
+		style,
 	} = props;
 
 	const HeaderTag = mapSizeToHeaderTag[size];
@@ -55,6 +57,7 @@ export const TextHolder = memo(function TextHolder(props: TextHolderProps) {
 	return (
 		<div
 			className={classNames(cls.text, additionalClasses, { [cls.bold]: bold })}
+			style={style}
 		>
 			{title && (
 				<HeaderTag className={cls.title} data-testid={`${dataTestId}.Header`}>

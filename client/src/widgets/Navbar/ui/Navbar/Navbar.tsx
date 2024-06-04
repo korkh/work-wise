@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Navbar.module.scss";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ interface NavbarProps {
 	className?: string;
 }
 
-export const Navbar = memo(function Navbar({ className }: NavbarProps) {
+const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	const { t } = useTranslation();
 	const [isAuthModal, setIsAuthModal] = useState(false);
 	const userData = useAuthToken();
@@ -73,3 +73,5 @@ export const Navbar = memo(function Navbar({ className }: NavbarProps) {
 		</RowStack>
 	);
 });
+
+export default Navbar;

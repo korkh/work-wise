@@ -15,6 +15,7 @@ import {
 } from "../../model/slices/employeeTimeCardSlice";
 import { useSelector } from "react-redux";
 import {
+	getEmployeeTiemCardError,
 	getEmployeeTiemCardIsLoading,
 	getEmployeeTiemCardSelectedMonth,
 	getEmployeeTimeCardData,
@@ -29,6 +30,8 @@ import { TimeCardSummaryHeaders } from "../TimeCardSummaryHeaders";
 import { TimeCardSummaryRow } from "../TimeCardSummaryRow";
 import { TimeCardDaysHeader } from "../TimeCardDaysHeader";
 import { TimeCardRows } from "../TableCardRows";
+import { TimeCardLoader } from "../TimeCardLoader";
+import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
 
 interface EmployeeTimeCardPageProps {
 	className?: string;
@@ -47,12 +50,15 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	const data = useSelector(getEmployeeTimeCardData);
 	const form = useSelector(getEmployeeTimeCardForm);
 	const isLoading = useSelector(getEmployeeTiemCardIsLoading);
+	const error = useSelector(getEmployeeTiemCardError);
 	const selectedMonth = useSelector(getEmployeeTiemCardSelectedMonth);
 	const [startDate, setStartDate] = useState(new Date());
 	const [holidays, setHolidays] = useState<number[] | undefined>([]);
 	const [adjustedWorkingHours, setAdjustedWorkingHours] = useState<{
 		[id: string]: number;
 	}>({});
+
+	const forceUpdate = useForceUpdate();
 
 	useEffect(() => {
 		dispatch(fetchEmployeeTimeCardData());
@@ -137,12 +143,76 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	const saveChanges = useCallback(() => {
 		if (form) {
 			dispatch(saveEmployeeTimeCardData());
+			forceUpdate();
 		}
-	}, [dispatch, form]);
+	}, [dispatch, forceUpdate, form]);
+
+	let content;
+
+	if (isLoading) {
+		content = <TimeCardLoader />;
+	} else if (error) {
+		content = (
+			<TextHolder
+				align="center"
+				variant="error"
+				title={t("TimeCard loading error")}
+				style={{ marginTop: "10vh" }}
+			/>
+		);
+	} else if (!form || form.length === 0) {
+		content = (
+			<TextHolder
+				align="center"
+				variant="accent"
+				title={t("No data available. Try to choose another date!")}
+				style={{ marginTop: "10vh" }}
+			/>
+		);
+	} else {
+		content = (
+			<table className={classNames(cls.timeCard, [className], {})}>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th className={cls.fullNameColumn}>{t("Full Name")}</th>
+						<th className={cls.verticalHeader}>
+							{t("Hrs / month ")}
+							<>
+								<button onClick={() => incrementWorkingHours()}>+</button>
+								<button onClick={() => decrementWorkingHours()}>-</button>
+							</>
+						</th>
+						<TimeCardDaysHeader
+							weekEndClass={cls.weekend}
+							holidayClass={cls.holiday}
+							selectedMonth={selectedMonth}
+							holidays={holidays}
+							toggleHoliday={toggleHoliday}
+						/>
+						<TimeCardSummaryHeaders className={cls.verticalHeader} />
+					</tr>
+				</thead>
+				<tbody>
+					<TimeCardRows
+						form={form}
+						selectedMonth={selectedMonth}
+						handleWorkingStateChange={handleWorkingStateChange}
+						adjustedWorkingHours={adjustedWorkingHours}
+					/>
+					<TimeCardSummaryRow
+						selectedMonth={selectedMonth}
+						form={form}
+						className={cls.summaryRow}
+					/>
+				</tbody>
+			</table>
+		);
+	}
 
 	return (
 		<DynamicReducerLoader reducers={reducers}>
-			<div className={classNames(cls.employeeTimeTablePage, [className], {})}>
+			<div className={classNames(cls.employeeTimeTablePage, [className])}>
 				<RowStack gap="32" justify="center" align="center">
 					<TextHolder title={t("Employees time card")} />
 					<DatePicker
@@ -154,42 +224,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 					/>
 					<Button onClick={saveChanges}>{t("Save")}</Button>
 				</RowStack>
-				<table className={classNames(cls.timeCard, [className], {})}>
-					<thead>
-						<tr>
-							<th>#</th>
-							<th className={cls.fullNameColumn}>{t("Full Name")}</th>
-							<th className={cls.verticalHeader}>
-								{t("Hrs / month ")}
-								<>
-									<button onClick={() => incrementWorkingHours()}>+</button>
-									<button onClick={() => decrementWorkingHours()}>-</button>
-								</>
-							</th>
-							<TimeCardDaysHeader
-								weekEndClass={cls.weekend}
-								holidayClass={cls.holiday}
-								selectedMonth={selectedMonth}
-								holidays={holidays}
-								toggleHoliday={toggleHoliday}
-							/>
-							<TimeCardSummaryHeaders className={cls.verticalHeader} />
-						</tr>
-					</thead>
-					<tbody>
-						<TimeCardRows
-							form={form}
-							selectedMonth={selectedMonth}
-							handleWorkingStateChange={handleWorkingStateChange}
-							adjustedWorkingHours={adjustedWorkingHours}
-						/>
-						<TimeCardSummaryRow
-							selectedMonth={selectedMonth}
-							form={form}
-							className={cls.summaryRow}
-						/>
-					</tbody>
-				</table>
+				{content}
 			</div>
 		</DynamicReducerLoader>
 	);

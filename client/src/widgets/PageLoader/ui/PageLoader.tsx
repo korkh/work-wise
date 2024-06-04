@@ -7,7 +7,7 @@ interface PageLoaderProps {
 	className?: string;
 }
 
-export const PageLoader = memo(function PageLoader(
+const PageLoader = memo(function PageLoader(
 	props: PropsWithChildren<PageLoaderProps>
 ) {
 	const { className, ...otherProps } = props;
@@ -20,3 +20,5 @@ export const PageLoader = memo(function PageLoader(
 		</div>
 	);
 });
+
+export default PageLoader;

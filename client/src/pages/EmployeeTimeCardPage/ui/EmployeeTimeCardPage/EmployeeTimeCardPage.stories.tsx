@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
 import EmployeeTimeTablePage from "./EmployeeTimeCardPage";
+import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
+import { Theme } from "@/shared/consts/Theme";
 
 const meta = {
 	title: "pages/EmployeeTimeTablePage",
@@ -22,7 +24,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof EmployeeTimeTablePage>;
 
 export const Primary: Story = {
 	args: {},
