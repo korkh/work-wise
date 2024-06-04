@@ -90,7 +90,6 @@ export const EmployeeDetailsCard = memo(function EmployeeDetailsCard(
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const formData = useSelector(getEmployeeForm);
-	console.log("FORM DATA", formData);
 	const isLoading = useSelector(getEmployeeDetailsIsLoading);
 	const error = useSelector(getEmployeeDetailsError);
 	const readonly = useSelector(getEmployeeReadonly);

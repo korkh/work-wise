@@ -82,7 +82,7 @@ export function GenericTable<T extends Identifiable, U>({
 
 	return (
 		<>
-			<table className={classNames(cls.genericTable, [className], {})}>
+			<table className={classNames(cls.genericTable, [className])}>
 				<caption>
 					<TextHolder align="center" title={title} />
 					<RowStack max gap="16" align="center" justify="between">

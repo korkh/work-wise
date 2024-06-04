@@ -2,6 +2,7 @@ using Application.Addresses;
 using Application.Contracts;
 using Application.Documents;
 using Application.Employees;
+using Application.EmployeeTimeCards;
 using Application.Payrolls;
 using Application.Transports;
 using AutoMapper;
@@ -29,7 +30,10 @@ namespace Application.Core
             CreateMap<DocumentDto, Document>()
                 .ForPath(dest => dest.Employee.Id, opt => opt.MapFrom(src => src.EmployeeId))
                 .ReverseMap();
-
+            CreateMap<EmployeeTimeCard, EmployeeTimeCardDto>()
+                .ForPath(dest => dest.EmployeeLastName, opt => opt.MapFrom(src => src.Employee.LastName))
+                .ReverseMap();
+            CreateMap<WorkingState, WorkingStateDto>().ReverseMap();
             CreateMap<PayrollDto, Payroll>()
                 .ForPath(dest => dest.Employee.Id, opt => opt.MapFrom(src => src.EmployeeId))
                 .ReverseMap();

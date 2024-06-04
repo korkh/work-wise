@@ -19,7 +19,7 @@ import { EmployeeTimeCardSchema } from "@/pages/EmployeeTimeCardPage";
 export interface StateSchema {
 	user: UserSchema;
 	ui: UISchema;
-	employeeTimeCard: EmployeeTimeCardSchema;
+
 	[rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
 	//Async reducers
@@ -28,6 +28,7 @@ export interface StateSchema {
 	documentPage: DocumentPageSchema;
 	payrollPage: PayrollPageSchema;
 	employeeDetails: EmployeeDetailsSchema;
+	employeeTimeCard: EmployeeTimeCardSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

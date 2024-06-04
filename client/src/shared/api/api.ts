@@ -34,7 +34,6 @@ $api.interceptors.response.use(
 					withCredentials: true,
 				});
 				const newToken = res.data.token;
-				console.log("Token set in localStorage:", newToken);
 				localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, newToken);
 				originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
 				return $api.request(originalRequest);

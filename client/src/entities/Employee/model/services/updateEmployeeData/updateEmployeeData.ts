@@ -14,7 +14,7 @@ export const updateEmployeeData = createAsyncThunk<
 	const { extra, rejectWithValue, getState } = thunkApi;
 
 	const formData = getEmployeeForm(getState());
-	console.log("ROW VERSION IN UPDATE EMPLOYEE THUNK", formData?.rowVersion);
+
 	const errors = validateEmployeeData(formData);
 
 	if (errors.length) {
@@ -45,7 +45,6 @@ export const updateEmployeeData = createAsyncThunk<
 		if (!response.data) {
 			throw new Error();
 		}
-		console.log("RESPONSE IN fetchEmployeeByID", response.data);
 		return response.data;
 	} catch (error) {
 		console.error("Failed to fetch employee data!", error);

@@ -1,7 +1,7 @@
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./EmployeeTimeCardPage.module.scss";
 import { useTranslation } from "react-i18next";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -15,16 +15,23 @@ import {
 } from "../../model/slices/employeeTimeCardSlice";
 import { useSelector } from "react-redux";
 import {
+	getEmployeeTiemCardIsLoading,
 	getEmployeeTiemCardSelectedMonth,
 	getEmployeeTimeCardData,
+	getEmployeeTimeCardForm,
 } from "../../model/selectors/employeeTimeCard";
 import { WorkingInits } from "../../model/consts/working_states";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { RowStack } from "@/shared/ui/Stack";
 import { ToolTipCell } from "@/shared/ui/Table/ui/ToolTipCell";
+import { fetchEmployeeTimeCardData } from "../../model/services/fetchEmployeeTimeCardData/fetchEmployeeTimeCardData";
+import { saveEmployeeTimeCardData } from "../../model/services/saveEmployeeTimeCardData/saveEmployeeTimeCardData";
+import { Button } from "@/shared/ui/Button";
+import { TimeCardSummaryHeaders } from "../TimeCardSummaryHeaders";
 
 interface EmployeeTimeCardPageProps {
 	className?: string;
+	isLoaded?: boolean;
 }
 
 const reducers: ReducersList = {
@@ -35,12 +42,15 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	const { className } = props;
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
+
 	const data = useSelector(getEmployeeTimeCardData);
+	const form = useSelector(getEmployeeTimeCardForm);
+	const isLoading = useSelector(getEmployeeTiemCardIsLoading);
 	const selectedMonth = useSelector(getEmployeeTiemCardSelectedMonth);
 	const [startDate, setStartDate] = useState(new Date());
-	const [holidays, setHolidays] = useState<number[]>([]);
+	const [holidays, setHolidays] = useState<number[] | undefined>([]);
 	const [adjustedWorkingHours, setAdjustedWorkingHours] = useState<{
-		[id: number]: number;
+		[id: string]: number;
 	}>({});
 
 	const daysInMonth = (year: number, month: number) => {
@@ -48,45 +58,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	};
 
 	useEffect(() => {
-		const initialData = [
-			{
-				id: 1,
-				fullName: "John Doe",
-				availableWorkingHoursPerMonth: 0,
-				workingState: {},
-			},
-			{
-				id: 2,
-				fullName: "Peter Johnson",
-				availableWorkingHoursPerMonth: 0,
-				workingState: {},
-			},
-			{
-				id: 3,
-				fullName: "Nadir Abduhadi",
-				availableWorkingHoursPerMonth: 0,
-				workingState: {},
-			},
-			{
-				id: 4,
-				fullName: "John Doe",
-				availableWorkingHoursPerMonth: 0,
-				workingState: {},
-			},
-			{
-				id: 5,
-				fullName: "Peter Johnson",
-				availableWorkingHoursPerMonth: 0,
-				workingState: {},
-			},
-			{
-				id: 6,
-				fullName: "Nadir Abduhadi",
-				availableWorkingHoursPerMonth: 0,
-				workingState: {},
-			},
-		];
-		dispatch(employeeTimeCardActions.setEmployeeData(initialData));
+		dispatch(fetchEmployeeTimeCardData());
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -94,15 +66,24 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 		const month = startDate.getMonth() + 1;
 		const monthString = `${year}-${String(month).padStart(2, "0")}`;
 		dispatch(employeeTimeCardActions.setSelectedMonth(monthString));
-		dispatch(employeeTimeCardActions.updateAvailableWorkingDays(holidays));
-	}, [startDate, dispatch, holidays]);
+	}, [startDate, dispatch]);
+
+	useEffect(() => {
+		const allHolidays = form
+			?.map((emp) => emp.workingStates)
+			.flat()
+			.filter((ws) => ws.holiday)
+			.map((ws) => ws.day);
+		setHolidays(allHolidays);
+		dispatch(employeeTimeCardActions.updateAvailableWorkingDays(allHolidays));
+	}, [form, dispatch]);
 
 	const handleDateChange = (date: Date) => {
 		setStartDate(date);
 	};
 
 	const handleWorkingStateChange = (
-		id: number,
+		id: string,
 		day: number,
 		state: string | number
 	) => {
@@ -118,9 +99,9 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 
 	const toggleHoliday = (day: number) => {
 		setHolidays((prevHolidays) => {
-			const newHolidays = prevHolidays.includes(day)
+			const newHolidays = prevHolidays?.includes(day)
 				? prevHolidays.filter((d) => d !== day)
-				: [...prevHolidays, day];
+				: prevHolidays && [...prevHolidays, day];
 			dispatch(employeeTimeCardActions.updateAvailableWorkingDays(newHolidays));
 			return newHolidays;
 		});
@@ -136,7 +117,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						acc[emp.id] = currentHours + 1;
 						return acc;
 					},
-					{} as { [id: number]: number }
+					{} as { [id: string]: number }
 				)
 			);
 	};
@@ -151,19 +132,26 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						acc[emp.id] = currentHours - 1;
 						return acc;
 					},
-					{} as { [id: number]: number }
+					{} as { [id: string]: number }
 				)
 			);
 	};
+
+	const saveChanges = useCallback(() => {
+		if (form) {
+			dispatch(saveEmployeeTimeCardData());
+		}
+	}, [dispatch, form]);
 
 	const renderDaysHeaders = () => {
 		if (!selectedMonth) return null;
 		const [year, month] = selectedMonth.split("-").map(Number);
 		const days = daysInMonth(year, month - 1);
+
 		return Array.from({ length: days }, (_, i) => {
 			const day = new Date(year, month - 1, i + 1).getDay();
 			const isWeekend = day === 0 || day === 6;
-			const isHoliday = holidays.includes(i + 1);
+			const isHoliday = holidays?.includes(i + 1);
 			return (
 				<th
 					key={i + 1}
@@ -171,7 +159,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						[cls.weekend]: isWeekend,
 						[cls.holiday]: isHoliday,
 					})}
-					onClick={() => toggleHoliday(i + 1)} // Toggle holiday on click
+					onClick={() => toggleHoliday(i + 1)}
 				>
 					{i + 1}
 				</th>
@@ -180,104 +168,126 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	};
 
 	const renderRows = () => {
-		return data?.map((employee) => {
-			const totalWorkingDays = Object.values(employee.workingState).filter(
-				(state) => typeof state === "number" && state > 0
+		if (!form || form.length === 0)
+			return (
+				<tr>
+					<td colSpan={10}>
+						<TextHolder title={t("No data available")} />
+					</td>
+				</tr>
+			);
+		return form.map((timecard, index) => {
+			const workingStatesMap = timecard.workingStates.reduce(
+				(acc, ws) => {
+					acc[ws.day] = ws.state;
+					return acc;
+				},
+				{} as { [day: number]: string | number }
+			);
+
+			const totalWorkingDays = timecard.workingStates.filter(
+				(ws) => typeof ws.state === "number" && ws.state > 0
 			).length;
 
-			const totalWorkingHours = Object.values(
-				employee.workingState
-			).reduce<number>((acc, state) => {
-				const parsedState = typeof state === "string" ? Number(state) : state;
-				if (!isNaN(parsedState)) {
-					return acc + parsedState;
-				}
-				return acc;
-			}, 0);
-
-			const overtimeHours = Object.entries(
-				employee.workingState
-			).reduce<number>((acc, [_, hours]) => {
-				const parsedHours = typeof hours === "string" ? Number(hours) : hours;
-				if (!isNaN(parsedHours) && parsedHours > 8) {
-					return acc + (parsedHours - 8);
-				}
-				return acc;
-			}, 0);
-
-			const overtimePS = Object.values(employee.workingState).reduce<number>(
-				(acc, state) => {
-					if (
-						typeof state === "string" &&
-						(state.startsWith("P/") ||
-							state.startsWith("PK/") ||
-							state.startsWith("S/") ||
-							state.startsWith("SK/"))
-					) {
-						const hours = parseInt(state.split("/")[1], 10);
-						return acc + (isNaN(hours) ? 0 : hours);
+			const totalWorkingHours = timecard.workingStates.reduce<number>(
+				(acc, ws) => {
+					const parsedState =
+						typeof ws.state === "string" ? Number(ws.state) : ws.state;
+					if (!isNaN(parsedState)) {
+						return acc + parsedState;
 					}
 					return acc;
 				},
 				0
 			);
 
-			const komandirovkaDays = Object.values(employee.workingState).filter(
-				(state) =>
-					state === WorkingInits.K ||
-					(typeof state === "string" && state.startsWith("PK")) ||
-					(typeof state === "string" && state.startsWith("SK"))
-			).length;
-
-			const illnessDays = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.L
-			).length;
-
-			const absenceDaysReason = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.A
-			).length;
-
-			const notPaidHolidays = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.NA
-			).length;
-
-			const idleDays = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.PV
-			).length;
-
-			const truancyDays = Object.values(employee.workingState).filter(
-				(state) => state === WorkingInits.PB
-			).length;
-
-			const totalAbsenceHours = Object.values(
-				employee.workingState
-			).reduce<number>((acc, state) => {
-				if (
-					(typeof state === "string" && state === WorkingInits.NA) ||
-					state === WorkingInits.PB
-				) {
-					return acc + 8;
+			const overtimeHours = timecard.workingStates.reduce<number>((acc, ws) => {
+				const parsedHours =
+					typeof ws.state === "string" ? Number(ws.state) : ws.state;
+				if (!isNaN(parsedHours) && parsedHours > 8) {
+					return acc + (parsedHours - 8);
 				}
 				return acc;
 			}, 0);
 
+			const overtimePS = timecard.workingStates.reduce<number>((acc, ws) => {
+				if (
+					typeof ws.state === "string" &&
+					(ws.state.startsWith("P/") ||
+						ws.state.startsWith("PK/") ||
+						ws.state.startsWith("S/") ||
+						ws.state.startsWith("SK/"))
+				) {
+					const hours = parseInt(ws.state.split("/")[1], 10);
+					return acc + (isNaN(hours) ? 0 : hours);
+				}
+				return acc;
+			}, 0);
+
+			const komandirovkaDays = timecard.workingStates.filter(
+				(ws) =>
+					typeof ws.state === "string" &&
+					(ws.state.startsWith("K") ||
+						ws.state.startsWith("PK") ||
+						ws.state.startsWith("SK"))
+			).length;
+
+			const illnessDays = timecard.workingStates.filter(
+				(ws) => ws.state === WorkingInits.L
+			).length;
+
+			const absenceDaysReason = timecard.workingStates.filter(
+				(ws) => ws.state === WorkingInits.A
+			).length;
+
+			const notPaidHolidays = timecard.workingStates.filter(
+				(ws) => ws.state === WorkingInits.NA
+			).length;
+
+			const idleDays = timecard.workingStates.filter(
+				(ws) => ws.state === WorkingInits.PV
+			).length;
+
+			const truancyDays = timecard.workingStates.filter(
+				(ws) => ws.state === WorkingInits.PB
+			).length;
+
+			const totalAbsenceHours = timecard.workingStates.reduce<number>(
+				(acc, ws) => {
+					if (
+						(typeof ws.state === "string" && ws.state === WorkingInits.NA) ||
+						ws.state === WorkingInits.PB
+					) {
+						return acc + 8;
+					}
+					return acc;
+				},
+				0
+			);
+
 			const [year, month] = selectedMonth.split("-").map(Number);
 			const days = daysInMonth(year, month - 1);
+
 			const availableWorkingHours =
-				adjustedWorkingHours[employee.id] ??
-				employee.availableWorkingHoursPerMonth;
+				adjustedWorkingHours[timecard.id] ??
+				timecard.availableWorkingHoursPerMonth;
 
 			return (
-				<tr key={employee.id}>
-					<td>{employee.id}</td>
+				<tr key={timecard.id}>
+					<td>{index + 1}</td>
 					<td className={cls.fullNameColumn}>
-						<ToolTipCell str={employee.fullName} num={20} />
+						<ToolTipCell
+							str={`${timecard.employeeFirstName} ${timecard.employeeLastName}`}
+							num={20}
+						/>
 					</td>
 					<td>{availableWorkingHours}</td>
 					{Array.from({ length: days }, (_, day) => {
 						const date = new Date(year, month - 1, day + 1);
 						const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-						const isHoliday = holidays.includes(day + 1);
+						const isHoliday = timecard.workingStates.some(
+							(ws) => ws.day === day + 1 && ws.holiday
+						);
 						const defaultValue = isWeekend ? "P" : isHoliday ? "S" : "";
 						return (
 							<td
@@ -289,11 +299,11 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 							>
 								<input
 									type="text"
-									value={employee.workingState[day + 1] || defaultValue}
+									value={workingStatesMap[day + 1] || defaultValue}
 									onChange={(e) => {
 										const value = e.target.value.toUpperCase();
 										handleWorkingStateChange(
-											employee.id,
+											timecard.id,
 											day + 1,
 											isNaN(Number(value)) ? value : Number(value)
 										);
@@ -322,53 +332,21 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 		});
 	};
 
-	const renderSummaryHeaders = () => (
-		<>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("Working Days")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("Working Hours")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>{t("Overtime / hours")}</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("Overtime P & S / hours")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("K / days")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("A / days")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("NA / days")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("PV / days")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>
-				<ToolTipCell str={t("PB / days")} num={10} />
-			</th>
-			<th className={cls.verticalHeader}>{t("L / days")}</th>
-			<th className={cls.verticalHeader}>{t("Absence Hours")}</th>
-		</>
-	);
-
 	const renderSummaryRow = () => {
 		const totalWorkingDays =
-			data?.reduce((acc, emp) => {
-				const empWorkingDays = Object.values(emp.workingState).filter(
-					(state) => typeof state === "number" && state > 0
+			form?.reduce((acc, emp) => {
+				const empWorkingDays = emp.workingStates.filter(
+					(ws) => typeof ws.state === "number" && ws.state > 0
 				).length;
 				return acc + empWorkingDays;
 			}, 0) || 0;
 
 		const totalWorkingHours =
-			data?.reduce((acc, emp) => {
-				const empWorkingHours = Object.values(emp.workingState).reduce<number>(
-					(empAcc, state) => {
+			form?.reduce((acc, emp) => {
+				const empWorkingHours = emp.workingStates.reduce<number>(
+					(empAcc, ws) => {
 						const parsedState =
-							typeof state === "string" ? Number(state) : state;
+							typeof ws.state === "string" ? Number(ws.state) : ws.state;
 						if (!isNaN(parsedState)) {
 							return empAcc + parsedState;
 						}
@@ -383,78 +361,79 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 			totalWorkingHours > 160 ? totalWorkingHours - 160 : 0;
 
 		const totalOvertimePS =
-			data?.reduce((acc, emp) => {
-				const empOvertimePS = Object.values(emp.workingState).reduce<number>(
-					(empAcc, state) => {
-						if (
-							typeof state === "string" &&
-							(state.startsWith("P/") || state.startsWith("S/"))
-						) {
-							const hours = parseInt(state.split("/")[1], 10);
-							return empAcc + (isNaN(hours) ? 0 : hours);
-						}
-						return empAcc;
-					},
-					0
-				);
+			form?.reduce((acc, emp) => {
+				const empOvertimePS = emp.workingStates.reduce<number>((empAcc, ws) => {
+					if (
+						typeof ws.state === "string" &&
+						(ws.state.startsWith("P/") || ws.state.startsWith("S/"))
+					) {
+						const hours = parseInt(ws.state.split("/")[1], 10);
+						return empAcc + (isNaN(hours) ? 0 : hours);
+					}
+					return empAcc;
+				}, 0);
 				return acc + empOvertimePS;
 			}, 0) || 0;
 
 		const totalKomandirovkaDays =
-			data?.reduce((acc, emp) => {
-				const empKomandirovkaDays = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.K
+			form?.reduce((acc, emp) => {
+				const empKomandirovkaDays = emp.workingStates.filter(
+					(ws) =>
+						typeof ws.state === "string" &&
+						(ws.state.startsWith("K") ||
+							ws.state.startsWith("PK") ||
+							ws.state.startsWith("SK"))
 				).length;
 				return acc + empKomandirovkaDays;
 			}, 0) || 0;
 
 		const totalIllnessDays =
-			data?.reduce((acc, emp) => {
-				const empIllnessDays = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.L
+			form?.reduce((acc, emp) => {
+				const empIllnessDays = emp.workingStates.filter(
+					(ws) => ws.state === WorkingInits.L
 				).length;
 				return acc + empIllnessDays;
 			}, 0) || 0;
 
 		const totalAbsenceDaysReason =
-			data?.reduce((acc, emp) => {
-				const empAbsenceDaysReason = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.A
+			form?.reduce((acc, emp) => {
+				const empAbsenceDaysReason = emp.workingStates.filter(
+					(ws) => ws.state === WorkingInits.A
 				).length;
 				return acc + empAbsenceDaysReason;
 			}, 0) || 0;
 
 		const totalNotPaidHolidays =
-			data?.reduce((acc, emp) => {
-				const empNotPaidHolidays = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.NA
+			form?.reduce((acc, emp) => {
+				const empNotPaidHolidays = emp.workingStates.filter(
+					(ws) => ws.state === WorkingInits.NA
 				).length;
 				return acc + empNotPaidHolidays;
 			}, 0) || 0;
 
 		const totalIddleDays =
-			data?.reduce((acc, emp) => {
-				const empIdleDays = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.PV
+			form?.reduce((acc, emp) => {
+				const empIdleDays = emp.workingStates.filter(
+					(ws) => ws.state === WorkingInits.PV
 				).length;
 				return acc + empIdleDays;
 			}, 0) || 0;
 
 		const totalTruancyDays =
-			data?.reduce((acc, emp) => {
-				const empTruancyDays = Object.values(emp.workingState).filter(
-					(state) => state === WorkingInits.PB
+			form?.reduce((acc, emp) => {
+				const empTruancyDays = emp.workingStates.filter(
+					(ws) => ws.state === WorkingInits.PB
 				).length;
 				return acc + empTruancyDays;
 			}, 0) || 0;
 
 		const totalAbsenceHours =
-			data?.reduce((acc, emp) => {
-				const empAbsenceHours = Object.values(emp.workingState).reduce<number>(
-					(empAcc, state) => {
+			form?.reduce((acc, emp) => {
+				const empAbsenceHours = emp.workingStates.reduce<number>(
+					(empAcc, ws) => {
 						if (
-							(typeof state === "string" && state === WorkingInits.NA) ||
-							state === WorkingInits.PB
+							(typeof ws.state === "string" && ws.state === WorkingInits.NA) ||
+							ws.state === WorkingInits.PB
 						) {
 							return empAcc + 8;
 						}
@@ -506,6 +485,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						showMonthYearPicker
 						className={cls.monthSelect}
 					/>
+					<Button onClick={saveChanges}>{t("Save")}</Button>
 				</RowStack>
 				<table className={classNames(cls.timeCard, [className], {})}>
 					<thead>
@@ -520,7 +500,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 								</>
 							</th>
 							{renderDaysHeaders()}
-							{renderSummaryHeaders()}
+							<TimeCardSummaryHeaders className={cls.verticalHeader} />
 						</tr>
 					</thead>
 					<tbody>

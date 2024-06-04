@@ -13,4 +13,3 @@ export {
 //Selectors
 export { getUserInited } from "./model/selectors/getUserInited";
 export { getUserAuthData } from "./model/selectors/getUserAuthData";
-export { useJsonSettings } from "./model/selectors/jsonSettings";

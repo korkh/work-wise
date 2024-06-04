@@ -16,5 +16,6 @@ namespace Domain.Entities
         public Contract ContractData { get; set; }
         public ICollection<Document> Documents { get; set; } = new List<Document>();
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
+        public ICollection<EmployeeTimeCard> EmployeeTimeCards { get; set; } = new List<EmployeeTimeCard>();
     }
 }

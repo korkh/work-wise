@@ -1,4 +1,3 @@
-using Application.Employees;
 using Application.Payrolls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

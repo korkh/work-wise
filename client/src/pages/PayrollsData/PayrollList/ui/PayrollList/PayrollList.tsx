@@ -31,7 +31,7 @@ export const PayrollList = memo(function DocumentsList(
 
 	if (!isLoading && !payrolls.length) {
 		return (
-			<div className={classNames(cls.payrollList, [className], {})}>
+			<div className={classNames(cls.payrollList, [className])}>
 				<TextHolder size={"l"} title={t("Payrolls not found")} />
 			</div>
 		);

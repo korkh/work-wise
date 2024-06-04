@@ -21,12 +21,7 @@ import { ForbiddenPage } from "@/pages/ForbiddenPage";
 import { MainPage } from "@/pages/MainPage";
 import { ManagerPanelPage } from "@/pages/ManagerPanelPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
-import {
-	PayrollsPage,
-	PayrollDetailsPage,
-	PayrollCreatePage,
-	PayrollDeletePage,
-} from "@/pages/PayrollsData";
+import { PayrollsPage, PayrollDetailsPage } from "@/pages/PayrollsData";
 import { ProfilePage } from "@/pages/Profiles";
 
 import { SettingsPage } from "@/pages/SettingsPage";
@@ -49,8 +44,6 @@ import {
 	getRouteMain,
 	getRouteManager,
 	getRouteNotFound,
-	getRoutePayrollCreate,
-	getRoutePayrollDelete,
 	getRoutePayrollDetails,
 	getRoutePayrolls,
 	getRouteProfile,
@@ -132,18 +125,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.PAYROLL_DETAILS]: {
 		path: getRoutePayrollDetails(":id"),
 		element: <PayrollDetailsPage />,
-		authOnly: true,
-		roles: [UserRole.ACCOUNTANT],
-	},
-	[AppRoutes.PAYROLL_CEREATE]: {
-		path: getRoutePayrollCreate(),
-		element: <PayrollCreatePage />,
-		authOnly: true,
-		roles: [UserRole.ACCOUNTANT],
-	},
-	[AppRoutes.PAYROLL_DELETE]: {
-		path: getRoutePayrollDelete(":id"),
-		element: <PayrollDeletePage />,
 		authOnly: true,
 		roles: [UserRole.ACCOUNTANT],
 	},

@@ -77,6 +77,28 @@ namespace Storage.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("Domain.Entities.EmployeeTimeCard", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AvailableWorkingHoursPerMonth")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Month")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeTimeCards");
+                });
+
             modelBuilder.Entity("Domain.Entities.Payroll", b =>
                 {
                     b.Property<Guid>("Id")
@@ -356,6 +378,31 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.WorkingState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("EmployeeTimeCardId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Holiday")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeTimeCardId");
+
+                    b.ToTable("WorkingStates");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -603,6 +650,17 @@ namespace Storage.Migrations
                     b.Navigation("TransportInfo");
                 });
 
+            modelBuilder.Entity("Domain.Entities.EmployeeTimeCard", b =>
+                {
+                    b.HasOne("Domain.Entities.Employee", "Employee")
+                        .WithMany("EmployeeTimeCards")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Domain.Entities.Payroll", b =>
                 {
                     b.HasOne("Domain.Entities.Employee", "Employee")
@@ -628,6 +686,17 @@ namespace Storage.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.WorkingState", b =>
+                {
+                    b.HasOne("Domain.Entities.EmployeeTimeCard", "EmployeeTimeCard")
+                        .WithMany("WorkingStates")
+                        .HasForeignKey("EmployeeTimeCardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeTimeCard");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -685,7 +754,14 @@ namespace Storage.Migrations
                 {
                     b.Navigation("Documents");
 
+                    b.Navigation("EmployeeTimeCards");
+
                     b.Navigation("Payrolls");
+                });
+
+            modelBuilder.Entity("Domain.Entities.EmployeeTimeCard", b =>
+                {
+                    b.Navigation("WorkingStates");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

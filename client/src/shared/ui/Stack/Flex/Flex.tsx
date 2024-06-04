@@ -69,6 +69,7 @@ export interface FlexProps extends DivProps {
 	wrap?: FlexWrapProps;
 	gap?: FlexGapProps;
 	max?: boolean;
+	width?: string;
 }
 
 export const Flex = (props: FlexProps) => {
@@ -81,6 +82,7 @@ export const Flex = (props: FlexProps) => {
 		wrap = "nowrap",
 		gap,
 		max,
+		width,
 		...otherProps
 	} = props;
 
@@ -98,7 +100,11 @@ export const Flex = (props: FlexProps) => {
 	};
 
 	return (
-		<div className={classNames(cls.Flex, classes, mods)} {...otherProps}>
+		<div
+			className={classNames(cls.Flex, classes, mods)}
+			style={{ width }}
+			{...otherProps}
+		>
 			{children}
 		</div>
 	);

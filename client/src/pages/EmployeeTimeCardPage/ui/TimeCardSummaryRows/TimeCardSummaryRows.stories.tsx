@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/const/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import PayrollDeletePage from "./PayrollDeletePage";
+import {TimeCardSummaryRows} from "./TimeCardSummaryRows";
 
 const meta = {
-  title: "pages/PayrollDeletePage",
-  component: PayrollDeletePage,
+  title: "shared/TimeCardSummaryRows",
+  component: TimeCardSummaryRows,
   parameters: {
     layout: "fullscreen",
   },
@@ -15,12 +15,14 @@ const meta = {
   argTypes: {},
   decorators: [
     (Story) => (
-      <StoreDecorator state={{}}>
+      <StoreDecorator
+        state={{}}
+      >
         <Story />
       </StoreDecorator>
     ),
   ],
-} satisfies Meta<typeof PayrollDeletePage>;
+} satisfies Meta<typeof TimeCardSummaryRows>;
 
 export default meta;
 

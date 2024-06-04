@@ -17,6 +17,8 @@ namespace Storage
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Payroll> Payrolls { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<EmployeeTimeCard> EmployeeTimeCards { get; set; }
+        public DbSet<WorkingState> WorkingStates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,6 +34,15 @@ namespace Storage
                 .HasOne(p => p.Employee)
                 .WithMany(e => e.Documents)
                 .HasForeignKey(p => p.EmployeeId);
+            builder.Entity<Employee>()
+                .HasMany(e => e.EmployeeTimeCards)
+                .WithOne(tc => tc.Employee)
+                .HasForeignKey(tc => tc.EmployeeId);
+
+            builder.Entity<EmployeeTimeCard>()
+                .HasMany(tc => tc.WorkingStates)
+                .WithOne(ws => ws.EmployeeTimeCard)
+                .HasForeignKey(ws => ws.EmployeeTimeCardId);
 
             builder
                 .Entity<Role>()

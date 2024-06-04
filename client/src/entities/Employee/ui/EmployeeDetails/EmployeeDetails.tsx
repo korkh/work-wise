@@ -52,7 +52,7 @@ export const EmployeeDetails = memo(function EmployeeDetails(
 				gap="16"
 				max
 				align="center"
-				className={classNames(cls.employeeDetails, [className], {})}
+				className={classNames(cls.employeeDetails, [className])}
 			>
 				{content}
 			</ColumnStack>

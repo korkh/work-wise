@@ -1,0 +1,28 @@
+.fullNameColumn {
+  min-width: 100px;
+  width: 200px;
+  white-space: nowrap;
+}
+
+.weekend {
+  background-color: var(--column-table-normal);
+  color: var(--text-table)
+}
+
+.holiday {
+  background-color: var(--column-table-accent);
+  color: var(--text-table)
+}
+
+.inputCell {
+  max-width: 1.2vw;
+  caret-color: auto;
+
+  input {
+    width: 100%;
+    padding: 3px;
+    border: 1px dotted var(--info);
+    text-align: center;
+    text-transform: uppercase;
+  }
+}

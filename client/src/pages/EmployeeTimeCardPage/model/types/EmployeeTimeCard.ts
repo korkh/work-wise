@@ -1,14 +1,22 @@
-export type WorkingState = Record<number, string | number>;
+export type WorkingState = {
+	id: string;
+	day: number;
+	state: string | number;
+	holiday?: boolean;
+};
 
 export interface EmployeeTimeCard {
-	id: number;
-	fullName: string;
+	id: string;
+	employeeFirstName: string;
+	employeeLastName: string;
+	month: string;
 	availableWorkingHoursPerMonth?: number;
-	workingState: WorkingState;
+	workingStates: WorkingState[];
 }
 
 export interface EmployeeTimeCardSchema {
 	data?: EmployeeTimeCard[];
+	form?: EmployeeTimeCard[];
 	selectedMonth: string;
 	readonly: boolean;
 	isLoading: boolean;

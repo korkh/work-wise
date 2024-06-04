@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Storage.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class addedEmployeeTimeCards : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -290,6 +290,26 @@ namespace Storage.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeeTimeCards",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Month = table.Column<string>(type: "TEXT", nullable: true),
+                    AvailableWorkingHoursPerMonth = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeTimeCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTimeCards_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payrolls",
                 columns: table => new
                 {
@@ -356,6 +376,28 @@ namespace Storage.Migrations
                         name: "FK_TransportInfo_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkingStates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EmployeeTimeCardId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Day = table.Column<int>(type: "INTEGER", nullable: false),
+                    Holiday = table.Column<bool>(type: "INTEGER", nullable: false),
+                    State = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkingStates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkingStates_EmployeeTimeCards_EmployeeTimeCardId",
+                        column: x => x.EmployeeTimeCardId,
+                        principalTable: "EmployeeTimeCards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -438,6 +480,11 @@ namespace Storage.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeeTimeCards_EmployeeId",
+                table: "EmployeeTimeCards",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payrolls_EmployeeId",
                 table: "Payrolls",
                 column: "EmployeeId");
@@ -451,6 +498,11 @@ namespace Storage.Migrations
                 name: "IX_RefreshToken_UserId",
                 table: "RefreshToken",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkingStates_EmployeeTimeCardId",
+                table: "WorkingStates",
+                column: "EmployeeTimeCardId");
         }
 
         /// <inheritdoc />
@@ -493,6 +545,9 @@ namespace Storage.Migrations
                 name: "RefreshToken");
 
             migrationBuilder.DropTable(
+                name: "WorkingStates");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -500,6 +555,9 @@ namespace Storage.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeTimeCards");
 
             migrationBuilder.DropTable(
                 name: "Employees");

@@ -1,7 +1,7 @@
 import { memo, MutableRefObject, ReactNode, UIEvent, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
+import { classNames, Mods } from "@/shared/lib/utils/classNames/classNames";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 
 import { StateSchema } from "@/app/providers/StoreProvider";
@@ -19,6 +19,7 @@ interface PageContainerProps extends TestingProps {
 	children: ReactNode;
 	height?: number;
 	onScrollEnd?: () => void;
+	center?: boolean;
 }
 
 export const PAGE_ID = "PAGE_ID";
@@ -26,7 +27,7 @@ export const PAGE_ID = "PAGE_ID";
 export const PageContainer = memo(function PageContainer(
 	props: PageContainerProps
 ) {
-	const { className, children, height = 100, onScrollEnd } = props;
+	const { className, children, height = 100, onScrollEnd, center } = props;
 	const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
 	const triggerRef = useRef() as MutableRefObject<HTMLDivElement>;
 	const dispatch = useAppDispatch();
@@ -54,11 +55,15 @@ export const PageContainer = memo(function PageContainer(
 		);
 	}, 500);
 
+	const mods: Mods = {
+		[cls.center]: center,
+	};
+
 	return (
 		<main
 			style={{ height: `calc(${height}vh - var(--navbar-height))` }}
 			ref={wrapperRef}
-			className={classNames(cls.Page, [className], {})}
+			className={classNames(cls.Page, [className], mods)}
 			onScroll={onScroll}
 			id={PAGE_ID}
 			data-testid={props["data-testid"] ?? "Page"}
