@@ -1,24 +1,23 @@
-import cls from "./TimeCardSummaryRows.module.scss";
 import { useTranslation } from "react-i18next";
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { EmployeeTimeCard } from "../../model/types/EmployeeTimeCard";
-import { getDaysInMonth } from "../../model/consts/consts";
+import { WorkingInits } from "../../model/consts/working_states";
 
-interface TimeCardSummaryRowsProps {
-	form?: EmployeeTimeCard[] | undefined;
+interface TimeCardSummaryRowProps {
+	className?: string;
+	form?: EmployeeTimeCard[];
 	selectedMonth: string;
 }
 
-export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
-	props: TimeCardSummaryRowsProps
+export const TimeCardSummaryRow = memo(function TimeCardSummaryRow(
+	props: TimeCardSummaryRowProps
 ) {
-	const { form, selectedMonth } = props;
+	const { className, form, selectedMonth } = props;
 	const { t } = useTranslation();
-	const [days, setDays] = useState<number>(1);
 
-	useEffect(() => {
-		setDays(getDaysInMonth(selectedMonth));
-	}, [selectedMonth]);
+	const daysInMonth = (year: number, month: number) => {
+		return new Date(year, month + 1, 0).getDate();
+	};
 
 	const totalWorkingDays =
 		form?.reduce((acc, emp) => {
@@ -74,7 +73,7 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 	const totalIllnessDays =
 		form?.reduce((acc, emp) => {
 			const empIllnessDays = emp.workingStates.filter(
-				(ws) => ws.state === "L"
+				(ws) => ws.state === WorkingInits.L
 			).length;
 			return acc + empIllnessDays;
 		}, 0) || 0;
@@ -82,7 +81,7 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 	const totalAbsenceDaysReason =
 		form?.reduce((acc, emp) => {
 			const empAbsenceDaysReason = emp.workingStates.filter(
-				(ws) => ws.state === "A"
+				(ws) => ws.state === WorkingInits.A
 			).length;
 			return acc + empAbsenceDaysReason;
 		}, 0) || 0;
@@ -90,7 +89,7 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 	const totalNotPaidHolidays =
 		form?.reduce((acc, emp) => {
 			const empNotPaidHolidays = emp.workingStates.filter(
-				(ws) => ws.state === "NA"
+				(ws) => ws.state === WorkingInits.NA
 			).length;
 			return acc + empNotPaidHolidays;
 		}, 0) || 0;
@@ -98,7 +97,7 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 	const totalIddleDays =
 		form?.reduce((acc, emp) => {
 			const empIdleDays = emp.workingStates.filter(
-				(ws) => ws.state === "PV"
+				(ws) => ws.state === WorkingInits.PV
 			).length;
 			return acc + empIdleDays;
 		}, 0) || 0;
@@ -106,7 +105,7 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 	const totalTruancyDays =
 		form?.reduce((acc, emp) => {
 			const empTruancyDays = emp.workingStates.filter(
-				(ws) => ws.state === "PB"
+				(ws) => ws.state === WorkingInits.PB
 			).length;
 			return acc + empTruancyDays;
 		}, 0) || 0;
@@ -115,8 +114,8 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 		form?.reduce((acc, emp) => {
 			const empAbsenceHours = emp.workingStates.reduce<number>((empAcc, ws) => {
 				if (
-					(typeof ws.state === "string" && ws.state === "NA") ||
-					ws.state === "PB"
+					(typeof ws.state === "string" && ws.state === WorkingInits.NA) ||
+					ws.state === WorkingInits.PB
 				) {
 					return empAcc + 8;
 				}
@@ -124,12 +123,21 @@ export const TimeCardSummaryRows = memo(function TimeCardSummaryRows(
 			}, 0);
 			return acc + empAbsenceHours;
 		}, 0) || 0;
+
 	return (
-		<tr className={cls.summaryRow}>
+		<tr className={className}>
 			<td colSpan={3}>{t("Summary")}</td>
-			{Array.from({ length: days }, (_, i) => (
-				<td key={i} />
-			))}
+			{Array.from(
+				{
+					length: daysInMonth(
+						Number(selectedMonth?.split("-")[0]),
+						Number(selectedMonth?.split("-")[1]) - 1
+					),
+				},
+				(_, i) => (
+					<td key={i} />
+				)
+			)}
 			<td>{totalWorkingDays}</td>
 			<td>{totalWorkingHours}</td>
 			<td>{totalOvertimeHours}</td>

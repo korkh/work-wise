@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/const/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import {TimeCardSummaryRows} from "./TimeCardSummaryRows";
+import {TimeCardDaysHeader} from "./TimeCardDaysHeader";
 
 const meta = {
-  title: "shared/TimeCardSummaryRows",
-  component: TimeCardSummaryRows,
+  title: "shared/TimeCardDaysHeader",
+  component: TimeCardDaysHeader,
   parameters: {
     layout: "fullscreen",
   },
@@ -22,7 +22,7 @@ const meta = {
       </StoreDecorator>
     ),
   ],
-} satisfies Meta<typeof TimeCardSummaryRows>;
+} satisfies Meta<typeof TimeCardDaysHeader>;
 
 export default meta;
 
