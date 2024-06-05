@@ -13,7 +13,7 @@ import { Pagination } from "../Pagination";
 import { RowStack } from "../../../../../shared/ui/Stack";
 import { sortValues } from "@/shared/lib/utils/table/sorting/sorting_filtering";
 
-interface TableProps<T extends Identifiable, U> {
+interface TableProps<T extends Identifiable> {
 	columns: Column<T>[];
 	data: T[];
 	className?: string;
@@ -24,7 +24,7 @@ interface TableProps<T extends Identifiable, U> {
 	getRowClass?: (row: T) => string;
 }
 
-export function GenericTable<T extends Identifiable, U>({
+export function GenericTable<T extends Identifiable>({
 	className,
 	columns,
 	data,
@@ -33,10 +33,10 @@ export function GenericTable<T extends Identifiable, U>({
 	redirect,
 	verticalHeaders = false,
 	getRowClass,
-}: TableProps<T, U>) {
+}: TableProps<T>) {
 	const [filteredData, setFilteredData] = useState(data);
 	const [search, setSearch] = useState("");
-	const [sortField, setSortField] = useState<keyof U | null>(null);
+	const [sortField, setSortField] = useState<string | null>(null);
 	const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 10;
@@ -111,7 +111,7 @@ export function GenericTable<T extends Identifiable, U>({
 										sortField === column.key && sortOrder === "asc"
 											? "desc"
 											: "asc";
-									setSortField(column.key as keyof U);
+									setSortField(column.key as string);
 									setSortOrder(newOrder);
 								}}
 							>

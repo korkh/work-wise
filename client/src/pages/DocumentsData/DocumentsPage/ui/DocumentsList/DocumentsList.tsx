@@ -2,7 +2,7 @@ import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./DocumentsList.module.scss";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";
-import { DocumentSortField, EmployeeDocument } from "@/entities/Document";
+import { EmployeeDocument } from "@/entities/Document";
 import { Column } from "@/shared/types/ui_components";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
@@ -70,7 +70,7 @@ export const DocumentsList = memo(function DocumentsList(
 
 	return (
 		<>
-			<GenericTable<EmployeeDocument, DocumentSortField>
+			<GenericTable<EmployeeDocument>
 				title="List of documents"
 				columns={tableColumns}
 				data={documents}

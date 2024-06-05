@@ -2,7 +2,6 @@ import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./EmployeeList.module.scss";
 import { useTranslation } from "react-i18next";
 import { Employee } from "../../../entities/Employee/model/types/Employee";
-import { EmployeeSortField } from "../../../entities/Employee/model/consts/employee_consts";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { memo } from "react";
 import { GenericTable } from "@/shared/ui/Table";
@@ -62,7 +61,7 @@ export const EmployeeList = memo(function EmployeeList(
 
 	return (
 		<>
-			<GenericTable<Employee, EmployeeSortField>
+			<GenericTable<Employee>
 				title="List of employees"
 				columns={tableColumns}
 				data={employees}

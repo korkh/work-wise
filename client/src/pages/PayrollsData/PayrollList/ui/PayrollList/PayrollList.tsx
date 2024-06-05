@@ -8,7 +8,6 @@ import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { getRoutePayrollDetails } from "@/shared/consts/routerConsts";
 import { Payroll } from "@/entities/Payroll";
-import { PayrollSortField } from "../../../../../pages/PayrollsData";
 import { payrollColumns } from "../../consts/payrollColumns";
 
 interface PayrollsListProps {
@@ -39,7 +38,7 @@ export const PayrollList = memo(function DocumentsList(
 
 	return (
 		<>
-			<GenericTable<Payroll, PayrollSortField>
+			<GenericTable<Payroll>
 				title="List of payrolls"
 				columns={tableColumns}
 				data={payrolls}
