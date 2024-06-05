@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import ManagerPanelPage from "./ManagerPanelPage";
 
 const meta = {
-	title: "pages/ManagerPanelPage",
+	title: "Pages/ManagerPanelPage",
 	component: ManagerPanelPage,
 	parameters: {
 		layout: "fullscreen",

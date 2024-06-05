@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { SidebarItem } from "./SidebarItem";
 
 const meta = {
-	title: "shared/SidebarItem",
+	title: "widgets/SidebarItem",
 	component: SidebarItem,
 	parameters: {
 		layout: "fullscreen",
@@ -24,7 +24,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof SidebarItem>;
 
 export const Primary: Story = {
 	args: {},

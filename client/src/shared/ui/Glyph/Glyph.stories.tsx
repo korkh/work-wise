@@ -3,7 +3,7 @@ import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
 import { Glyph } from "./Glyph";
-import ProfileIcon from "@/shared/assets/icons/profile-20-20.svg?react";
+import ProfileIcon from "@/shared/assets/icons/user-blank.svg?react";
 
 const meta: Meta<typeof Glyph> = {
 	title: "shared/Glyph",

@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { PersonalInformation } from "./PersonalInformation";
 
 const meta = {
-	title: "shared/PersonalInformation",
+	title: "entities/Employee/PersonalInformation",
 	component: PersonalInformation,
 	parameters: {
 		layout: "fullscreen",

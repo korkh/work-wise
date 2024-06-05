@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import NotFoundPage from "./NotFoundPage";
 
 const meta = {
-	title: "pages/NotFoundPage",
+	title: "Pages/NotFoundPage",
 	component: NotFoundPage,
 	parameters: {
 		layout: "fullscreen",

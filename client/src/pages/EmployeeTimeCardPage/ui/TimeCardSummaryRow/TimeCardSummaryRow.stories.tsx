@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { TimeCardSummaryRow } from "./TimeCardSummaryRow";
 
 const meta = {
-	title: "shared/TimeCardSummaryRow",
+	title: "Pages/EmployeeTimeCardPage/TimeCardSummaryRow",
 	component: TimeCardSummaryRow,
 	parameters: {
 		layout: "fullscreen",
@@ -24,7 +24,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TimeCardSummaryRow>;
 
 export const Primary: Story = {
 	args: {},

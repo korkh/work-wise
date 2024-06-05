@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { TimeCardLoader } from "./TimeCardLoader";
 
 const meta = {
-	title: "shared/TimeCardLoader",
+	title: "Pages/EmployeeTimeCardPage/TimeCardLoader",
 	component: TimeCardLoader,
 	parameters: {
 		layout: "fullscreen",

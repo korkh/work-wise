@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import PageContainer from "./PageContainer";
+import { PageContainer } from "./PageContainer";
 
 const meta = {
-	title: "pages/PageContainer",
+	title: "widgets/PageContainer",
 	component: PageContainer,
 	parameters: {
 		layout: "fullscreen",
@@ -24,7 +24,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof PageContainer>;
 
 export const Primary: Story = {
 	args: {},

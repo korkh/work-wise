@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import DocumentsPage from "./DocumentsPage";
 
 const meta = {
-	title: "pages/DocumentsPage",
+	title: "Pages/DocumentsData/DocumentsPage",
 	component: DocumentsPage,
 	parameters: {
 		layout: "fullscreen",

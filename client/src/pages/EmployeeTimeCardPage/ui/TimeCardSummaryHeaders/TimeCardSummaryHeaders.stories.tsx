@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { TimeCardSummaryHeaders } from "./TimeCardSummaryHeaders";
 
 const meta = {
-	title: "shared/TimeCardSummaryHeaders",
+	title: "Pages/EmployeeTimeCardPage/TimeCardSummaryHeaders",
 	component: TimeCardSummaryHeaders,
 	parameters: {
 		layout: "fullscreen",

@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { DocumentInfiniteList } from "./DocumentInfiniteList";
 
 const meta = {
-	title: "shared/DocumentInfiniteList",
+	title: "Pages/DocumentsData/DocumentInfiniteList",
 	component: DocumentInfiniteList,
 	parameters: {
 		layout: "fullscreen",

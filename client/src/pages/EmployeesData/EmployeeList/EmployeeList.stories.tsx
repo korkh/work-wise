@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { EmployeeList } from "./EmployeeList";
 
 const meta = {
-	title: "shared/EmployeeList",
+	title: "Pages/EmployeeData/EmployeeList",
 	component: EmployeeList,
 	parameters: {
 		layout: "fullscreen",
@@ -24,7 +24,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof EmployeeList>;
 
 export const Primary: Story = {
 	args: {},

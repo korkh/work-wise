@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { EmployeeInfiniteList } from "./EmployeeInfiniteList";
 
 const meta = {
-	title: "shared/EmployeeInfiniteList",
+	title: "Pages/EmployeeData/EmployeeInfiniteList",
 	component: EmployeeInfiniteList,
 	parameters: {
 		layout: "fullscreen",

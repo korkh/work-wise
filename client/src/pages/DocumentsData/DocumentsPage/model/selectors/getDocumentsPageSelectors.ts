@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { buildSelector } from "@/shared/lib/store";
 import { selectDocumentPageState } from "../slices/documentPageSlice";
-// Memoized selectors for other documentPage properties
+
 export const getDocumentsPageIsLoading = createSelector(
 	[selectDocumentPageState],
 	(documentPage) => documentPage.isLoading || false

@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { RegistrationAddress } from "./RegistrationAddress";
 
 const meta = {
-	title: "shared/RegistrationAddress",
+	title: "entities/Employee/RegistrationAddress",
 	component: RegistrationAddress,
 	parameters: {
 		layout: "fullscreen",

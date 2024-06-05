@@ -5,7 +5,7 @@ import ThemeDecorator from "../../../../shared/config/storybook/ThemeDecorator/T
 import { ErrorPage } from "./ErrorPage";
 
 const meta = {
-	title: "pages/ErrorPage",
+	title: "Pages/ErrorPage",
 	component: ErrorPage,
 	parameters: {
 		layout: "fullscreen",

@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import MainPage from "./MainPage";
 
 const meta = {
-	title: "pages/MainPage",
+	title: "Pages/MainPage",
 	component: MainPage,
 	parameters: {
 		layout: "fullscreen",

@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import ProfileEditPage from "./ProfileEditPage";
 
 const meta = {
-	title: "pages/ProfileEditPage",
+	title: "Pages/Profiles/ProfileEditPage",
 	component: ProfileEditPage,
 	parameters: {
 		layout: "fullscreen",

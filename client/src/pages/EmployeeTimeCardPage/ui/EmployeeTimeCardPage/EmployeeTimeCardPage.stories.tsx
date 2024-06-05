@@ -5,7 +5,7 @@ import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecora
 import { Theme } from "@/shared/consts/Theme";
 
 const meta = {
-	title: "pages/EmployeeTimeTablePage",
+	title: "Pages/EmployeeTimeCardPage/EmployeeTimeTablePage",
 	component: EmployeeTimeTablePage,
 	parameters: {
 		layout: "fullscreen",

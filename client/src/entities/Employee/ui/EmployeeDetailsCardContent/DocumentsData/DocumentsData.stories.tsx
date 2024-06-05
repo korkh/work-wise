@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { DocumentsData } from "./DocumentsData";
 
 const meta = {
-	title: "shared/DocumentsData",
+	title: "entities/Employee/DocumentsData",
 	component: DocumentsData,
 	parameters: {
 		layout: "fullscreen",

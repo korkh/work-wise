@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import EmployeeDeletePage from "./EmployeeDeletePage";
 
 const meta = {
-	title: "pages/EmployeeDeletePage",
+	title: "Pages/EmployeeData/EmployeeDeletePage",
 	component: EmployeeDeletePage,
 	parameters: {
 		layout: "fullscreen",

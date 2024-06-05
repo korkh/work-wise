@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import ForbiddenPage from "./ForbiddenPage";
+import { ForbiddenPage } from "./ForbiddenPage";
 
 const meta = {
-	title: "pages/ForbiddenPage",
+	title: "Pages/ForbiddenPage",
 	component: ForbiddenPage,
 	parameters: {
 		layout: "fullscreen",

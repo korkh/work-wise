@@ -5,7 +5,7 @@ import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecora
 import { TransportInfo } from "./TransportInfo";
 
 const meta = {
-	title: "shared/TransportInfo",
+	title: "entities/Employee/TransportInfo",
 	component: TransportInfo,
 	parameters: {
 		layout: "fullscreen",

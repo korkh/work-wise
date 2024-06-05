@@ -13,7 +13,7 @@ interface DocumentInfiniteListProps {
 	className?: string;
 }
 
-export const PayroLLsPageBaseList = memo(function PayroLLsPageBaseList(
+const PayroLLsPageBaseList = memo(function PayroLLsPageBaseList(
 	props: DocumentInfiniteListProps
 ) {
 	const { className } = props;
@@ -44,3 +44,5 @@ export const PayroLLsPageBaseList = memo(function PayroLLsPageBaseList(
 		/>
 	);
 });
+
+export default PayroLLsPageBaseList;

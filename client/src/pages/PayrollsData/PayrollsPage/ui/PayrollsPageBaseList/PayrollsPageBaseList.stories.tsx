@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import { PayrollsPageBaseList } from "./PayrollsPageBaseList";
+import PayrollsPageBaseList from "./PayrollsPageBaseList";
 
 const meta = {
-	title: "shared/PayrollsPageBaseList",
+	title: "Pages/PayrollsData/PayrollsPageBaseList",
 	component: PayrollsPageBaseList,
 	parameters: {
 		layout: "fullscreen",

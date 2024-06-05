@@ -1,14 +1,14 @@
-import { StateSchema } from "@/app/providers/StoreProvider";
-import { DocumentSortField, EmployeeDocument } from "@/entities/Document";
 import {
-	PayloadAction,
-	createEntityAdapter,
 	createSlice,
+	createEntityAdapter,
+	PayloadAction,
 } from "@reduxjs/toolkit";
-import { EntityAdapterOptions } from "@reduxjs/toolkit/dist/entities/models";
-import { DocumentPageSchema } from "../types/DocumentPageSchema";
+import { StateSchema } from "@/app/providers/StoreProvider";
+import { EmployeeDocument, DocumentSortField } from "@/entities/Document";
 import { SortOrder } from "@/shared/types/sort";
 import { fetchDocumentsList } from "../services/fetchDocumentsList/fetchDocumentsList";
+import { EntityAdapterOptions } from "@reduxjs/toolkit/dist/entities/models";
+import { DocumentPageSchema } from "../types/DocumentPageSchema";
 
 const adapterOptions: EntityAdapterOptions<EmployeeDocument, string> = {
 	selectId: (doc: EmployeeDocument) => doc.id,
