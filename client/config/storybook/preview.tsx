@@ -1,5 +1,6 @@
 import RouterDecorator from "@/shared/config/storybook/RouterDecorator/RouterDecorator";
 import ThemeDecorator from "../../src/shared/config/storybook/ThemeDecorator/ThemeDecorator";
+import "../../src/app/styles/index.scss";
 import { Theme } from "../../src/shared/consts/Theme";
 import type { Preview } from "@storybook/react";
 import { SuspenseDecorator } from "@/shared/config/storybook/SuspenseDecorator/SuspenseDecorator";

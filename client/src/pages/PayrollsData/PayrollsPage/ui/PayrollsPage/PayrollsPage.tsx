@@ -8,7 +8,7 @@ import {
 } from "@/shared/lib/DynamicReducerLoader/DynamicReducerLoader";
 import { payrollsPageReducer } from "../../model/slices/payrollPageSlice";
 import { initPayrollPage } from "../../model/services/initPayrollPage/initPayrollPage";
-import { PayroLLsPageBaseList } from "../PayrollsPageBaseList/PayrollsPageBaseList";
+import { PayrollsPageBaseList } from "../PayrollsPageBaseList";
 
 const reducers: ReducersList = {
 	payrollPage: payrollsPageReducer,
@@ -24,7 +24,7 @@ const PayrollsPage = () => {
 
 	return (
 		<DynamicReducerLoader reducers={reducers} removeAfterUnmount={false}>
-			<PayroLLsPageBaseList />
+			<PayrollsPageBaseList />
 		</DynamicReducerLoader>
 	);
 };

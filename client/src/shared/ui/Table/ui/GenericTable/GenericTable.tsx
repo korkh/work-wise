@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import cls from "./GenericTable.module.scss";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
-import { TextHolder } from "../../../TextHolder";
+import { TextHolder } from "../../../../../shared/ui/TextHolder";
 import { Column, Identifiable } from "@/shared/types/ui_components";
 import { TableCellRenderer } from "../TableCellRenderer/TableCellRenderer";
 import { AppLink } from "../../../../../shared/ui/AppLink";
@@ -13,7 +13,7 @@ import { Pagination } from "../Pagination";
 import { RowStack } from "../../../../../shared/ui/Stack";
 import { sortValues } from "@/shared/lib/utils/table/sorting/sorting_filtering";
 
-interface TableProps<T extends Identifiable, _U> {
+interface TableProps<T extends Identifiable, U> {
 	columns: Column<T>[];
 	data: T[];
 	className?: string;
@@ -21,6 +21,7 @@ interface TableProps<T extends Identifiable, _U> {
 	redirect?: (id: string) => string;
 	children?: ReactNode;
 	verticalHeaders?: boolean;
+	getRowClass?: (row: T) => string;
 }
 
 export function GenericTable<T extends Identifiable, U>({
@@ -31,6 +32,7 @@ export function GenericTable<T extends Identifiable, U>({
 	children,
 	redirect,
 	verticalHeaders = false,
+	getRowClass,
 }: TableProps<T, U>) {
 	const [filteredData, setFilteredData] = useState(data);
 	const [search, setSearch] = useState("");
@@ -126,27 +128,34 @@ export function GenericTable<T extends Identifiable, U>({
 					</tr>
 				</thead>
 				<tbody>
-					{paginatedData.map((row, index) => (
-						<tr key={row.id}>
-							{columns.map((column) => (
-								<td key={`${index}-${String(column.uniqueId || column.key)}`}>
-									{row.id && row.id !== undefined ? (
-										redirect ? (
-											<AppLink to={redirect(String(row.id))}>
-												{column.key === "id"
-													? index + 1
-													: TableCellRenderer(row, column)}
-											</AppLink>
-										) : column.key === "id" ? (
-											index + 1
-										) : (
-											TableCellRenderer(row, column)
-										)
-									) : null}
-								</td>
-							))}
-						</tr>
-					))}
+					{paginatedData.map((row, index) => {
+						const rowClass = getRowClass ? getRowClass(row) : "";
+						return (
+							<tr key={row.id} className={rowClass}>
+								{columns.map((column) => (
+									<td key={`${index}-${String(column.uniqueId || column.key)}`}>
+										{row.id && row.id !== undefined ? (
+											redirect ? (
+												<AppLink to={redirect(String(row.id))}>
+													{column.key === "id"
+														? index + 1
+														: column.render
+															? column.render(row[column.key], row)
+															: TableCellRenderer(row, column)}
+												</AppLink>
+											) : column.key === "id" ? (
+												index + 1
+											) : column.render ? (
+												column.render(row[column.key], row)
+											) : (
+												TableCellRenderer(row, column)
+											)
+										) : null}
+									</td>
+								))}
+							</tr>
+						);
+					})}
 				</tbody>
 			</table>
 			{filteredData.length > itemsPerPage && (

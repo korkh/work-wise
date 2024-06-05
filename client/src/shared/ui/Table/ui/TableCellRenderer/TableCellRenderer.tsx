@@ -3,11 +3,12 @@ import { Column } from "@/shared/types/ui_components";
 import { Avatar } from "../../../../../shared/ui/Avatar";
 import cls from "./TableCellRenderer.module.scss";
 import { truncateString } from "@/shared/lib/utils/table/truncateString/truncateString";
+
 export function TableCellRenderer<T>(
 	item: T,
 	column: Column<T>
 ): React.ReactNode {
-	const { key, nestedKeys } = column;
+	const { key, nestedKeys, render } = column;
 
 	// Traverse nested keys to get the final value
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +20,11 @@ export function TableCellRenderer<T>(
 	};
 
 	const value = nestedKeys ? getNestedValue(item[key], nestedKeys) : item[key];
+
+	// Use custom render function if provided
+	if (render) {
+		return render(value, item);
+	}
 
 	if (key === "avatar") {
 		return <Avatar src={String(value)} size={50} alt="Avatar" />;

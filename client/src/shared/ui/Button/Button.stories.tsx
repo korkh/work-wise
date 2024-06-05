@@ -2,27 +2,30 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
 import { Theme } from "@/shared/consts/Theme";
+import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 
-const meta = {
+const meta: Meta<typeof Button> = {
 	title: "shared/Button",
 	component: Button,
 	parameters: {
-		layout: "centered",
+		layout: "fullscrean",
 	},
 	tags: ["autodocs"],
 	argTypes: {},
 	args: { children: ">", color: "normal" },
 	decorators: [
 		(Story) => (
-			<ThemeDecorator theme={Theme.LIGHT}>
-				<Story />
-			</ThemeDecorator>
+			<StoreDecorator state={{}}>
+				<ThemeDecorator theme={Theme.LIGHT}>
+					<Story />
+				</ThemeDecorator>
+			</StoreDecorator>
 		),
 	],
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
 	args: { children: "TEXT" },

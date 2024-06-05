@@ -4,7 +4,7 @@ import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecora
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
 import { AppLogo } from "./AppLogo";
 
-const meta = {
+const meta: Meta<typeof AppLogo> = {
 	title: "shared/AppLogo",
 	component: AppLogo,
 	parameters: {
@@ -20,14 +20,14 @@ const meta = {
 			</StoreDecorator>
 		),
 	],
-} satisfies Meta<typeof AppLogo>;
+};
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-	args: {},
+	args: { size: 150 },
 };
 
 export const Dark: Story = {

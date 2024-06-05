@@ -11,7 +11,7 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240604110756_addedEmployeeTimeCards")]
+    [Migration("20240605130213_addedEmployeeTimeCards")]
     partial class addedEmployeeTimeCards
     {
         /// <inheritdoc />

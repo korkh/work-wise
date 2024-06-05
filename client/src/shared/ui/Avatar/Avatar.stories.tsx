@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
-import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
 import { Avatar } from "./Avatar";
+import AvatarImage from "./avatar.jpg";
 
 const meta = {
 	title: "shared/Avatar",
@@ -27,16 +26,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-	args: {},
+	args: { size: 150, src: AvatarImage },
 };
 
-export const Dark: Story = {
-	args: {},
-	decorators: [
-		(Story) => (
-			<ThemeDecorator theme={Theme.DARK}>
-				<Story />
-			</ThemeDecorator>
-		),
-	],
+export const Small: Story = {
+	args: { size: 50, src: AvatarImage },
 };

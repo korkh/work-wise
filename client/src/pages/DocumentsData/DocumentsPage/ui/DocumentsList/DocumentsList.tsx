@@ -8,7 +8,6 @@ import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
-import { booleanToYesNo } from "@/shared/lib/utils/table/booleanConverter/booleanConverter";
 import { getRouteDocumentDetails } from "@/shared/consts/routerConsts";
 
 interface DocumentsListProps {
@@ -22,6 +21,8 @@ export const DocumentsList = memo(function DocumentsList(
 ) {
 	const { className, documents, isLoading } = props;
 	const { t } = useTranslation();
+
+	console.log("DOCUMENTS", documents);
 
 	const tableColumns: Column<EmployeeDocument>[] = [
 		{ key: "id", header: "No." },
@@ -37,22 +38,23 @@ export const DocumentsList = memo(function DocumentsList(
 			header: "Expire",
 			render: (value) => formatDate(value as string),
 		},
-		{
-			key: "hasTwoMonthWarning",
-			header: "2m-Warrning",
-			render: (value) => booleanToYesNo(value as boolean),
-		},
-		{
-			key: "hasThreeMonthWarning",
-			header: "3m-Warrning",
-			render: (value) => booleanToYesNo(value as boolean),
-		},
-		{
-			key: "hasSixMonthWarning",
-			header: "6m-Warrning",
-			render: (value) => booleanToYesNo(value as boolean),
-		},
 	];
+
+	const getRowClass = (row: EmployeeDocument) => {
+		if (
+			row.hasTwoMonthWarning &&
+			row.hasThreeMonthWarning &&
+			row.hasSixMonthWarning
+		) {
+			return cls.redRow;
+		} else if (row.hasThreeMonthWarning && row.hasSixMonthWarning) {
+			return cls.orangeRow;
+		} else if (row.hasSixMonthWarning) {
+			return cls.yellowRow;
+		} else {
+			return "";
+		}
+	};
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -73,6 +75,7 @@ export const DocumentsList = memo(function DocumentsList(
 				columns={tableColumns}
 				data={documents}
 				redirect={getRouteDocumentDetails}
+				getRowClass={getRowClass}
 			>
 				<ExportToExcel
 					data={documents}

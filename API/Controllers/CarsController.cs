@@ -1,5 +1,4 @@
 using Application.Transports;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

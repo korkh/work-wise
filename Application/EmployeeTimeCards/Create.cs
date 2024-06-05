@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Storage;
 
 namespace Application.EmployeeTimeCards
@@ -26,9 +27,18 @@ namespace Application.EmployeeTimeCards
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var employee = await _context.Employees
+                    .Include(e => e.EmployeeTimeCards)
+                    .FirstOrDefaultAsync(e => e.Id == request.EmployeeTimeCardDto.EmployeeId);
+
+                if (employee == null)
+                {
+                    return Result<Unit>.Failure("Employee not found");
+                }
+
                 var employeeTimeCard = _mapper.Map<EmployeeTimeCard>(request.EmployeeTimeCardDto);
 
-                await _context.EmployeeTimeCards.AddAsync(employeeTimeCard, cancellationToken);
+                employee.EmployeeTimeCards.Add(employeeTimeCard);
 
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
@@ -39,4 +49,7 @@ namespace Application.EmployeeTimeCards
             }
         }
     }
+
+
+
 }

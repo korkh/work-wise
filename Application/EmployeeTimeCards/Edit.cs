@@ -38,6 +38,12 @@ namespace Application.EmployeeTimeCards
             {
                 foreach (var dto in request.EmployeeTimeCards)
                 {
+                    var employee = await _context.Employees.FindAsync(dto.EmployeeId);
+                    if (employee == null)
+                    {
+                        return Result<Unit>.Failure($"Employee with ID {dto.EmployeeId} not found.");
+                    }
+
                     var employeeTimeCard = await _context.EmployeeTimeCards
                         .Include(e => e.WorkingStates)
                         .FirstOrDefaultAsync(e => e.Id == dto.Id);
@@ -59,7 +65,6 @@ namespace Application.EmployeeTimeCards
                         }
                     }
 
-                    // Update existing and add new working states
                     foreach (var workingStateDto in dto.WorkingStates)
                     {
                         var existingState = employeeTimeCard.WorkingStates.FirstOrDefault(w => w.Id == workingStateDto.Id);
@@ -83,4 +88,5 @@ namespace Application.EmployeeTimeCards
             }
         }
     }
+
 }

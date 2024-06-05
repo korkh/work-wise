@@ -2,7 +2,6 @@ using Application.Core;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Storage;
 
 namespace Application.Transports
