@@ -3,7 +3,7 @@ import cls from "./EmployeeList.module.scss";
 import { useTranslation } from "react-i18next";
 import { Employee } from "../../../entities/Employee/model/types/Employee";
 import { TextHolder } from "@/shared/ui/TextHolder";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { GenericTable } from "@/shared/ui/Table";
 import { Column } from "@/shared/types/ui_components";
 import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
@@ -37,7 +37,7 @@ export const EmployeeList = memo(function EmployeeList(
 		{
 			key: "registrationAddress",
 			header: t("Location"),
-			nestedKeys: ["city", "country"],
+			nestedKeys: ["city"],
 		},
 		{ key: "phoneNumber", header: t("Phone Number") },
 		{ key: "email", header: "Email" },

@@ -15,6 +15,7 @@ import { RowStack } from "@/shared/ui/Stack";
 import { getUserAuthData } from "@/entities/User";
 import { useSelector } from "react-redux";
 import { LanguageSwitcher } from "@/features/LanguageSwitcher";
+import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
 
 interface NavbarProps {
 	className?: string;
@@ -26,6 +27,7 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	const userData = useAuthToken();
 	const userAuth = useSelector(getUserAuthData);
 	const navbarItemsList = useNavbarItems({ userData });
+	const isMobile = useMobile();
 
 	const onCloseModal = useCallback(() => {
 		setIsAuthModal(false);
@@ -55,7 +57,7 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 			{userAuth ? (
 				<RowStack gap="32" className={cls.actions} align="center">
 					<ThemeSwitcher />
-					<LanguageSwitcher abbreviated className={cls.lang} />
+					<LanguageSwitcher abbreviated={isMobile} className={cls.lang} />
 					<span>
 						{t("Welcome")}&nbsp;
 						{userAuth.displayName}
@@ -64,6 +66,8 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 				</RowStack>
 			) : (
 				<RowStack gap="32">
+					<ThemeSwitcher />
+					<LanguageSwitcher abbreviated={isMobile} className={cls.lang} />
 					<Button variant="clear" className={cls.links} onClick={onShowModal}>
 						{t("Sign in")}
 					</Button>

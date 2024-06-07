@@ -17,6 +17,7 @@ export const LanguageSwitcher = memo(function LanguageSwitcher(
 	const toggle = async () => {
 		i18n.changeLanguage(i18n.language === "lt" ? "en" : "lt");
 	};
+
 	return (
 		<Button
 			variant="clear"
