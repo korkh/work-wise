@@ -8,7 +8,6 @@ import { CombinedState } from "../types/stateTypes";
 import { userReducer } from "@/entities/User";
 import { createReducerManager } from "./reducerManager";
 import { uiReducer } from "@/features/UI";
-import { employeeTimeCardReducer } from "@/pages/EmployeeTimeCardPage";
 
 export function createReduxStore(
 	initialState: StateSchema,
@@ -18,7 +17,6 @@ export function createReduxStore(
 		...asyncReducers,
 		user: userReducer,
 		ui: uiReducer,
-		employeeTimeCard: employeeTimeCardReducer,
 		[rtkApi.reducerPath]: rtkApi.reducer,
 	};
 

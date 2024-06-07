@@ -27,6 +27,7 @@ import {
 	ReducersList,
 } from "@/shared/lib/DynamicReducerLoader/DynamicReducerLoader";
 import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
+
 export interface EmployeeDetailsCardProps {
 	className?: string;
 	data?: Employee;

@@ -8,7 +8,8 @@ import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { getRoutePayrollDetails } from "@/shared/consts/routerConsts";
 import { Payroll } from "@/entities/Payroll";
-import { payrollColumns } from "../../consts/payrollColumns";
+import { Loader } from "@/shared/ui/Loader";
+import { getPayrollColumns } from "../../consts/payrollColumns";
 
 interface PayrollsListProps {
 	className?: string;
@@ -20,12 +21,12 @@ export const PayrollList = memo(function DocumentsList(
 	props: PayrollsListProps
 ) {
 	const { className, payrolls, isLoading } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("payrolls");
 
-	const tableColumns: Column<Payroll>[] = payrollColumns;
+	const tableColumns: Column<Payroll>[] = getPayrollColumns();
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loader />;
 	}
 
 	if (!isLoading && !payrolls.length) {
@@ -39,7 +40,7 @@ export const PayrollList = memo(function DocumentsList(
 	return (
 		<>
 			<GenericTable<Payroll>
-				title="List of payrolls"
+				title={t("List of payrolls")}
 				columns={tableColumns}
 				data={payrolls}
 				redirect={getRoutePayrollDetails}

@@ -13,7 +13,7 @@ export const TimeCardSummaryRow = memo(function TimeCardSummaryRow(
 	props: TimeCardSummaryRowProps
 ) {
 	const { className, form, selectedMonth } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("timecards");
 
 	const daysInMonth = (year: number, month: number) => {
 		return new Date(year, month + 1, 0).getDate();

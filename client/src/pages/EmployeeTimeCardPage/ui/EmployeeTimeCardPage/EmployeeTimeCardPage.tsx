@@ -44,7 +44,7 @@ const reducers: ReducersList = {
 
 const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 	const { className } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("timecards");
 	const dispatch = useAppDispatch();
 
 	const data = useSelector(getEmployeeTimeCardData);
@@ -177,7 +177,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						<th>#</th>
 						<th className={cls.fullNameColumn}>{t("Full Name")}</th>
 						<th className={cls.verticalHeader}>
-							{t("Hrs / month ")}
+							{t("Hrs in month")}
 							<>
 								<button onClick={() => incrementWorkingHours()}>+</button>
 								<button onClick={() => decrementWorkingHours()}>-</button>

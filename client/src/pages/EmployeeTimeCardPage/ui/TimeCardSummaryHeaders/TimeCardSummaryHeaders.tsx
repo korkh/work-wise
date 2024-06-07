@@ -9,7 +9,7 @@ interface TimeCardSummaryHeadersProps {
 export const TimeCardSummaryHeaders = memo(function TimeCardSummaryHeaders({
 	className,
 }: TimeCardSummaryHeadersProps) {
-	const { t } = useTranslation();
+	const { t } = useTranslation("timecards");
 	return (
 		<>
 			<th className={className}>
@@ -18,27 +18,27 @@ export const TimeCardSummaryHeaders = memo(function TimeCardSummaryHeaders({
 			<th className={className}>
 				<ToolTipCell str={t("Working Hours")} num={10} />
 			</th>
-			<th className={className}>{t("Overtime / hours")}</th>
+			<th className={className}>{t("Overtime")}</th>
 			<th className={className}>
-				<ToolTipCell str={t("Overtime P & S / hours")} num={10} />
+				<ToolTipCell str={t("Overtime P & S")} num={10} />
 			</th>
 			<th className={className}>
-				<ToolTipCell str={t("K / days")} num={10} />
+				<ToolTipCell str={t("K")} num={10} />
 			</th>
 			<th className={className}>
-				<ToolTipCell str={t("A / days")} num={10} />
+				<ToolTipCell str={t("A")} num={10} />
 			</th>
 			<th className={className}>
-				<ToolTipCell str={t("NA / days")} num={10} />
+				<ToolTipCell str={t("NA")} num={10} />
 			</th>
 			<th className={className}>
-				<ToolTipCell str={t("PV / days")} num={10} />
+				<ToolTipCell str={t("PV")} num={10} />
 			</th>
 			<th className={className}>
-				<ToolTipCell str={t("PB / days")} num={10} />
+				<ToolTipCell str={t("PB")} num={10} />
 			</th>
-			<th className={className}>{t("L / days")}</th>
-			<th className={className}>{t("Absence Hours")}</th>
+			<th className={className}>{t("L")}</th>
+			<th className={className}>{t("Absence")}</th>
 		</>
 	);
 });

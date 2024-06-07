@@ -26,7 +26,7 @@ export const UserDropdown = memo(function UserDropdown(
 	props: UserDropdownProps
 ) {
 	const { className } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("translation");
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

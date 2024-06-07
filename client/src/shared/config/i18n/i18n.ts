@@ -11,7 +11,6 @@ i18n
 	.use(initReactI18next)
 	.init({
 		fallbackLng: false,
-		debug: __IS_DEV__,
 		keySeparator: false,
 		nsSeparator: false,
 		interpolation: {
@@ -24,7 +23,16 @@ i18n
 			},
 		},
 		supportedLngs: ["en", "lt"],
-		ns: ["translation"],
+		ns: [
+			"translation",
+			"employees",
+			"payrolls",
+			"navbar",
+			"main",
+			"timecards",
+			"documents",
+		],
+		defaultNS: "translation",
 	});
 
 export default i18n;

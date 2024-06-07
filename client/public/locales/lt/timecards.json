@@ -1,0 +1,20 @@
+{
+  "Summary": "Suvestinė",
+  "Working Days": "Darbo Dienos",
+  "Working Hours": "Darbo valandos",
+  "Overtime": "Viršvalandžiai",
+  "K": "K / dienos",
+  "A": "A / dienos",
+  "NA": "NA / dienos",
+  "PV": "PV / dienos",
+  "PB": "PB / dienos",
+  "L": "L / dienos",
+  "Absence": "Neatvylimas",
+  "Overtime P & S": "Viršvalandžiai P & S",
+  "TimeCard loading error": "Tabelio Įkėlimo klaida",
+  "No data available. Try to choose another date!": "Nėra duomenų. Pabandykite pasirinkti kitą datą!",
+  "Full Name": "Vardas Pavardė",
+  "Hrs in month": "Valandos per mėnesį",
+  "Employees time card": "Darbuotojų tabelis",
+  "Save": "Išsaugoti"
+}

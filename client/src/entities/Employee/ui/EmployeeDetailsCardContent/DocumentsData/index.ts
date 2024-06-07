@@ -1,1 +1,1 @@
-export * from "./DocumentsData";
+export { DocumentsData } from "./DocumentsData";

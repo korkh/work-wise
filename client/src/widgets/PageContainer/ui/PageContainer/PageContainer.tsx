@@ -17,7 +17,7 @@ import { useInfiniteScroll } from "@/shared/lib/hooks/useInfiniteScroll/useInfin
 interface PageContainerProps extends TestingProps {
 	className?: string;
 	children: ReactNode;
-	height?: number;
+	height?: number | string;
 	onScrollEnd?: () => void;
 	center?: boolean;
 }
@@ -27,7 +27,7 @@ export const PAGE_ID = "PAGE_ID";
 export const PageContainer = memo(function PageContainer(
 	props: PageContainerProps
 ) {
-	const { className, children, height = 100, onScrollEnd, center } = props;
+	const { className, children, height = "85vh", onScrollEnd, center } = props;
 	const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
 	const triggerRef = useRef() as MutableRefObject<HTMLDivElement>;
 	const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ export const PageContainer = memo(function PageContainer(
 
 	return (
 		<main
-			style={{ height: `calc(${height}vh - var(--navbar-height))` }}
+			style={{ height: height }}
 			ref={wrapperRef}
 			className={classNames(cls.Page, [className], mods)}
 			onScroll={onScroll}

@@ -15,6 +15,7 @@ import { PayrollPageSchema } from "@/pages/PayrollsData";
 import { EmployeePageSchema } from "@/pages/EmployeesData";
 import { DocumentPageSchema } from "@/pages/DocumentsData";
 import { EmployeeTimeCardSchema } from "@/pages/EmployeeTimeCardPage";
+import { DocumentSchema } from "@/entities/Document";
 
 export interface StateSchema {
 	user: UserSchema;
@@ -26,6 +27,7 @@ export interface StateSchema {
 	signInForm: SignInSchema;
 	employeePage: EmployeePageSchema;
 	documentPage: DocumentPageSchema;
+	documentDetails: DocumentSchema;
 	payrollPage: PayrollPageSchema;
 	employeeDetails: EmployeeDetailsSchema;
 	employeeTimeCard: EmployeeTimeCardSchema;

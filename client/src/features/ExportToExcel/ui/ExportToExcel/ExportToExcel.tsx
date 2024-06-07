@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { memo } from "react";
 import { exportToExcel } from "@/shared/lib/utils/exportToExcel/exportToExcel";
 import { Button } from "@/shared/ui/Button";
+import { Loader } from "@/shared/ui/Loader";
 
 export interface ExportToExcelProps<T extends object> {
 	className?: string;
@@ -18,7 +19,7 @@ export const ExportToExcel = memo(function ExportToExcel<T extends object>(
 ) {
 	const { className, data, fileName, isLoading, department } = props;
 
-	const { t } = useTranslation();
+	const { t } = useTranslation("translation");
 
 	const handleExport = () => {
 		exportToExcel<T>({
@@ -29,7 +30,7 @@ export const ExportToExcel = memo(function ExportToExcel<T extends object>(
 	};
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loader />;
 	}
 
 	if (!data.length) {
@@ -41,7 +42,7 @@ export const ExportToExcel = memo(function ExportToExcel<T extends object>(
 			className={classNames(cls.exportToExcel, [className], {})}
 			onClick={handleExport}
 		>
-			{t("ExportToExcel")}
+			{t("Export")}
 		</Button>
 	);
 });

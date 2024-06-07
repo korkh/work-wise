@@ -9,20 +9,23 @@ import {
 } from "@/shared/consts/routerConsts";
 import { NavbarItemType } from "../types/navbar_items";
 import { JwtPayload } from "@/shared/types/token";
+import { useTranslation } from "react-i18next";
 
 interface NavbarHookProps {
 	userData: JwtPayload | null;
 }
 
 export const useNavbarItems = ({ userData }: NavbarHookProps) => {
+	const { t } = useTranslation("navbar");
+
 	const sidebarItemsList: NavbarItemType[] = [
 		{
 			path: getRouteMain(),
-			text: "Main",
+			text: t("Main"),
 		},
 		{
 			path: getRouteAbout(),
-			text: "About",
+			text: t("About us"),
 		},
 	];
 
@@ -30,22 +33,22 @@ export const useNavbarItems = ({ userData }: NavbarHookProps) => {
 		sidebarItemsList.push(
 			{
 				path: getRouteProfile(userData.nameid),
-				text: "Profile",
+				text: t("Profile"),
 				authOnly: true,
 			},
 			{
 				path: getRouteEmployees(),
-				text: "Employees",
+				text: t("Employees"),
 				authOnly: true,
 			},
 			{
 				path: getRoutePayrolls(),
-				text: "Payrolls",
+				text: t("Payrolls"),
 				authOnly: true,
 			},
 			{
 				path: getRouteEmployeeTimeCard(),
-				text: "Timecard",
+				text: t("Timecards"),
 				authOnly: true,
 			}
 		);
@@ -55,17 +58,17 @@ export const useNavbarItems = ({ userData }: NavbarHookProps) => {
 		sidebarItemsList.push(
 			{
 				path: getRouteProfile(userData.nameid),
-				text: "Profile",
+				text: t("Profile"),
 				authOnly: true,
 			},
 			{
 				path: getRouteEmployees(),
-				text: "Employees",
+				text: t("Employees"),
 				authOnly: true,
 			},
 			{
 				path: getRouteDocuments(),
-				text: "Documents",
+				text: t("Documents"),
 				authOnly: true,
 			}
 		);

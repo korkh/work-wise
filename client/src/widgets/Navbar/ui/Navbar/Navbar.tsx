@@ -14,13 +14,14 @@ import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { RowStack } from "@/shared/ui/Stack";
 import { getUserAuthData } from "@/entities/User";
 import { useSelector } from "react-redux";
+import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 
 interface NavbarProps {
 	className?: string;
 }
 
 const Navbar = memo(function Navbar({ className }: NavbarProps) {
-	const { t } = useTranslation();
+	const { t } = useTranslation("navbar");
 	const [isAuthModal, setIsAuthModal] = useState(false);
 	const userData = useAuthToken();
 	const userAuth = useSelector(getUserAuthData);
@@ -54,8 +55,9 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 			{userAuth ? (
 				<RowStack gap="32" className={cls.actions} align="center">
 					<ThemeSwitcher />
+					<LanguageSwitcher abbreviated className={cls.lang} />
 					<span>
-						{t("Welcome ")}
+						{t("Welcome")}&nbsp;
 						{userAuth.displayName}
 					</span>
 					<UserDropdown />

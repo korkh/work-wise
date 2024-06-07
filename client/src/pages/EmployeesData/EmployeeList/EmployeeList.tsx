@@ -3,13 +3,14 @@ import cls from "./EmployeeList.module.scss";
 import { useTranslation } from "react-i18next";
 import { Employee } from "../../../entities/Employee/model/types/Employee";
 import { TextHolder } from "@/shared/ui/TextHolder";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { GenericTable } from "@/shared/ui/Table";
 import { Column } from "@/shared/types/ui_components";
 import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
 import { booleanToYesNo } from "@/shared/lib/utils/table/booleanConverter/booleanConverter";
 import { ExportToExcel } from "../../../features/ExportToExcel";
 import { getRouteEmployeeDetails } from "@/shared/consts/routerConsts";
+import { Loader } from "@/shared/ui/Loader";
 
 interface EmployeeListProps {
 	className?: string;
@@ -20,35 +21,35 @@ export const EmployeeList = memo(function EmployeeList(
 	props: EmployeeListProps
 ) {
 	const { className, employees, isLoading } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("employees");
 
 	const tableColumns: Column<Employee>[] = [
 		{ key: "id", header: "No." },
-		{ key: "avatar", header: "Photo" },
-		{ key: "firstName", header: "First Name" },
-		{ key: "lastName", header: "Last Name" },
+		{ key: "avatar", header: t("Photo") },
+		{ key: "firstName", header: t("First Name") },
+		{ key: "lastName", header: t("Last Name") },
 		{
 			key: "birthDay",
-			header: "Birthday",
+			header: t("Birthday"),
 			render: (value) => formatDate(value as string),
 		},
-		{ key: "contractData", header: "Capacity", nestedKeys: ["position"] },
+		{ key: "contractData", header: t("Capacity"), nestedKeys: ["position"] },
 		{
 			key: "registrationAddress",
-			header: "Location",
+			header: t("Location"),
 			nestedKeys: ["city", "country"],
 		},
-		{ key: "phoneNumber", header: "Phone Number" },
+		{ key: "phoneNumber", header: t("Phone Number") },
 		{ key: "email", header: "Email" },
 		{
 			key: "isAvailable",
-			header: "Available",
+			header: t("Available"),
 			render: (value) => booleanToYesNo(value as boolean),
 		},
 	];
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loader />;
 	}
 
 	if (!isLoading && !employees.length) {
@@ -62,7 +63,7 @@ export const EmployeeList = memo(function EmployeeList(
 	return (
 		<>
 			<GenericTable<Employee>
-				title="List of employees"
+				title={t("List of employees")}
 				columns={tableColumns}
 				data={employees}
 				redirect={getRouteEmployeeDetails}

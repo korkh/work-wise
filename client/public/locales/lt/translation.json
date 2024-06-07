@@ -1,4 +1,14 @@
 {
   "Refresh page, please": "Atnaujinti puslapį",
-  "Oops.. Something went wrong": "Oi.. Kažkas negerai"
+  "Oops.. Something went wrong": "Oi.. Kažkas negerai",
+  "Abbreviated language": "EN",
+  "Language": "English",
+  "No data available to export": "Nėra duomenų eksportuoti",
+  "Export": "Eksportuoti",
+  "Admin panel": "Administratoriaus lentelė",
+  "Manager panel": "Valdytojo lentelė",
+  "Accountant panel": "Buhalterio lentelė",
+  "Profile": "Profilis",
+  "Settings": "Nustatymai",
+  "Sign out": "Atsijungti"
 }

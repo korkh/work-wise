@@ -1,7 +1,9 @@
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./DocumentDetailsPage.module.scss";
-import { useTranslation } from "react-i18next";
 import { memo } from "react";
+import { useParams } from "react-router-dom";
+import { PageContainer } from "@/widgets/PageContainer";
+import { DocumentDetails } from "../DocumentDetails/DocumentDetails";
 
 interface DocumentDetailsPageProps {
 	className?: string;
@@ -9,11 +11,13 @@ interface DocumentDetailsPageProps {
 
 const DocumentDetailsPage = (props: DocumentDetailsPageProps) => {
 	const { className } = props;
-	const { t } = useTranslation();
+	const { id } = useParams<{ id: string }>();
 	return (
-		<div className={classNames(cls.documentDetailsPage, [className], {})}>
-			{t("DocumentDetailsPage")}
-		</div>
+		<PageContainer
+			className={classNames(cls.documentDetailsPage, [className], {})}
+		>
+			{id && <DocumentDetails documentId={id} />}
+		</PageContainer>
 	);
 };
 

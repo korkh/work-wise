@@ -5,6 +5,7 @@ import { memo } from "react";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { ColumnStack } from "@/shared/ui/Stack";
 import { PageContainer } from "@/widgets/PageContainer";
+import { useTranslation } from "react-i18next";
 
 interface MainPageProps {
 	className?: string;
@@ -12,37 +13,51 @@ interface MainPageProps {
 
 const MainPage = (props: MainPageProps) => {
 	const { className } = props;
+	const { t } = useTranslation("main");
 
 	return (
-		<PageContainer center className={classNames(cls.mainPage, [className], {})}>
+		<PageContainer
+			center
+			className={classNames(cls.mainPage, [className], {})}
+			height={"80vh"}
+		>
 			<ColumnStack gap="16" width="50%">
 				<ColumnStack align="center" max>
-					<TextHolder size="l" title="Welcome to Work Wise Lietuva" />
-					<TextHolder size="m" title="Empowering Your Workforce Management" />
+					<TextHolder size="l" title={t("Welcome to Work Wise Lietuva")} />
+					<TextHolder
+						size="m"
+						title={t("Empowering Your Workforce Management")}
+					/>
 				</ColumnStack>
 				<TextHolder
 					size="m"
-					text="Welcome to Work Wise Lietuva, your trusted partner in efficient workforce management. With over 20 years of excellence in providing specialized personnel for the Oil & Gas, Marine, and Wind industries, we bring experience, quality, and efficiency to your fingertips."
+					text={t(
+						"Welcome to Work Wise Lietuva, your trusted partner in efficient workforce management. With over 20 years of excellence in providing specialized personnel for the Oil & Gas, Marine, and Wind industries, we bring experience, quality, and efficiency to your fingertips."
+					)}
 				/>
 				<ColumnStack align="center" max>
-					<TextHolder size="m" title="Our Commitment to Excellence" />
+					<TextHolder size="m" title={t("Our Commitment to Excellence")} />
 				</ColumnStack>
 				<TextHolder
 					size="m"
-					text="At Work Wise Lietuva, we specialize in worldwide contracting and project management across a diverse range of services including:"
+					text={t(
+						"At Work Wise Lietuva, we specialize in worldwide contracting and project management across a diverse range of services including:"
+					)}
 				/>
-				<TextHolder size="m" text="- Scaffolding and Rope Access" />
-				<TextHolder size="m" text="- WebDeck & WebNet Solutions" />
-				<TextHolder size="m" text="- Blasting & Painting" />
-				<TextHolder size="m" text="- Piping & Construction" />
-				<TextHolder size="m" text="- Cable Pulling & Pacing" />
-				<TextHolder size="m" text="- Insulation" />
-				<TextHolder size="m" text="- Non-Destructive Testing (NDT)" />
-				<TextHolder size="m" text="- Blade Repair" />
-				<TextHolder size="m" text="- ROV and Drone Inspection" />
+				<TextHolder size="m" text={t("- Scaffolding and Rope Access")} />
+				<TextHolder size="m" text={t("- WebDeck & WebNet Solutions")} />
+				<TextHolder size="m" text={t("- Blasting & Painting")} />
+				<TextHolder size="m" text={t("- Piping & Construction")} />
+				<TextHolder size="m" text={t("- Cable Pulling & Pacing")} />
+				<TextHolder size="m" text={t("- Insulation")} />
+				<TextHolder size="m" text={t("- Non-Destructive Testing (NDT)")} />
+				<TextHolder size="m" text={t("- Blade Repair")} />
+				<TextHolder size="m" text={t("- ROV and Drone Inspection")} />
 				<TextHolder
 					size="m"
-					text="- Statutory Inspection & Testing for Wind Turbine Generators (WTG)"
+					text={t(
+						"- Statutory Inspection & Testing for Wind Turbine Generators (WTG)"
+					)}
 				/>
 				<TextHolder size="m" text="- Commissioning & Decommissioning" />
 				<TextHolder size="m" text="- Maintenance and Labour Supply" />

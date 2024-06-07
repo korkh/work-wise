@@ -17,7 +17,7 @@ const PayrollsPageBaseList = memo(function PayrollsPageBaseList(
 	props: DocumentInfiniteListProps
 ) {
 	const { className } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("payrolls");
 
 	const payrolls = useSelector(selectAllPayrolls);
 	const isLoading = useSelector(getPayrollPageIsLoading);
