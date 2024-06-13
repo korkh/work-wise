@@ -8,7 +8,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class DocumentList
+    public class List
     {
         public class Query : IRequest<Result<PagedList<DocumentDto>>>
         {

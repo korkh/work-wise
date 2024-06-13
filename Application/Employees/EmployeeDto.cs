@@ -1,4 +1,5 @@
 using Application.Addresses;
+using Application.BusinessTrips;
 using Application.Contracts;
 using Application.Documents;
 using Application.EmployeeTimeCards;
@@ -24,6 +25,9 @@ namespace Application.Employees
         public ICollection<DocumentDto> Documents { get; set; }
         public ICollection<PayrollDto> Payrolls { get; set; }
         public ICollection<EmployeeTimeCardDto> EmployeeTimeCards { get; set; }
+        public
+        ICollection<BusinessTripDto> BusinessTrips
+        { get; set; } = new List<BusinessTripDto>();
 
         public void FilterSensitiveData(bool canViewSensitiveData)
         {
@@ -32,6 +36,7 @@ namespace Application.Employees
                 Payrolls = new List<PayrollDto>();
                 Documents = new List<DocumentDto>();
                 EmployeeTimeCards = new List<EmployeeTimeCardDto>();
+                BusinessTrips = new List<BusinessTripDto>();
             }
         }
     }

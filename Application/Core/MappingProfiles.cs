@@ -1,4 +1,5 @@
 using Application.Addresses;
+using Application.BusinessTrips;
 using Application.Contracts;
 using Application.Documents;
 using Application.Employees;
@@ -14,14 +15,11 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<User, Profiles.Profile>()
-                .ForMember(
-                    d => d.Image,
-                    o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url)
-                );
-
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(dest => dest.RegistrationAddress, opt => opt.MapFrom(src => src.RegistrationAddress))
+                .ReverseMap();
+            CreateMap<BusinessTripDto, BusinessTrip>()
+                .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.EmployeeId))
                 .ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
             CreateMap<TransportInfoDto, TransportInfo>().ReverseMap();
@@ -37,7 +35,6 @@ namespace Application.Core
             CreateMap<PayrollDto, Payroll>()
                 .ForPath(dest => dest.Employee.Id, opt => opt.MapFrom(src => src.EmployeeId))
                 .ReverseMap();
-
         }
     }
 }

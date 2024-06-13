@@ -52,6 +52,8 @@ export const validateEmployeeData = (
 
 	if (
 		contractData &&
+		contractData.acceptionDate &&
+		contractData.dismissalDate &&
 		contractData.acceptionDate >= contractData.dismissalDate
 	) {
 		errors.push(ValidateEmployeeError.INCORRECT_CONTRACT_DATA);

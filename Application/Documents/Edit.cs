@@ -8,7 +8,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class DocumentEdit
+    public class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {

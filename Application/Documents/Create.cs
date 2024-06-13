@@ -1,5 +1,4 @@
 using Application.Core;
-using Application.Employees;
 using AutoMapper;
 using Domain.Entities;
 using FluentValidation;
@@ -10,7 +9,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class DocumentCreate
+    public class Create
     {
         public class Command : IRequest<Result<Unit>>
         {

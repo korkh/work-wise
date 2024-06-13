@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Storage;
 
-namespace Application.Documents
+namespace Application.BusinessTrips
 {
-    public class DocumentDelete
+    public class Delete
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -18,7 +18,7 @@ namespace Application.Documents
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Id).NotEmpty().WithMessage("Document ID is required.");
+                RuleFor(x => x.Id).NotEmpty().WithMessage("Business trip ID is required.");
             }
         }
 
@@ -38,25 +38,25 @@ namespace Application.Documents
                 CancellationToken cancellationToken
             )
             {
-                var document = await _context.Documents.FindAsync(request.Id);
+                var bTrip = await _context.BusinessTrips.FindAsync(request.Id);
 
-                if (document == null)
+                if (bTrip == null)
                 {
                     _logger.LogWarning(
-                        "Attempt to delete a non-existent document with ID: {DocumentId}",
+                        "Attempt to delete a non-existent business trip with ID: {BusinessTripId}",
                         request.Id
                     );
-                    return Result<Unit>.Failure("Document not found");
+                    return Result<Unit>.Failure("Business trip not found");
                 }
 
-                _context.Documents.Remove(document);
+                _context.BusinessTrips.Remove(bTrip);
 
                 try
                 {
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
                     if (!result)
                     {
-                        return Result<Unit>.Failure("Failed to delete the document");
+                        return Result<Unit>.Failure("Failed to delete the business trip");
                     }
                     return Result<Unit>.Success(Unit.Value);
                 }
@@ -64,10 +64,10 @@ namespace Application.Documents
                 {
                     _logger.LogError(
                         ex,
-                        "Error deleting document with ID: {DocumentId}",
+                        "Error deleting business trip with ID: {BusinessTripId}",
                         request.Id
                     );
-                    return Result<Unit>.Failure("An error occurred while deleting the document");
+                    return Result<Unit>.Failure("An error occurred while deleting the business trip");
                 }
             }
         }

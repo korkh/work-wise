@@ -11,14 +11,48 @@ using Storage;
 namespace Storage.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240605130213_addedEmployeeTimeCards")]
-    partial class addedEmployeeTimeCards
+    [Migration("20240612103900_addedEmployeeBusinessTrips")]
+    partial class addedEmployeeBusinessTrips
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
+
+            modelBuilder.Entity("Domain.Entities.BusinessTrip", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Alga")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Bankas")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Baudos")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Dienpinigai")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("Laikotarpis")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Likutis")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("BusinessTrips");
+                });
 
             modelBuilder.Entity("Domain.Entities.Document", b =>
                 {
@@ -505,6 +539,17 @@ namespace Storage.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.BusinessTrip", b =>
+                {
+                    b.HasOne("Domain.Entities.Employee", "Employee")
+                        .WithMany("BusinessTrips")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Domain.Entities.Document", b =>
                 {
                     b.HasOne("Domain.Entities.Employee", "Employee")
@@ -755,6 +800,8 @@ namespace Storage.Migrations
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>
                 {
+                    b.Navigation("BusinessTrips");
+
                     b.Navigation("Documents");
 
                     b.Navigation("EmployeeTimeCards");

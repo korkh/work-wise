@@ -26,7 +26,7 @@ export const fetchEmployeeTimeCardData = createAsyncThunk<
 		if (!response.data) {
 			throw new Error();
 		}
-		console.log("DATA FROM DATABASE", response.data);
+
 		return response.data;
 	} catch (e) {
 		return rejectWithValue("No response from server");

@@ -3,18 +3,16 @@ import {
 	getEmployeesPageOrder,
 	getEmployeesPageSearch,
 	getEmployeesPageSort,
-	getEmployeesPageView,
 } from "../../model/selectors/getEmployeesPageSelectors";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useCallback } from "react";
 import { useDebounce } from "@/shared/lib/hooks/useDebounce.ts/useDebounce";
-import { EmployeeSortField, EmployeeView } from "@/entities/Employee";
+import { EmployeeSortField } from "@/entities/Employee";
 import { employeesPageActions } from "../../model/slices/employeesPageSlice";
 import { SortOrder } from "@/shared/types/sort";
 import { fetchEmployeesList } from "../../model/services/fetchEmployeesList/fetchEmployeesList";
 
 export function useEmployeeFilters() {
-	const view = useSelector(getEmployeesPageView);
 	const sort = useSelector(getEmployeesPageSort);
 	const order = useSelector(getEmployeesPageOrder);
 	const search = useSelector(getEmployeesPageSearch);
@@ -27,12 +25,12 @@ export function useEmployeeFilters() {
 
 	const debouncedData = useDebounce(fetchData, 500);
 
-	const onChangeView = useCallback(
-		(view: EmployeeView) => {
-			dispatch(employeesPageActions.setView(view));
-		},
-		[dispatch]
-	);
+	// const onChangeView = useCallback(
+	// 	(view: EmployeeView) => {
+	// 		dispatch(employeesPageActions.setView(view));
+	// 	},
+	// 	[dispatch]
+	// );
 
 	const onChangeSort = useCallback(
 		(newSort: EmployeeSortField) => {
@@ -62,11 +60,9 @@ export function useEmployeeFilters() {
 	);
 
 	return {
-		view,
 		sort,
 		order,
 		search,
-		onChangeView,
 		onChangeSort,
 		onChangeOrder,
 		onChangeSearch,

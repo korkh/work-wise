@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Storage.Migrations
 {
     /// <inheritdoc />
-    public partial class addedEmployeeTimeCards : Migration
+    public partial class addedEmployeeBusinessTrips : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -236,6 +236,30 @@ namespace Storage.Migrations
                     table.PrimaryKey("PK_Addresses", x => x.EmployeeId);
                     table.ForeignKey(
                         name: "FK_Addresses_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BusinessTrips",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Laikotarpis = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    Alga = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Dienpinigai = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Bankas = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Baudos = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Likutis = table.Column<decimal>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BusinessTrips", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BusinessTrips_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
@@ -475,6 +499,11 @@ namespace Storage.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_BusinessTrips_EmployeeId",
+                table: "BusinessTrips",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Documents_EmployeeId",
                 table: "Documents",
                 column: "EmployeeId");
@@ -525,6 +554,9 @@ namespace Storage.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BusinessTrips");
 
             migrationBuilder.DropTable(
                 name: "Cars");

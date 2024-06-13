@@ -1,7 +1,7 @@
 import { Employee } from "@/entities/Employee";
 
 export interface EmployeeDocument {
-	id?: string;
+	id: string;
 	employee?: Employee;
 	employeeId?: string;
 	title?: string;

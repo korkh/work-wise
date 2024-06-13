@@ -9,7 +9,7 @@ using Storage;
 
 namespace Application.Documents
 {
-    public class DocumentDetails
+    public class Details
     {
         public class Query : IRequest<Result<DocumentDto>>
         {

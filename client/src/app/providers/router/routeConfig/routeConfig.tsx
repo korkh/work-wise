@@ -3,6 +3,10 @@ import { AboutPage } from "@/pages/AboutPage";
 import { AccountantPanelPage } from "@/pages/AccountantPanelPage";
 import { AdminPanelPage } from "@/pages/AdminPanelPage";
 import {
+	BusinessTripDetails,
+	BusinessTripsPage,
+} from "@/pages/BusinessTripsData";
+import {
 	DocumentsPage,
 	DocumentCreatePage,
 	DocumentDeletePage,
@@ -30,6 +34,8 @@ import {
 	getRouteAbout,
 	getRouteAccountant,
 	getRouteAdmin,
+	getRouteBusinessTripDetails,
+	getRouteBusinessTrips,
 	getRouteDocumentCreate,
 	getRouteDocumentDelete,
 	getRouteDocumentDetails,
@@ -125,6 +131,18 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.PAYROLL_DETAILS]: {
 		path: getRoutePayrollDetails(":id"),
 		element: <PayrollDetailsPage />,
+		authOnly: true,
+		roles: [UserRole.ACCOUNTANT],
+	},
+	[AppRoutes.BUSINESS_TRIPS]: {
+		path: getRouteBusinessTrips(),
+		element: <BusinessTripsPage />,
+		authOnly: true,
+		roles: [UserRole.ACCOUNTANT],
+	},
+	[AppRoutes.BUSINESS_TRIP_DETAILS]: {
+		path: getRouteBusinessTripDetails(":id"),
+		element: <BusinessTripDetails />,
 		authOnly: true,
 		roles: [UserRole.ACCOUNTANT],
 	},

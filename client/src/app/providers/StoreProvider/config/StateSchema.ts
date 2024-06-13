@@ -16,6 +16,8 @@ import { EmployeePageSchema } from "@/pages/EmployeesData";
 import { DocumentPageSchema } from "@/pages/DocumentsData";
 import { EmployeeTimeCardSchema } from "@/pages/EmployeeTimeCardPage";
 import { DocumentSchema } from "@/entities/Document";
+import { BusinessTripDetailsSchema } from "@/entities/BusinessTrip";
+import { BusinessTripPageSchema } from "@/pages/BusinessTripsData";
 
 export interface StateSchema {
 	user: UserSchema;
@@ -30,6 +32,8 @@ export interface StateSchema {
 	documentDetails: DocumentSchema;
 	payrollPage: PayrollPageSchema;
 	employeeDetails: EmployeeDetailsSchema;
+	businessTripPage: BusinessTripPageSchema;
+	businessTripDetails: BusinessTripDetailsSchema;
 	employeeTimeCard: EmployeeTimeCardSchema;
 }
 

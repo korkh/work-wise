@@ -17,5 +17,8 @@ namespace Domain.Entities
         public ICollection<Document> Documents { get; set; } = new List<Document>();
         public ICollection<Payroll> Payrolls { get; set; } = new List<Payroll>();
         public ICollection<EmployeeTimeCard> EmployeeTimeCards { get; set; } = new List<EmployeeTimeCard>();
+        public
+        ICollection<BusinessTrip> BusinessTrips
+        { get; set; } = new List<BusinessTrip>();
     }
 }

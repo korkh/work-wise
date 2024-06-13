@@ -1,6 +1,4 @@
 using Application.Documents;
-using Application.Employees;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +10,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDocuments([FromQuery] DocumentParams param)
         {
-            return HandlePagedResult(await Mediator.Send(new DocumentList.Query { Params = param }));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDocument(Guid id)
         {
-            return HandleResult(await Mediator.Send(new DocumentDetails.Query { Id = id }));
+            return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
 
         [HttpPost("{employeeId}")]
@@ -26,7 +24,7 @@ namespace API.Controllers
         {
             return HandleResult(
                 await Mediator.Send(
-                    new DocumentCreate.Command { Document = documentDto, EmployeeId = employeeId }
+                    new Create.Command { Document = documentDto, EmployeeId = employeeId }
                 )
             );
         }
@@ -35,13 +33,13 @@ namespace API.Controllers
         public async Task<IActionResult> EditDocument(Guid id, DocumentDto documentDto)
         {
             documentDto.Id = id;
-            return HandleResult(await Mediator.Send(new DocumentEdit.Command { Document = documentDto }));
+            return HandleResult(await Mediator.Send(new Edit.Command { Document = documentDto }));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocument(Guid id)
         {
-            return HandleResult(await Mediator.Send(new DocumentDelete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }

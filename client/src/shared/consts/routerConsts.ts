@@ -13,6 +13,8 @@ export enum AppRoutes {
 	DOCUMENT_DELETE = "document_delete",
 	PAYROLLS = "payrolls",
 	PAYROLL_DETAILS = "payroll_details",
+	BUSINESS_TRIPS = "busineess_trips",
+	BUSINESS_TRIP_DETAILS = "busineess_trip_details",
 	ADMIN_PANEL = "admin_panel",
 	MANAGER_PANEL = "manager_panel",
 	ACCOUNTANT_PANEL = "accountant_panel",
@@ -36,6 +38,9 @@ export const getRouteDocumentCreate = () => "/documents/new";
 export const getRouteDocumentDelete = (id: string) => `/documents/${id}`;
 export const getRoutePayrolls = () => "/payrolls";
 export const getRoutePayrollDetails = (id: string) => `/papyrolls/${id}`;
+export const getRouteBusinessTrips = () => `/businesstrips`;
+export const getRouteBusinessTripDetails = (id: string) =>
+	`/businesstrip/${id}`;
 export const getRouteAdmin = () => "/admin";
 export const getRouteManager = () => "/manager";
 export const getRouteAccountant = () => "/accountant";
@@ -59,6 +64,8 @@ export const AppRouteByPathPattern: Record<string, AppRoutes> = {
 	[getRouteDocumentDelete(":id")]: AppRoutes.DOCUMENT_DELETE,
 	[getRoutePayrolls()]: AppRoutes.PAYROLLS,
 	[getRoutePayrollDetails(":id")]: AppRoutes.PAYROLL_DETAILS,
+	[getRouteBusinessTrips()]: AppRoutes.BUSINESS_TRIPS,
+	[getRouteBusinessTripDetails(":id")]: AppRoutes.BUSINESS_TRIP_DETAILS,
 	[getRouteAdmin()]: AppRoutes.ADMIN_PANEL,
 	[getRouteManager()]: AppRoutes.MANAGER_PANEL,
 	[getRouteAccountant()]: AppRoutes.ACCOUNTANT_PANEL,

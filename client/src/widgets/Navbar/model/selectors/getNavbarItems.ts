@@ -1,5 +1,6 @@
 import {
 	getRouteAbout,
+	getRouteBusinessTrips,
 	getRouteDocuments,
 	getRouteEmployeeTimeCard,
 	getRouteEmployees,
@@ -44,6 +45,11 @@ export const useNavbarItems = ({ userData }: NavbarHookProps) => {
 			{
 				path: getRoutePayrolls(),
 				text: t("Payrolls"),
+				authOnly: true,
+			},
+			{
+				path: getRouteBusinessTrips(),
+				text: t("Business trips"),
 				authOnly: true,
 			},
 			{

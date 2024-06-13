@@ -19,7 +19,7 @@ const NotFoundPage = () => {
 	};
 	return (
 		<PageContainer>
-			<ColumnStack gap="8" align="center">
+			<ColumnStack gap="8" align="center" max>
 				<TextHolder variant="error" title={"404 PAGE NOT FOUND"} />
 				<div style={{ margin: 50 }}></div>
 				<Glyph SvgImage={Astronaut} className={cls.astronaut} />

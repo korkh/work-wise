@@ -71,8 +71,8 @@ namespace Storage
                     new()
                     {
                         Avatar = "https://i.pinimg.com/originals/26/e5/e0/26e5e02218aa21654bb17829cd5c7229.jpg",
-                        FirstName = "Ahad",
-                        LastName = "Hamidov",
+                        FirstName = "Abbas",
+                        LastName = "Imamverdiyev",
                         BirthDay = new DateTime(1990, 1, 15),
                         RegistrationAddress = new Address
                         {
@@ -82,7 +82,7 @@ namespace Storage
                             Country = "Norway"
                         },
                         PhoneNumber = "+37022222222",
-                        Email = "ahamidov@test.com",
+                        Email = "imamverdiyev@test.com",
                         IsAvailable = true,
                         IsFired = false,
                         ContractData = new Contract
@@ -289,13 +289,52 @@ namespace Storage
                             new WorkingState { Day = 29, State = "8" },
                             new WorkingState { Day = 30, State = "8" },
                         }
-                    }}
+                    },
+                    },
+                    BusinessTrips = new List<BusinessTrip>{
+                        new(){
+                                Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2023, 12, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 1742.16m,
+                                    Bankas = 0m,
+                                    Baudos = 0m,
+                                    Likutis = 1742.16m,
+                                },
+                        new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 1, 1),
+                                    Alga = 1011.36m,
+                                    Dienpinigai = 1984m,
+                                    Bankas = 2492m,
+                                    Baudos = 0m,
+                                    Likutis = 503.36m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 2, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 0m,
+                                    Bankas = 1824m,
+                                    Baudos = 0m,
+                                    Likutis = -1824m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 3, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 0m,
+                                    Bankas = 100m,
+                                    Baudos = 0m,
+                                    Likutis = -100m,
+                                }
+                    },
                     },
                     new()
                     {
                         Avatar = "https://www.meme-arsenal.com/memes/77dfdbd947fb563006dcc4315a13b971.jpg",
-                        FirstName = "Bjørn",
-                        LastName = "Peterson",
+                        FirstName = "Elchin",
+                        LastName = "Suleymanov",
                         BirthDay = new DateTime(1995, 1, 15),
                         RegistrationAddress = new Address
                         {
@@ -305,7 +344,7 @@ namespace Storage
                             Country = "Lithuania"
                         },
                         PhoneNumber = "555-1235",
-                        Email = "johnfired@test.com",
+                        Email = "suleymanov@test.com",
                         IsAvailable = false,
                         IsFired = true,
                         ContractData = new Contract
@@ -513,12 +552,59 @@ namespace Storage
                             new WorkingState { Day = 30, State = "8" },
                         }
                     }}
+                    ,BusinessTrips = new List<BusinessTrip>{
+                        new(){
+                                Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2023, 12, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 1157.11m,
+                                    Bankas = 0m,
+                                    Baudos = 0m,
+                                    Likutis = 1157.11m,
+                                },
+                        new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 1, 1),
+                                    Alga = 402.66m,
+                                    Dienpinigai = 832m,
+                                    Bankas = 1467m,
+                                    Baudos = 0m,
+                                    Likutis = -232.34m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 2, 1),
+                                    Alga = 1015.8m,
+                                    Dienpinigai = 1408m,
+                                    Bankas = 832m,
+                                    Baudos = 0m,
+                                    Likutis = 1591.8m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 3, 1),
+                                    Alga = 949.69m,
+                                    Dienpinigai = 1884m,
+                                    Bankas = 2284m,
+                                    Baudos = 0m,
+                                    Likutis = 549.69m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 4, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 0m,
+                                    Bankas = 2665m,
+                                    Baudos = 0m,
+                                    Likutis = -2665m,
+                                }
+                    },
                     },
                     new()
                     {
                         Avatar = "https://i.pinimg.com/originals/1a/5b/d0/1a5bd09226035a1fcaf9836af44330eb.jpg",
-                        FirstName = "Peter",
-                        LastName = "Smith",
+                        FirstName = "Faig ",
+                        LastName = "Mammadov",
                         BirthDay = new DateTime(1985, 5, 20),
                         RegistrationAddress = new Address
                         {
@@ -528,7 +614,7 @@ namespace Storage
                             Country = "Lithuania"
                         },
                         PhoneNumber = "555-5678",
-                        Email = "petersmith@test.com",
+                        Email = "mammadov@test.com",
                         IsAvailable = true,
                         IsFired = false,
                         ContractData = new Contract
@@ -717,12 +803,59 @@ namespace Storage
                             new WorkingState { Day = 30, State = "8" },
                         }
                     }}
+                    ,BusinessTrips = new List<BusinessTrip>{
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2023, 12, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 1139.41m,
+                                    Bankas = 0m,
+                                    Baudos = 0m,
+                                    Likutis = 1139.41m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 1, 1),
+                                    Alga = 1203m,
+                                    Dienpinigai = 1984m,
+                                    Bankas = 2004m,
+                                    Baudos = 0m,
+                                    Likutis = 1183m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 2, 1),
+                                    Alga = 1399.63m,
+                                    Dienpinigai = 1216m,
+                                    Bankas = 1904m,
+                                    Baudos = 0m,
+                                    Likutis = 711.63m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 3, 1),
+                                    Alga = 740m,
+                                    Dienpinigai = 1600m,
+                                    Bankas = 1400m,
+                                    Baudos = 0m,
+                                    Likutis = 940m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 4, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 0m,
+                                    Bankas = 3492m,
+                                    Baudos = 0m,
+                                    Likutis = -3492m,
+                                }
+                        },
                     },
                     new()
                     {
                         Avatar = "https://i.pinimg.com/originals/71/cd/b1/71cdb14248d0f90d983e595f458dd2a0.png",
-                        FirstName = "Bob",
-                        LastName = "Johnson",
+                        FirstName = "Rasul",
+                        LastName = "Huseynov",
                         BirthDay = new DateTime(1978, 10, 10),
                         RegistrationAddress = new Address
                         {
@@ -732,7 +865,7 @@ namespace Storage
                             Country = "Lithuania"
                         },
                         PhoneNumber = "555-9012",
-                        Email = "bobjonson@test.com",
+                        Email = "huseynov@test.com",
                         IsAvailable = true,
                         IsFired = false,
                         ContractData = new Contract
@@ -921,7 +1054,53 @@ namespace Storage
                             new WorkingState { Day = 30, State = "8" },
                         }
                     }
-                    }
+                    },BusinessTrips = new List<BusinessTrip>{
+                            new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2023, 12, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 290.26m,
+                                    Bankas = 0m,
+                                    Baudos = 0m,
+                                    Likutis = 290.26m,
+                                },
+                            new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 1, 1),
+                                    Alga = 884.94m,
+                                    Dienpinigai = 1984m,
+                                    Bankas = 956m,
+                                    Baudos = 0m,
+                                    Likutis = 1912.94m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 2, 1),
+                                    Alga = 1035.11m,
+                                    Dienpinigai = 1856m,
+                                    Bankas = 2754m,
+                                    Baudos = 0m,
+                                    Likutis = 137.11m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 3, 1),
+                                    Alga = 283.76m,
+                                    Dienpinigai = 512m,
+                                    Bankas = 2100m,
+                                    Baudos = 180.89m,
+                                    Likutis = -1485.13m,
+                                },
+                                new(){
+                                    Id = Guid.NewGuid(),
+                                    Laikotarpis = new DateOnly(2024, 4, 1),
+                                    Alga = 0m,
+                                    Dienpinigai = 0m,
+                                    Bankas = 1614m,
+                                    Baudos = 0m,
+                                    Likutis = -1614m,
+                                }
+                    },
                     },
                 };
                 await context.Employees.AddRangeAsync(employees);

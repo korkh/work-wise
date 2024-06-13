@@ -9,6 +9,7 @@ import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
 import { getRouteDocumentDetails } from "@/shared/consts/routerConsts";
+import { Loader } from "@/shared/ui/Loader";
 
 interface DocumentsListProps {
 	className?: string;
@@ -21,8 +22,6 @@ export const DocumentsList = memo(function DocumentsList(
 ) {
 	const { className, documents, isLoading } = props;
 	const { t } = useTranslation();
-
-	console.log("DOCUMENTS", documents);
 
 	const tableColumns: Column<EmployeeDocument>[] = [
 		{ key: "id", header: "No." },
@@ -57,7 +56,7 @@ export const DocumentsList = memo(function DocumentsList(
 	};
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loader />;
 	}
 
 	if (!isLoading && !documents.length) {
