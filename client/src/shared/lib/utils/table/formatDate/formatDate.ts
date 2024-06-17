@@ -1,4 +1,7 @@
-export function formatDate(dateString: string | null | undefined): string {
+export function formatDate(
+	dateString: string | null | undefined,
+	full?: boolean
+): string {
 	if (!dateString) {
 		return "N/A";
 	}
@@ -12,5 +15,8 @@ export function formatDate(dateString: string | null | undefined): string {
 	const month = (date.getMonth() + 1).toString().padStart(2, "0");
 	const day = (date.getDay() + 1).toString().padStart(2, "0");
 
-	return `${day}-${month}-${year}`;
+	if (full) {
+		return `${day}-${month}-${year}`;
+	}
+	return `${month}-${year}`;
 }

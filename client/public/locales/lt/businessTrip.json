@@ -8,5 +8,15 @@
   "Fines": "Baudos",
   "Balance": "Likutis",
   "List of business trips": "Komandiruočių sąrašas",
-  "Business trips data loading error": "Komandiruočių duomenų įkėlimo klaida"
+  "Business trips data loading error": "Komandiruočių duomenų įkėlimo klaida",
+  "Photo": "Nuotrauka",
+  "Employee": "Darbuotojas",
+  "Year": "Metai",
+  "Total salary": "Bandra alga",
+  "Total daily allowance": "Bendra dienpinigių suma",
+  "Total Bank": "Isviso bankas",
+  "Total Fines": "Isviso Baudos",
+  "Total balance": "Isviso likutis",
+  "No business trip summaries found": "Komandiruocių santraukų nerasta",
+  "Business Trips Summaries": "Komandiruočių santraukos"
 }

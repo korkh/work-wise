@@ -11,7 +11,7 @@ namespace API.Controllers
         [HttpGet] // api/businesstrips
         public async Task<IActionResult> GetBusinessTrips([FromQuery] BusinessTripParams param)
         {
-            return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
+            return HandleResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
         [HttpGet("{id}")]
@@ -35,6 +35,7 @@ namespace API.Controllers
         public async Task<IActionResult> EditBusinessTrip(Guid id, BusinessTripDto businessTrip)
         {
             businessTrip.Id = id;
+
             return HandleResult(await Mediator.Send(new Edit.Command { BusinessTrip = businessTrip }));
         }
 

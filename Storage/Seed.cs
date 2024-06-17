@@ -584,10 +584,10 @@ namespace Storage
                                     Id = Guid.NewGuid(),
                                     Laikotarpis = new DateOnly(2024, 3, 1),
                                     Alga = 949.69m,
-                                    Dienpinigai = 1884m,
+                                    Dienpinigai = 1984m,
                                     Bankas = 2284m,
                                     Baudos = 0m,
-                                    Likutis = 549.69m,
+                                    Likutis = 649.69m,
                                 },
                                 new(){
                                     Id = Guid.NewGuid(),

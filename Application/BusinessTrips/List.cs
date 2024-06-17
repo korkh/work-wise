@@ -10,7 +10,7 @@ namespace Application.BusinessTrips
 {
     public class List
     {
-        public class Query : IRequest<Result<PagedList<BusinessTripDto>>>
+        public class Query : IRequest<Result<List<BusinessTripDto>>>
         {
             public BusinessTripParams Params { get; set; }
         }
@@ -23,7 +23,7 @@ namespace Application.BusinessTrips
             }
         }
 
-        public class Handler : IRequestHandler<Query, Result<PagedList<BusinessTripDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<BusinessTripDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -34,7 +34,7 @@ namespace Application.BusinessTrips
                 _mapper = mapper;
             }
 
-            public async Task<Result<PagedList<BusinessTripDto>>> Handle(
+            public async Task<Result<List<BusinessTripDto>>> Handle(
                 Query request,
                 CancellationToken cancellationToken
             )
@@ -90,12 +90,9 @@ namespace Application.BusinessTrips
                     query = query.Where(bt => bt.Likutis <= request.Params.MaxLikutis.Value);
                 }
 
-                var businessTrips = await PagedList<BusinessTripDto>.CreateAsync(
-                    query,
-                    request.Params.PageNumber,
-                    request.Params.PageSize
-                );
-                return Result<PagedList<BusinessTripDto>>.Success(businessTrips);
+                var businessTrips = await query.ToListAsync(cancellationToken);
+
+                return Result<List<BusinessTripDto>>.Success(businessTrips);
             }
         }
     }

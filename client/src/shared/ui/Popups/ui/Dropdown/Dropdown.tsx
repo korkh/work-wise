@@ -4,8 +4,8 @@ import { ReactNode, memo, useEffect, useRef, useState } from "react";
 import { DropdownDirection } from "@/shared/types/ui_components";
 import { mapDirectionClass } from "../../styles/popup_consts";
 import popupCls from "../../styles/popup.module.scss";
-import { Button } from "../../../../../shared/ui/Button";
-import { AppLink } from "../../../../../shared/ui/AppLink";
+import { Button, ButtonVariant } from "@/shared/ui/Button";
+import { AppLink } from "@/shared/ui/AppLink";
 
 export interface DropdownItem {
 	disabled?: boolean;
@@ -19,10 +19,17 @@ interface DropdownProps {
 	items: DropdownItem[];
 	direction?: DropdownDirection;
 	trigger: ReactNode;
+	variant?: ButtonVariant;
 }
 
 export const Dropdown = memo(function Dropdown(props: DropdownProps) {
-	const { className, trigger, items, direction = "bottom right" } = props;
+	const {
+		className,
+		trigger,
+		items,
+		direction = "bottom right",
+		variant,
+	} = props;
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +60,11 @@ export const Dropdown = memo(function Dropdown(props: DropdownProps) {
 			className={classNames(cls.dropdown, [className, popupCls.popup], {})}
 			ref={dropdownRef}
 		>
-			<Button onClick={toggleDropdown} className={cls.trigger}>
+			<Button
+				variant={variant}
+				onClick={toggleDropdown}
+				className={cls.trigger}
+			>
 				{trigger}
 			</Button>
 			{isOpen && (

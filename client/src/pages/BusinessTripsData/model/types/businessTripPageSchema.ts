@@ -8,9 +8,9 @@ export interface BusinessTripPageSchema
 	error?: string;
 
 	//pagination
-	pageNumber: number;
-	pageSize: number;
-	hasMore: boolean;
+	// pageNumber: number;
+	// pageSize: number;
+	// hasMore: boolean;
 
 	//filters
 	order: SortOrder;

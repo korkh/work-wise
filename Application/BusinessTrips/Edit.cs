@@ -45,6 +45,19 @@ namespace Application.BusinessTrips
                 CancellationToken cancellationToken
             )
             {
+                var employeeExists = await _context.Employees.AnyAsync(
+                    e => e.Id == request.BusinessTrip.EmployeeId,
+                    cancellationToken
+                );
+                if (!employeeExists)
+                {
+                    _logger.LogWarning(
+                        "Attempted to edit a business trip for a non-existent employee with ID: {EmployeeId}",
+                        request.BusinessTrip.EmployeeId
+                    );
+                    return Result<Unit>.Failure("Employee not found");
+                }
+
                 var businessTripToUpdate = await _context.BusinessTrips.FirstOrDefaultAsync(
                     bt => bt.Id == request.BusinessTrip.Id,
                     cancellationToken
@@ -58,21 +71,10 @@ namespace Application.BusinessTrips
                     return Result<Unit>.Failure("Business trip not found");
                 }
 
-                // Ensure no other business trip exists with the same Laikotarpis and EmployeeId
-                bool businessTripExists = await _context.BusinessTrips.AnyAsync(
-                    bt => bt.Laikotarpis == request.BusinessTrip.Laikotarpis && bt.Id != request.BusinessTrip.Id,
-                    cancellationToken
-                );
-                if (businessTripExists)
-                {
-                    _logger.LogWarning(
-                        "Attempted to edit a business trip with a duplicate Laikotarpis and EmployeeId."
-                    );
-                    return Result<Unit>.Failure("A business trip with the same Laikotarpis already exists.");
-                }
-
                 _mapper.Map(request.BusinessTrip, businessTripToUpdate);
-                _context.BusinessTrips.Update(businessTripToUpdate);
+
+                // Ensure the Employee entity is not updated
+                _context.Entry(businessTripToUpdate).Reference(bt => bt.Employee).IsModified = false;
 
                 try
                 {

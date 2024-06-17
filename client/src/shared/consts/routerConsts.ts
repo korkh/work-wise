@@ -14,6 +14,7 @@ export enum AppRoutes {
 	PAYROLLS = "payrolls",
 	PAYROLL_DETAILS = "payroll_details",
 	BUSINESS_TRIPS = "busineess_trips",
+	BUSINESS_TRIPS_SUMMARIES = "business_trips_summaries",
 	BUSINESS_TRIP_DETAILS = "busineess_trip_details",
 	ADMIN_PANEL = "admin_panel",
 	MANAGER_PANEL = "manager_panel",
@@ -39,6 +40,7 @@ export const getRouteDocumentDelete = (id: string) => `/documents/${id}`;
 export const getRoutePayrolls = () => "/payrolls";
 export const getRoutePayrollDetails = (id: string) => `/papyrolls/${id}`;
 export const getRouteBusinessTrips = () => `/businesstrips`;
+export const getRouteBusinessTripsSummaries = () => `/businesstrips/summaries`;
 export const getRouteBusinessTripDetails = (id: string) =>
 	`/businesstrip/${id}`;
 export const getRouteAdmin = () => "/admin";
@@ -65,6 +67,7 @@ export const AppRouteByPathPattern: Record<string, AppRoutes> = {
 	[getRoutePayrolls()]: AppRoutes.PAYROLLS,
 	[getRoutePayrollDetails(":id")]: AppRoutes.PAYROLL_DETAILS,
 	[getRouteBusinessTrips()]: AppRoutes.BUSINESS_TRIPS,
+	[getRouteBusinessTripsSummaries()]: AppRoutes.BUSINESS_TRIPS_SUMMARIES,
 	[getRouteBusinessTripDetails(":id")]: AppRoutes.BUSINESS_TRIP_DETAILS,
 	[getRouteAdmin()]: AppRoutes.ADMIN_PANEL,
 	[getRouteManager()]: AppRoutes.MANAGER_PANEL,

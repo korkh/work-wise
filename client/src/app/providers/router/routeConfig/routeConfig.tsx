@@ -5,6 +5,7 @@ import { AdminPanelPage } from "@/pages/AdminPanelPage";
 import {
 	BusinessTripDetails,
 	BusinessTripsPage,
+	BusinessTripsSummariesPage,
 } from "@/pages/BusinessTripsData";
 import {
 	DocumentsPage,
@@ -36,6 +37,7 @@ import {
 	getRouteAdmin,
 	getRouteBusinessTripDetails,
 	getRouteBusinessTrips,
+	getRouteBusinessTripsSummaries,
 	getRouteDocumentCreate,
 	getRouteDocumentDelete,
 	getRouteDocumentDetails,
@@ -137,6 +139,12 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.BUSINESS_TRIPS]: {
 		path: getRouteBusinessTrips(),
 		element: <BusinessTripsPage />,
+		authOnly: true,
+		roles: [UserRole.ACCOUNTANT],
+	},
+	[AppRoutes.BUSINESS_TRIPS_SUMMARIES]: {
+		path: getRouteBusinessTripsSummaries(),
+		element: <BusinessTripsSummariesPage />,
 		authOnly: true,
 		roles: [UserRole.ACCOUNTANT],
 	},

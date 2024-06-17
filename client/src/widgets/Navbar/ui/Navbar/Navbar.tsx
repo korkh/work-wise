@@ -15,6 +15,10 @@ import { RowStack } from "@/shared/ui/Stack";
 import { getUserAuthData } from "@/entities/User";
 import { useSelector } from "react-redux";
 import { LanguageSwitcher } from "@/features/LanguageSwitcher";
+import {
+	getRouteBusinessTrips,
+	getRouteBusinessTripsSummaries,
+} from "@/shared/consts/routerConsts";
 
 interface NavbarProps {
 	className?: string;
@@ -25,6 +29,7 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	const [isAuthModal, setIsAuthModal] = useState(false);
 	const userData = useAuthToken();
 	const userAuth = useSelector(getUserAuthData);
+	const [activeItem, setActiveItem] = useState<string | null>(null);
 	const navbarItemsList = useNavbarItems({ userData });
 
 	const onCloseModal = useCallback(() => {
@@ -35,10 +40,43 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 		setIsAuthModal(true);
 	}, []);
 
+	const dropdownItems = [
+		{
+			content: t("Business trips summaries"),
+			href: getRouteBusinessTripsSummaries(),
+			onClick: () => setActiveItem(getRouteBusinessTripsSummaries()),
+		},
+		{
+			content: t("Business trips"),
+			href: getRouteBusinessTrips(),
+			onClick: () => setActiveItem(getRouteBusinessTrips()),
+		},
+	];
+
 	const itemsList = useMemo(
 		() =>
-			navbarItemsList.map((item) => <NavbarItem item={item} key={item.path} />),
-		[navbarItemsList]
+			navbarItemsList.map((item) => {
+				if (item.text === "Business trips" || item.text === "Komandiruotės") {
+					return (
+						<NavbarItem
+							item={item}
+							key={item.path}
+							dropDownItems={dropdownItems}
+							activeItem={activeItem}
+							setActiveItem={setActiveItem}
+						/>
+					);
+				}
+				return (
+					<NavbarItem
+						item={item}
+						key={item.path}
+						activeItem={activeItem}
+						setActiveItem={setActiveItem}
+					/>
+				);
+			}),
+		[navbarItemsList, activeItem]
 	);
 
 	return (

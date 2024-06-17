@@ -12,7 +12,7 @@
 
   th,
   td {
-    padding: 5px;
+    padding: 5px 0 0;
     max-width: 10vw;
     color: var(--text);
     text-align: center;
@@ -54,6 +54,11 @@
     transform: rotate(180deg);
     text-align: left;
     white-space: nowrap;
+  }
+
+  .editableInput {
+    max-width: 5vw;
+    text-align: center;
   }
 
 }

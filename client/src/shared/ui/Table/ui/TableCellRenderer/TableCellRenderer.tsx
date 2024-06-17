@@ -26,8 +26,12 @@ export function TableCellRenderer<T>(
 		return render(value, item);
 	}
 
+	if (nestedKeys && nestedKeys.includes("avatar")) {
+		return <Avatar src={String(value)} size={40} alt="Avatar" />;
+	}
+
 	if (key === "avatar") {
-		return <Avatar src={String(value)} size={50} alt="Avatar" />;
+		return <Avatar src={String(value)} size={40} alt="Avatar" />;
 	}
 
 	if (value && typeof value === "object") {

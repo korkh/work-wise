@@ -22,9 +22,6 @@ const initialState: BusinessTripPageSchema = {
 	error: undefined,
 	ids: [],
 	entities: {},
-	pageNumber: 1,
-	pageSize: 10,
-	hasMore: true,
 	order: "asc",
 	sort: BusinessTripSortField.laikotarpis,
 	search: "",
@@ -43,9 +40,9 @@ const businessTripPageSlice = createSlice({
 	name: "pages/businessTripPageSlice",
 	initialState,
 	reducers: {
-		setPage: (state, action: PayloadAction<number>) => {
-			state.pageNumber = action.payload;
-		},
+		// setPage: (state, action: PayloadAction<number>) => {
+		// 	state.pageNumber = action.payload;
+		// },
 		setOrder: (state, action: PayloadAction<SortOrder>) => {
 			state.order = action.payload;
 		},
@@ -56,7 +53,6 @@ const businessTripPageSlice = createSlice({
 			state.search = action.payload;
 		},
 		initState: (state) => {
-			state.pageSize = 8;
 			state._inited = true;
 		},
 	},
@@ -71,7 +67,7 @@ const businessTripPageSlice = createSlice({
 			})
 			.addCase(fetchBusinessTripsList.fulfilled, (state, action) => {
 				state.isLoading = false;
-				state.hasMore = action.payload.length >= state.pageSize;
+				// state.hasMore = action.payload.length >= state.pageSize;
 				const bTrips = action.payload.filter(
 					(item: BusinessTrip) => item.employeeId
 				);

@@ -1,1 +1,2 @@
-export { BusinessTripsInfiniteListAsync as BusinessTripsInfiniteList } from "./ui/BusinessTripsInfiniteList/BusinessTripsInfiniteList.async";
+import BusinessTripsInfiniteList from "./ui/BusinessTripsInfiniteList/BusinessTripsInfiniteList";
+export { BusinessTripsInfiniteList };

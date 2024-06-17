@@ -32,6 +32,7 @@ import { TimeCardDaysHeader } from "../TimeCardDaysHeader";
 import { TimeCardRows } from "../TableCardRows";
 import { TimeCardLoader } from "../TimeCardLoader";
 import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
+import { ToolTipCell } from "@/shared/ui/Table/ui/ToolTipCell";
 
 interface EmployeeTimeCardPageProps {
 	className?: string;
@@ -177,7 +178,7 @@ const EmployeeTimeCardPage = (props: EmployeeTimeCardPageProps) => {
 						<th>#</th>
 						<th className={cls.fullNameColumn}>{t("Full Name")}</th>
 						<th className={cls.verticalHeader}>
-							{t("Hrs in month")}
+							<ToolTipCell str={t("Hrs in month")} num={10} />
 							<>
 								<button onClick={() => incrementWorkingHours()}>+</button>
 								<button onClick={() => decrementWorkingHours()}>-</button>

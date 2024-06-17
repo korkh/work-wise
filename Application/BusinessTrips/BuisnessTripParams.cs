@@ -1,8 +1,7 @@
-using Application.Core;
 
 namespace Application.BusinessTrips
 {
-    public class BusinessTripParams : PagingParams
+    public class BusinessTripParams
     {
         public Guid? EmployeeId { get; set; }
         public DateOnly? StartDate { get; set; }

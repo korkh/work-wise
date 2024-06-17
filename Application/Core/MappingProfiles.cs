@@ -18,15 +18,19 @@ namespace Application.Core
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(dest => dest.RegistrationAddress, opt => opt.MapFrom(src => src.RegistrationAddress))
                 .ReverseMap();
+
             CreateMap<BusinessTripDto, BusinessTrip>()
                 .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.EmployeeId))
+                .ForMember(dest => dest.Employee, opt => opt.Ignore())
                 .ReverseMap();
+
             CreateMap<AddressDto, Address>().ReverseMap();
             CreateMap<TransportInfoDto, TransportInfo>().ReverseMap();
             CreateMap<CarDto, Car>().ReverseMap();
             CreateMap<ContractDto, Contract>().ReverseMap();
             CreateMap<DocumentDto, Document>()
                 .ForPath(dest => dest.Employee.Id, opt => opt.MapFrom(src => src.EmployeeId))
+                .ForMember(dest => dest.Employee, opt => opt.Ignore())
                 .ReverseMap();
             CreateMap<EmployeeTimeCard, EmployeeTimeCardDto>()
                 .ForPath(dest => dest.EmployeeLastName, opt => opt.MapFrom(src => src.Employee.LastName))

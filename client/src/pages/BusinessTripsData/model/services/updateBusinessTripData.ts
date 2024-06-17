@@ -1,15 +1,27 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
-import { ValidateBusinessTripError } from "../consts/validate_businessTrips";
-import { BusinessTrip } from "../types/BusinessTrip";
+import {
+	BusinessTrip,
+	ValidateBusinessTripError,
+} from "@/entities/BusinessTrip";
+import { getBusinessTripForm } from "@/entities/BusinessTrip/model/selectors/businessTrip_selectors";
+import { validateBusinessTripData } from "@/entities/BusinessTrip/model/services/validateBusinessTripData";
 
 export const updateBusinessTripData = createAsyncThunk<
 	BusinessTrip,
-	BusinessTrip,
+	void,
 	ThunkConfig<ValidateBusinessTripError[]>
->("businessTrips/updateBusinessTripData", async (businessTrip, thunkApi) => {
-	const { extra, rejectWithValue } = thunkApi;
+>("businessTripPage/updateBusinessTripDetailsData", async (_, thunkApi) => {
+	const { extra, rejectWithValue, getState } = thunkApi;
+
+	const formData = getBusinessTripForm(getState());
+
+	const errors = validateBusinessTripData(formData);
+
+	if (errors.length) {
+		return rejectWithValue(errors);
+	}
 
 	const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
 	if (!token) {
@@ -22,12 +34,9 @@ export const updateBusinessTripData = createAsyncThunk<
 			return rejectWithValue([ValidateBusinessTripError.NO_DATA]);
 		}
 
-		// Excluding the employee property
-		const { employee, ...businessTripWithoutEmployee } = businessTrip;
-
 		const response = await extra.api.put<BusinessTrip>(
-			`/businesstrips/${businessTrip.id}`,
-			businessTripWithoutEmployee,
+			`/businesstrips/${formData?.id}`,
+			formData,
 			{
 				headers: {
 					Authorization: `Bearer ${decodedToken}`,
@@ -38,10 +47,9 @@ export const updateBusinessTripData = createAsyncThunk<
 		if (!response.data) {
 			throw new Error();
 		}
-
 		return response.data;
 	} catch (error) {
-		console.error("Failed to update business trip data!", error);
+		console.error("Failed to fetch business trip data!", error);
 		return rejectWithValue([ValidateBusinessTripError.SERVER_ERROR]);
 	}
 });

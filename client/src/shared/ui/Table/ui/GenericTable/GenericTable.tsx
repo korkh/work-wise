@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import cls from "./GenericTable.module.scss";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { TextHolder } from "../../../../../shared/ui/TextHolder";
@@ -11,6 +11,7 @@ import { Glyph } from "../../../../../shared/ui/Glyph";
 import { SortOrder } from "@/shared/types/sort";
 import { Pagination } from "../Pagination";
 import { RowStack } from "../../../../../shared/ui/Stack";
+import { Button } from "@/shared/ui/Button";
 import { sortValues } from "@/shared/lib/utils/table/sorting/sorting_filtering";
 
 interface TableProps<T extends Identifiable> {
@@ -22,6 +23,8 @@ interface TableProps<T extends Identifiable> {
 	children?: ReactNode;
 	verticalHeaders?: boolean;
 	getRowClass?: (row: T) => string;
+	onDataChange?: (updatedData: T[]) => void;
+	editable?: boolean;
 }
 
 export function GenericTable<T extends Identifiable>({
@@ -33,19 +36,23 @@ export function GenericTable<T extends Identifiable>({
 	redirect,
 	verticalHeaders = false,
 	getRowClass,
+	onDataChange,
+	editable = false,
 }: TableProps<T>) {
 	const [filteredData, setFilteredData] = useState(data);
 	const [search, setSearch] = useState("");
 	const [sortField, setSortField] = useState<string | null>(null);
 	const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 10;
+	const [editingRowId, setEditingRowId] = useState<string | number | null>(
+		null
+	);
+	const [editingRowData, setEditingRowData] = useState<T | null>(null);
 
+	const itemsPerPage = 10;
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
-
 	const paginatedData = filteredData.slice(startIndex, endIndex);
-	console.log("Paginated Data:", paginatedData);
 
 	useEffect(() => {
 		let filtered = data;
@@ -80,6 +87,35 @@ export function GenericTable<T extends Identifiable>({
 
 	const handleSearchChange = (value: string) => {
 		setSearch(value);
+	};
+
+	const handleEdit = (row: T) => {
+		setEditingRowId(row.id!);
+		setEditingRowData({ ...row });
+	};
+
+	const handleCancelEdit = () => {
+		setEditingRowId(null);
+		setEditingRowData(null);
+	};
+
+	const handleSave = () => {
+		if (editingRowData) {
+			const updatedData = data.map((item) =>
+				item.id === editingRowData.id ? editingRowData : item
+			);
+			onDataChange?.(
+				updatedData.filter((item) => item.id === editingRowData.id)
+			);
+		}
+		setEditingRowId(null);
+		setEditingRowData(null);
+	};
+
+	const handleInputChange = (key: keyof T, value: string) => {
+		if (editingRowData) {
+			setEditingRowData({ ...editingRowData, [key]: value });
+		}
 	};
 
 	return (
@@ -125,26 +161,39 @@ export function GenericTable<T extends Identifiable>({
 								</RowStack>
 							</th>
 						))}
+						{editable && <th>{/* Actions Column Header */}</th>}
 					</tr>
 				</thead>
 				<tbody>
-					{paginatedData.map((row, index) => {
+					{paginatedData.map((row, rowIndex) => {
 						const rowClass = getRowClass ? getRowClass(row) : "";
+						const isEditing = editingRowId === row.id;
 						return (
 							<tr key={row.id} className={rowClass}>
 								{columns.map((column) => (
-									<td key={`${index}-${String(column.uniqueId || column.key)}`}>
-										{row.id && row.id !== undefined ? (
+									<td
+										key={`${rowIndex}-${String(column.uniqueId || column.key)}`}
+									>
+										{isEditing && !column.notEditable ? (
+											<input
+												className={cls.editableInput}
+												type="text"
+												value={String(editingRowData?.[column.key] || "")}
+												onChange={(e) =>
+													handleInputChange(column.key, e.target.value)
+												}
+											/>
+										) : row.id && row.id !== undefined ? (
 											redirect ? (
 												<AppLink to={redirect(String(row.id))}>
 													{column.key === "id"
-														? index + 1
+														? rowIndex + 1
 														: column.render
 															? column.render(row[column.key], row)
 															: TableCellRenderer(row, column)}
 												</AppLink>
 											) : column.key === "id" ? (
-												index + 1
+												rowIndex + 1
 											) : column.render ? (
 												column.render(row[column.key], row)
 											) : (
@@ -153,6 +202,28 @@ export function GenericTable<T extends Identifiable>({
 										) : null}
 									</td>
 								))}
+								{editable && (
+									<td>
+										{isEditing ? (
+											<RowStack gap="8">
+												<Button size="s" onClick={handleSave} color="success">
+													Save
+												</Button>
+												<Button
+													size="s"
+													onClick={handleCancelEdit}
+													color="error"
+												>
+													Cancel
+												</Button>
+											</RowStack>
+										) : (
+											<Button size="s" onClick={() => handleEdit(row)}>
+												Edit
+											</Button>
+										)}
+									</td>
+								)}
 							</tr>
 						);
 					})}

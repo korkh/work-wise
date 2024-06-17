@@ -8,5 +8,15 @@
   "Fines": "Fines",
   "Balance": "Balance",
   "List of business trips": "List of business trips",
-  "Business trips data loading error": "Business trips data loading error"
+  "Business trips data loading error": "Business trips data loading error",
+  "Photo": "Photo",
+  "Employee": "Employee",
+  "Year": "Year",
+  "Total salary": "Total salary",
+  "Total daily allowance": "Total daily allowance",
+  "Total Bank": "Total bank",
+  "Total Fines": "Total fines",
+  "Total balance": "Total balance",
+  "No business trip summaries found": "No business trip summaries found",
+  "Business Trips Summaries": "Business Trips Summaries"
 }

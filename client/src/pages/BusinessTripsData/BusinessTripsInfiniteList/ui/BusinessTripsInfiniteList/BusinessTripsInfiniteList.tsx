@@ -9,17 +9,19 @@ import {
 	getBusinessTripPageIsLoading,
 } from "@/pages/BusinessTripsData/model/selectors/businessTripPageSelectors";
 import { TextHolder } from "@/shared/ui/TextHolder";
+import { getRouteBusinessTripsSummaries } from "@/shared/consts/routerConsts";
+import { BusinessTripsSummariesList } from "@/pages/BusinessTripsData/BusinessTripsSummariesList";
 
 interface BusinessTripsInfiniteListProps {
 	className?: string;
+	variant?: string;
 }
 
 const BusinessTripsInfiniteList = (props: BusinessTripsInfiniteListProps) => {
-	const { className } = props;
+	const { className, variant } = props;
 	const { t } = useTranslation("businessTrip");
 
 	const bTrips = useSelector(selectAllBusinessTrips);
-	console.log("TRIPS IN INFINITE LSIT", bTrips);
 	const isLoading = useSelector(getBusinessTripPageIsLoading);
 	const error = useSelector(getBusinessTripPageError);
 
@@ -35,9 +37,16 @@ const BusinessTripsInfiniteList = (props: BusinessTripsInfiniteListProps) => {
 		return <TextHolder size={"l"} title={t("No business trip data found")} />;
 	}
 
-	return (
+	return variant === getRouteBusinessTripsSummaries() ? (
+		<BusinessTripsSummariesList
+			data-testid="BusinessTripsSummariesList"
+			isLoading={isLoading}
+			className={classNames("", [className], {})}
+			businessTrips={bTrips}
+		/>
+	) : (
 		<BusinessTripsList
-			data-testid="EmployeeList"
+			data-testid="BusinessTripsList"
 			isLoading={isLoading}
 			className={classNames("", [className], {})}
 			businessTrips={bTrips}

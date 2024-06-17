@@ -62,7 +62,14 @@ namespace Application.Documents
                     cancellationToken
                 );
                 if (documentToUpdate == null)
+                {
+                    _logger.LogWarning(
+                        "Attempted to edit a non-existent document with ID: {DocumentId}",
+                        request.Document.Id
+                    );
                     return Result<Unit>.Failure("Document not found");
+                }
+
 
                 bool titleExists = await _context.Documents.AnyAsync(
                     d => d.Title == request.Document.Title && d.Id != request.Document.Id,
@@ -72,12 +79,17 @@ namespace Application.Documents
                     return Result<Unit>.Failure("A document with the same title already exists.");
 
                 _mapper.Map(request.Document, documentToUpdate);
-                _context.Documents.Update(documentToUpdate);
+
+                // Ensure the Employee entity is not updated
+                _context.Entry(documentToUpdate).Reference(bt => bt.Employee).IsModified = false;
                 try
                 {
                     var result = await _context.SaveChangesAsync(cancellationToken) > 0;
                     if (!result)
+                    {
+                        _logger.LogInformation("No changes were made to the document with ID: {DocumentId}", request.Document.Id);
                         return Result<Unit>.Failure("No changes were made.");
+                    }
                     return Result<Unit>.Success(Unit.Value);
                 }
                 catch (DbUpdateConcurrencyException ex)

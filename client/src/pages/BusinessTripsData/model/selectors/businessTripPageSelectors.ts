@@ -8,14 +8,14 @@ export const getBusinessTripPageIsLoading = (state: StateSchema) =>
 export const getBusinessTripPageError = (state: StateSchema) =>
 	state.businessTripPage?.error;
 
-export const getBusinessTripPagePageNumber = (state: StateSchema) =>
-	state.businessTripPage?.pageNumber || 1;
+// export const getBusinessTripPagePageNumber = (state: StateSchema) =>
+// 	state.businessTripPage?.pageNumber || 1;
 
-export const getBusinessTripPageSize = (state: StateSchema) =>
-	state.businessTripPage?.pageSize || 10;
+// export const getBusinessTripPageSize = (state: StateSchema) =>
+// 	state.businessTripPage?.pageSize || 10;
 
-export const getBusinessTripPageHasMore = (state: StateSchema) =>
-	state.businessTripPage?.hasMore;
+// export const getBusinessTripPageHasMore = (state: StateSchema) =>
+// 	state.businessTripPage?.hasMore;
 
 export const getBusinessTripPageInitited = (state: StateSchema) =>
 	state.businessTripPage?._inited;
