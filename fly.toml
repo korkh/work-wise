@@ -1,0 +1,26 @@
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'work-wise'
+primary_region = 'arn'
+kill_signal = 'SIGINT'
+kill_timeout = '5s'
+
+[build]
+  image = 'akorkh/work-wise:latest'
+
+[env]
+  ASPNETCORE_URLS = 'http://+:8080'
+  Cloudinary__ApiKey = '326625459643216'
+  Cloudinary__CloudName = 'dqtgl2rlu'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'

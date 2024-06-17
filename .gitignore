@@ -478,3 +478,9 @@ $RECYCLE.BIN/
 *.lnk
 .vscode
 .fttemplates
+
+# appsettings
+appsettings.json
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
