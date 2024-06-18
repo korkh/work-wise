@@ -4,8 +4,18 @@ namespace Application.Contracts
     {
         public string Position { get; set; }
         public string ContractNumber { get; set; }
-        public DateTime AcceptionDate { get; set; }
-        public DateTime DismissalDate { get; set; }
+        private DateTime acceptationDate;
+        public DateTime AcceptionDate
+        {
+            get => acceptationDate;
+            set => acceptationDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
+        private DateTime dismissalDate;
+        public DateTime DismissalDate
+        {
+            get => dismissalDate;
+            set => dismissalDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
         public int EmploymentDays => (DismissalDate - AcceptionDate).Days;
         public int AnnualHolidays { get; set; }
         public int FatherHolidays { get; set; }

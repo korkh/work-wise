@@ -30,11 +30,26 @@ namespace Storage
                 .HasOne(p => p.Employee)
                 .WithMany(e => e.Payrolls)
                 .HasForeignKey(p => p.EmployeeId);
+
             builder
                 .Entity<Document>()
                 .HasOne(p => p.Employee)
                 .WithMany(e => e.Documents)
                 .HasForeignKey(p => p.EmployeeId);
+
+            builder.Entity<Document>()
+                .Property(d => d.IssueDate)
+                .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
+
+            builder.Entity<Document>()
+                .Property(d => d.ExpirationDate)
+                .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
 
             builder
                 .Entity<Employee>()
@@ -46,6 +61,13 @@ namespace Storage
                 .HasMany(e => e.BusinessTrips)
                 .WithOne(bts => bts.Employee)
                 .HasForeignKey(bts => bts.EmployeeId);
+
+            builder.Entity<Employee>()
+                .Property(e => e.BirthDay)
+                .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
 
             builder.Entity<EmployeeTimeCard>()
                 .HasMany(tc => tc.WorkingStates)

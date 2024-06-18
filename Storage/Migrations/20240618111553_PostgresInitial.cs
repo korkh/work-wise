@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Storage.Migrations
 {
     /// <inheritdoc />
-    public partial class addedEmployeeBusinessTrips : Migration
+    public partial class PostgresInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,11 +18,11 @@ namespace Storage.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,24 +33,24 @@ namespace Storage.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DisplayName = table.Column<string>(type: "TEXT", nullable: true),
-                    Position = table.Column<string>(type: "TEXT", nullable: true),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DisplayName = table.Column<string>(type: "text", nullable: true),
+                    Position = table.Column<string>(type: "text", nullable: true),
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,15 +61,15 @@ namespace Storage.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Avatar = table.Column<string>(type: "TEXT", nullable: true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true),
-                    BirthDay = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    IsAvailable = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsFired = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Avatar = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    BirthDay = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    IsAvailable = table.Column<bool>(type: "boolean", nullable: false),
+                    IsFired = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,11 +80,11 @@ namespace Storage.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -100,11 +101,11 @@ namespace Storage.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,10 +122,10 @@ namespace Storage.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    ProviderKey = table.Column<string>(type: "text", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,8 +142,8 @@ namespace Storage.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,10 +166,10 @@ namespace Storage.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,10 +186,10 @@ namespace Storage.Migrations
                 name: "Photos",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Url = table.Column<string>(type: "TEXT", nullable: true),
-                    IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Url = table.Column<string>(type: "text", nullable: true),
+                    IsMain = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -204,12 +205,12 @@ namespace Storage.Migrations
                 name: "RefreshToken",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Token = table.Column<string>(type: "TEXT", nullable: true),
-                    Expires = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Revoked = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: true),
+                    Token = table.Column<string>(type: "text", nullable: true),
+                    Expires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Revoked = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -225,11 +226,11 @@ namespace Storage.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Address1 = table.Column<string>(type: "TEXT", nullable: true),
-                    City = table.Column<string>(type: "TEXT", nullable: true),
-                    Zip = table.Column<string>(type: "TEXT", nullable: true),
-                    Country = table.Column<string>(type: "TEXT", nullable: true)
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Address1 = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    Zip = table.Column<string>(type: "text", nullable: true),
+                    Country = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,14 +247,14 @@ namespace Storage.Migrations
                 name: "BusinessTrips",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Laikotarpis = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    Alga = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Dienpinigai = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Bankas = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Baudos = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Likutis = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Laikotarpis = table.Column<DateOnly>(type: "date", nullable: false),
+                    Alga = table.Column<decimal>(type: "numeric", nullable: false),
+                    Dienpinigai = table.Column<decimal>(type: "numeric", nullable: false),
+                    Bankas = table.Column<decimal>(type: "numeric", nullable: false),
+                    Baudos = table.Column<decimal>(type: "numeric", nullable: false),
+                    Likutis = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -270,16 +271,16 @@ namespace Storage.Migrations
                 name: "Contracts",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Position = table.Column<string>(type: "TEXT", nullable: true),
-                    ContractNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    AcceptionDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DismissalDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    AnnualHolidays = table.Column<int>(type: "INTEGER", nullable: false),
-                    FatherHolidays = table.Column<int>(type: "INTEGER", nullable: false),
-                    UnpaidHolidays = table.Column<int>(type: "INTEGER", nullable: false),
-                    TruancyDays = table.Column<int>(type: "INTEGER", nullable: false),
-                    AllowedAbsenceDays = table.Column<int>(type: "INTEGER", nullable: false)
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Position = table.Column<string>(type: "text", nullable: true),
+                    ContractNumber = table.Column<string>(type: "text", nullable: true),
+                    AcceptionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DismissalDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AnnualHolidays = table.Column<int>(type: "integer", nullable: false),
+                    FatherHolidays = table.Column<int>(type: "integer", nullable: false),
+                    UnpaidHolidays = table.Column<int>(type: "integer", nullable: false),
+                    TruancyDays = table.Column<int>(type: "integer", nullable: false),
+                    AllowedAbsenceDays = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,11 +297,11 @@ namespace Storage.Migrations
                 name: "Documents",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    IssueDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    IssueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -317,10 +318,10 @@ namespace Storage.Migrations
                 name: "EmployeeTimeCards",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Month = table.Column<string>(type: "TEXT", nullable: true),
-                    AvailableWorkingHoursPerMonth = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Month = table.Column<string>(type: "text", nullable: true),
+                    AvailableWorkingHoursPerMonth = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -337,41 +338,41 @@ namespace Storage.Migrations
                 name: "Payrolls",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Year = table.Column<int>(type: "INTEGER", nullable: false),
-                    Month = table.Column<int>(type: "INTEGER", nullable: false),
-                    WorkingDays = table.Column<int>(type: "INTEGER", nullable: false),
-                    WorkingHours = table.Column<int>(type: "INTEGER", nullable: false),
-                    AtlyginimasPagalDS = table.Column<decimal>(type: "TEXT", nullable: false),
-                    DarboDienu = table.Column<int>(type: "INTEGER", nullable: false),
-                    DarboValandu = table.Column<int>(type: "INTEGER", nullable: false),
-                    Virsvalandziai = table.Column<int>(type: "INTEGER", nullable: false),
-                    SventinesIrPoilsioValandos = table.Column<int>(type: "INTEGER", nullable: false),
-                    PirmaEilesPareigosTaikomasNPD = table.Column<decimal>(type: "TEXT", nullable: false),
-                    NPD = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Atlyginimas = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Atostogos = table.Column<decimal>(type: "TEXT", nullable: false),
-                    VirsvalandziaiPriskaityta = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Priedas = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PriedasUzPoilsioIrSventines = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Liga2d = table.Column<decimal>(type: "TEXT", nullable: false),
-                    IsVisoPriskaityta = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PajamuMokestis20 = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PajamuMokestis15 = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PajamuMokestisOlandija = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Sodra_19 = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Sodra_3 = table.Column<decimal>(type: "TEXT", nullable: false),
-                    IsVisoIsskaityta = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Ismoketi = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Bankas = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Baudos = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Likutis = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Sodra_1 = table.Column<decimal>(type: "TEXT", nullable: false),
-                    SodraIsViso = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Dienpinigai = table.Column<decimal>(type: "TEXT", nullable: false),
-                    AdditionalCalculation = table.Column<decimal>(type: "TEXT", nullable: false),
-                    KiekTuriGauti = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    Month = table.Column<int>(type: "integer", nullable: false),
+                    WorkingDays = table.Column<int>(type: "integer", nullable: false),
+                    WorkingHours = table.Column<int>(type: "integer", nullable: false),
+                    AtlyginimasPagalDS = table.Column<decimal>(type: "numeric", nullable: false),
+                    DarboDienu = table.Column<int>(type: "integer", nullable: false),
+                    DarboValandu = table.Column<int>(type: "integer", nullable: false),
+                    Virsvalandziai = table.Column<int>(type: "integer", nullable: false),
+                    SventinesIrPoilsioValandos = table.Column<int>(type: "integer", nullable: false),
+                    PirmaEilesPareigosTaikomasNPD = table.Column<decimal>(type: "numeric", nullable: false),
+                    NPD = table.Column<decimal>(type: "numeric", nullable: false),
+                    Atlyginimas = table.Column<decimal>(type: "numeric", nullable: false),
+                    Atostogos = table.Column<decimal>(type: "numeric", nullable: false),
+                    VirsvalandziaiPriskaityta = table.Column<decimal>(type: "numeric", nullable: false),
+                    Priedas = table.Column<decimal>(type: "numeric", nullable: false),
+                    PriedasUzPoilsioIrSventines = table.Column<decimal>(type: "numeric", nullable: false),
+                    Liga2d = table.Column<decimal>(type: "numeric", nullable: false),
+                    IsVisoPriskaityta = table.Column<decimal>(type: "numeric", nullable: false),
+                    PajamuMokestis20 = table.Column<decimal>(type: "numeric", nullable: false),
+                    PajamuMokestis15 = table.Column<decimal>(type: "numeric", nullable: false),
+                    PajamuMokestisOlandija = table.Column<decimal>(type: "numeric", nullable: false),
+                    Sodra_19 = table.Column<decimal>(type: "numeric", nullable: false),
+                    Sodra_3 = table.Column<decimal>(type: "numeric", nullable: false),
+                    IsVisoIsskaityta = table.Column<decimal>(type: "numeric", nullable: false),
+                    Ismoketi = table.Column<decimal>(type: "numeric", nullable: false),
+                    Bankas = table.Column<decimal>(type: "numeric", nullable: false),
+                    Baudos = table.Column<decimal>(type: "numeric", nullable: false),
+                    Likutis = table.Column<decimal>(type: "numeric", nullable: false),
+                    Sodra_1 = table.Column<decimal>(type: "numeric", nullable: false),
+                    SodraIsViso = table.Column<decimal>(type: "numeric", nullable: false),
+                    Dienpinigai = table.Column<decimal>(type: "numeric", nullable: false),
+                    AdditionalCalculation = table.Column<decimal>(type: "numeric", nullable: false),
+                    KiekTuriGauti = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -388,10 +389,10 @@ namespace Storage.Migrations
                 name: "TransportInfo",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DrivingLicenseNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    E_100_CardNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    ExpectedKmPerDay = table.Column<int>(type: "INTEGER", nullable: false)
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DrivingLicenseNumber = table.Column<string>(type: "text", nullable: true),
+                    E_100_CardNumber = table.Column<string>(type: "text", nullable: true),
+                    ExpectedKmPerDay = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -408,12 +409,12 @@ namespace Storage.Migrations
                 name: "WorkingStates",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    EmployeeTimeCardId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Day = table.Column<int>(type: "INTEGER", nullable: false),
-                    Holiday = table.Column<bool>(type: "INTEGER", nullable: false),
-                    State = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EmployeeTimeCardId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Day = table.Column<int>(type: "integer", nullable: false),
+                    Holiday = table.Column<bool>(type: "boolean", nullable: false),
+                    State = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -430,15 +431,15 @@ namespace Storage.Migrations
                 name: "Cars",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TransportInfoId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Manufacturer = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    Model = table.Column<string>(type: "TEXT", nullable: true),
-                    Transmission = table.Column<string>(type: "TEXT", nullable: true),
-                    BuildYear = table.Column<string>(type: "TEXT", nullable: true),
-                    FuelType = table.Column<string>(type: "TEXT", nullable: true),
-                    CarPlateNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    Renter = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TransportInfoId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Manufacturer = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Model = table.Column<string>(type: "text", nullable: true),
+                    Transmission = table.Column<string>(type: "text", nullable: true),
+                    BuildYear = table.Column<string>(type: "text", nullable: true),
+                    FuelType = table.Column<string>(type: "text", nullable: true),
+                    CarPlateNumber = table.Column<string>(type: "text", nullable: true),
+                    Renter = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -14,7 +14,12 @@ namespace Application.Employees
         public string Avatar { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDay { get; set; }
+        private DateTime birthDay;
+        public DateTime BirthDay
+        {
+            get => birthDay;
+            set => birthDay = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
         public AddressDto RegistrationAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }

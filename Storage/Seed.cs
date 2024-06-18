@@ -27,6 +27,7 @@ namespace Storage
                 };
                 await userManager.CreateAsync(manager, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(manager, "Manager");
+
                 var accountant = new User
                 {
                     DisplayName = "Zivile",
@@ -44,6 +45,7 @@ namespace Storage
                 };
                 await userManager.CreateAsync(accountant, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(accountant, "Accountant");
+
                 var admin = new User
                 {
                     DisplayName = "Peter",
@@ -62,7 +64,6 @@ namespace Storage
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(admin, "Admin");
             }
-            ;
 
             if (!context.Employees.Any())
             {
@@ -73,7 +74,7 @@ namespace Storage
                         Avatar = "https://i.pinimg.com/originals/26/e5/e0/26e5e02218aa21654bb17829cd5c7229.jpg",
                         FirstName = "Abbas",
                         LastName = "Imamverdiyev",
-                        BirthDay = new DateTime(1990, 1, 15),
+                        BirthDay = DateTime.SpecifyKind(new DateTime(1990, 1, 15), DateTimeKind.Utc),
                         RegistrationAddress = new Address
                         {
                             Address1 = "123 Future St",
@@ -89,8 +90,8 @@ namespace Storage
                         {
                             Position = "Pastolių montuotojas",
                             ContractNumber = "CON-001",
-                            AcceptionDate = DateTime.UtcNow.AddYears(-2),
-                            DismissalDate = DateTime.UtcNow.AddYears(1),
+                            AcceptionDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                            DismissalDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(1), DateTimeKind.Utc),
                             AnnualHolidays = 20,
                             FatherHolidays = 5,
                             UnpaidHolidays = 10,
@@ -121,20 +122,20 @@ namespace Storage
                             new()
                             {
                                 Title = "Leidimas laikinai gyventi",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(1),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(1), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Dutch Permit",
-                                IssueDate = DateTime.UtcNow.AddYears(-1),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(3),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-1), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(3), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Europos sveikatos draudimo kortelė",
-                                IssueDate = DateTime.UtcNow.AddYears(-5),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(6),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-5), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(6), DateTimeKind.Utc),
                             }
                         },
                         Payrolls = new List<Payroll>
@@ -212,130 +213,137 @@ namespace Storage
                                 KiekTuriGauti = 3008m,
                             }
                         },
-                        EmployeeTimeCards = new List<EmployeeTimeCard>{new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-02",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
+                        EmployeeTimeCards = new List<EmployeeTimeCard>
                         {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    },
-                    new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-03",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
-                        {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    },
-                    },
-                    BusinessTrips = new List<BusinessTrip>{
-                        new(){
+                            new EmployeeTimeCard
+                            {
                                 Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2023, 12, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 1742.16m,
-                                    Bankas = 0m,
-                                    Baudos = 0m,
-                                    Likutis = 1742.16m,
-                                },
-                        new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 1, 1),
-                                    Alga = 1011.36m,
-                                    Dienpinigai = 1984m,
-                                    Bankas = 2492m,
-                                    Baudos = 0m,
-                                    Likutis = 503.36m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 2, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 0m,
-                                    Bankas = 1824m,
-                                    Baudos = 0m,
-                                    Likutis = -1824m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 3, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 0m,
-                                    Bankas = 100m,
-                                    Baudos = 0m,
-                                    Likutis = -100m,
+                                Month = "2024-02",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
                                 }
-                    },
+                            },
+                            new EmployeeTimeCard
+                            {
+                                Id = Guid.NewGuid(),
+                                Month = "2024-03",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
+                                }
+                            }
+                        },
+                        BusinessTrips = new List<BusinessTrip>
+                        {
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2023, 12, 1),
+                                Alga = 0m,
+                                Dienpinigai = 1742.16m,
+                                Bankas = 0m,
+                                Baudos = 0m,
+                                Likutis = 1742.16m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 1, 1),
+                                Alga = 1011.36m,
+                                Dienpinigai = 1984m,
+                                Bankas = 2492m,
+                                Baudos = 0m,
+                                Likutis = 503.36m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 2, 1),
+                                Alga = 0m,
+                                Dienpinigai = 0m,
+                                Bankas = 1824m,
+                                Baudos = 0m,
+                                Likutis = -1824m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 3, 1),
+                                Alga = 0m,
+                                Dienpinigai = 0m,
+                                Bankas = 100m,
+                                Baudos = 0m,
+                                Likutis = -100m,
+                            }
+                        }
                     },
                     new()
                     {
                         Avatar = "https://www.meme-arsenal.com/memes/77dfdbd947fb563006dcc4315a13b971.jpg",
                         FirstName = "Elchin",
                         LastName = "Suleymanov",
-                        BirthDay = new DateTime(1995, 1, 15),
+                        BirthDay = DateTime.SpecifyKind(new DateTime(1995, 1, 15), DateTimeKind.Utc),
                         RegistrationAddress = new Address
                         {
                             Address1 = "222 Main St",
@@ -351,8 +359,8 @@ namespace Storage
                         {
                             Position = "Pastolių montuotojas",
                             ContractNumber = "CON-002",
-                            AcceptionDate = DateTime.UtcNow.AddYears(-2),
-                            DismissalDate = DateTime.UtcNow.AddYears(1),
+                            AcceptionDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                            DismissalDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(1), DateTimeKind.Utc),
                             AnnualHolidays = 20,
                             FatherHolidays = 5,
                             UnpaidHolidays = 10,
@@ -383,20 +391,20 @@ namespace Storage
                             new()
                             {
                                 Title = "Leidimas laikinai gyventi",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(1),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(1), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Dutch Permit",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(4),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(4), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Europos sveikatos draudimo kortelė",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(8),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(8), DateTimeKind.Utc),
                             }
                         },
                         Payrolls = new List<Payroll>
@@ -474,138 +482,147 @@ namespace Storage
                                 KiekTuriGauti = 1794.81m
                             }
                         },
-                        EmployeeTimeCards = new List<EmployeeTimeCard>{new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-02",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
+                        EmployeeTimeCards = new List<EmployeeTimeCard>
                         {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    },
-                    new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-03",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
-                        {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    }}
-                    ,BusinessTrips = new List<BusinessTrip>{
-                        new(){
+                            new EmployeeTimeCard
+                            {
                                 Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2023, 12, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 1157.11m,
-                                    Bankas = 0m,
-                                    Baudos = 0m,
-                                    Likutis = 1157.11m,
-                                },
-                        new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 1, 1),
-                                    Alga = 402.66m,
-                                    Dienpinigai = 832m,
-                                    Bankas = 1467m,
-                                    Baudos = 0m,
-                                    Likutis = -232.34m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 2, 1),
-                                    Alga = 1015.8m,
-                                    Dienpinigai = 1408m,
-                                    Bankas = 832m,
-                                    Baudos = 0m,
-                                    Likutis = 1591.8m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 3, 1),
-                                    Alga = 949.69m,
-                                    Dienpinigai = 1984m,
-                                    Bankas = 2284m,
-                                    Baudos = 0m,
-                                    Likutis = 649.69m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 4, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 0m,
-                                    Bankas = 2665m,
-                                    Baudos = 0m,
-                                    Likutis = -2665m,
+                                Month = "2024-02",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
                                 }
-                    },
+                            },
+                            new EmployeeTimeCard
+                            {
+                                Id = Guid.NewGuid(),
+                                Month = "2024-03",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
+                                }
+                            }
+                        },
+                        BusinessTrips = new List<BusinessTrip>
+                        {
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2023, 12, 1),
+                                Alga = 0m,
+                                Dienpinigai = 1157.11m,
+                                Bankas = 0m,
+                                Baudos = 0m,
+                                Likutis = 1157.11m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 1, 1),
+                                Alga = 402.66m,
+                                Dienpinigai = 832m,
+                                Bankas = 1467m,
+                                Baudos = 0m,
+                                Likutis = -232.34m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 2, 1),
+                                Alga = 1015.8m,
+                                Dienpinigai = 1408m,
+                                Bankas = 832m,
+                                Baudos = 0m,
+                                Likutis = 1591.8m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 3, 1),
+                                Alga = 949.69m,
+                                Dienpinigai = 1984m,
+                                Bankas = 2284m,
+                                Baudos = 0m,
+                                Likutis = 649.69m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 4, 1),
+                                Alga = 0m,
+                                Dienpinigai = 0m,
+                                Bankas = 2665m,
+                                Baudos = 0m,
+                                Likutis = -2665m,
+                            }
+                        }
                     },
                     new()
                     {
                         Avatar = "https://i.pinimg.com/originals/1a/5b/d0/1a5bd09226035a1fcaf9836af44330eb.jpg",
                         FirstName = "Faig ",
                         LastName = "Mammadov",
-                        BirthDay = new DateTime(1985, 5, 20),
+                        BirthDay = DateTime.SpecifyKind(new DateTime(1985, 5, 20), DateTimeKind.Utc),
                         RegistrationAddress = new Address
                         {
                             Address1 = "456 Elmith St",
@@ -621,8 +638,8 @@ namespace Storage
                         {
                             Position = "Manager",
                             ContractNumber = "CON-003",
-                            AcceptionDate = DateTime.UtcNow.AddYears(-1),
-                            DismissalDate = DateTime.UtcNow.AddYears(2),
+                            AcceptionDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-1), DateTimeKind.Utc),
+                            DismissalDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(2), DateTimeKind.Utc),
                             AnnualHolidays = 25,
                             FatherHolidays = 5,
                             UnpaidHolidays = 8,
@@ -634,20 +651,20 @@ namespace Storage
                             new()
                             {
                                 Title = "Leidimas laikinai gyventi",
-                                IssueDate = DateTime.UtcNow.AddYears(-3),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(2),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-3), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(2), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Dutch Permit",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(7),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(7), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Europos sveikatos draudimo kortelė",
-                                IssueDate = DateTime.UtcNow.AddYears(-3),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(1),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-3), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(1), DateTimeKind.Utc),
                             }
                         },
                         Payrolls = new List<Payroll>
@@ -725,138 +742,147 @@ namespace Storage
                                 KiekTuriGauti = 1755m
                             }
                         },
-                        EmployeeTimeCards = new List<EmployeeTimeCard>{new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-02",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
+                        EmployeeTimeCards = new List<EmployeeTimeCard>
                         {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    },
-                    new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-03",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
-                        {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    }}
-                    ,BusinessTrips = new List<BusinessTrip>{
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2023, 12, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 1139.41m,
-                                    Bankas = 0m,
-                                    Baudos = 0m,
-                                    Likutis = 1139.41m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 1, 1),
-                                    Alga = 1203m,
-                                    Dienpinigai = 1984m,
-                                    Bankas = 2004m,
-                                    Baudos = 0m,
-                                    Likutis = 1183m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 2, 1),
-                                    Alga = 1399.63m,
-                                    Dienpinigai = 1216m,
-                                    Bankas = 1904m,
-                                    Baudos = 0m,
-                                    Likutis = 711.63m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 3, 1),
-                                    Alga = 740m,
-                                    Dienpinigai = 1600m,
-                                    Bankas = 1400m,
-                                    Baudos = 0m,
-                                    Likutis = 940m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 4, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 0m,
-                                    Bankas = 3492m,
-                                    Baudos = 0m,
-                                    Likutis = -3492m,
+                            new EmployeeTimeCard
+                            {
+                                Id = Guid.NewGuid(),
+                                Month = "2024-02",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
                                 }
+                            },
+                            new EmployeeTimeCard
+                            {
+                                Id = Guid.NewGuid(),
+                                Month = "2024-03",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
+                                }
+                            }
                         },
+                        BusinessTrips = new List<BusinessTrip>
+                        {
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2023, 12, 1),
+                                Alga = 0m,
+                                Dienpinigai = 1139.41m,
+                                Bankas = 0m,
+                                Baudos = 0m,
+                                Likutis = 1139.41m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 1, 1),
+                                Alga = 1203m,
+                                Dienpinigai = 1984m,
+                                Bankas = 2004m,
+                                Baudos = 0m,
+                                Likutis = 1183m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 2, 1),
+                                Alga = 1399.63m,
+                                Dienpinigai = 1216m,
+                                Bankas = 1904m,
+                                Baudos = 0m,
+                                Likutis = 711.63m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 3, 1),
+                                Alga = 740m,
+                                Dienpinigai = 1600m,
+                                Bankas = 1400m,
+                                Baudos = 0m,
+                                Likutis = 940m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 4, 1),
+                                Alga = 0m,
+                                Dienpinigai = 0m,
+                                Bankas = 3492m,
+                                Baudos = 0m,
+                                Likutis = -3492m,
+                            }
+                        }
                     },
                     new()
                     {
                         Avatar = "https://i.pinimg.com/originals/71/cd/b1/71cdb14248d0f90d983e595f458dd2a0.png",
                         FirstName = "Rasul",
                         LastName = "Huseynov",
-                        BirthDay = new DateTime(1978, 10, 10),
+                        BirthDay = DateTime.SpecifyKind(new DateTime(1978, 10, 10), DateTimeKind.Utc),
                         RegistrationAddress = new Address
                         {
                             Address1 = "454 Palm St",
@@ -872,8 +898,8 @@ namespace Storage
                         {
                             Position = "Accountant",
                             ContractNumber = "CON-004",
-                            AcceptionDate = DateTime.UtcNow.AddYears(-3),
-                            DismissalDate = DateTime.UtcNow.AddYears(1),
+                            AcceptionDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-3), DateTimeKind.Utc),
+                            DismissalDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(1), DateTimeKind.Utc),
                             AnnualHolidays = 18,
                             FatherHolidays = 4,
                             UnpaidHolidays = 12,
@@ -885,20 +911,20 @@ namespace Storage
                             new()
                             {
                                 Title = "Leidimas laikinai gyventi",
-                                IssueDate = DateTime.UtcNow.AddYears(-5),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(9),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-5), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(9), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Dutch Permit",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(9),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(9), DateTimeKind.Utc),
                             },
                             new()
                             {
                                 Title = "Europos sveikatos draudimo kortelė",
-                                IssueDate = DateTime.UtcNow.AddYears(-2),
-                                ExpirationDate = DateTime.UtcNow.AddMonths(9),
+                                IssueDate = DateTime.SpecifyKind(DateTime.UtcNow.AddYears(-2), DateTimeKind.Utc),
+                                ExpirationDate = DateTime.SpecifyKind(DateTime.UtcNow.AddMonths(9), DateTimeKind.Utc),
                             }
                         },
                         Payrolls = new List<Payroll>
@@ -976,132 +1002,141 @@ namespace Storage
                                 KiekTuriGauti = 1600m
                             }
                         },
-                        EmployeeTimeCards = new List<EmployeeTimeCard>{new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-02",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
+                        EmployeeTimeCards = new List<EmployeeTimeCard>
                         {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
-                        }
-                    },
-                    new EmployeeTimeCard
-                    {
-                        Id = Guid.NewGuid(),
-                        Month = "2024-03",
-                        AvailableWorkingHoursPerMonth = 160,
-                        WorkingStates = new List<WorkingState>
+                            new EmployeeTimeCard
+                            {
+                                Id = Guid.NewGuid(),
+                                Month = "2024-02",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
+                                }
+                            },
+                            new EmployeeTimeCard
+                            {
+                                Id = Guid.NewGuid(),
+                                Month = "2024-03",
+                                AvailableWorkingHoursPerMonth = 160,
+                                WorkingStates = new List<WorkingState>
+                                {
+                                    new WorkingState { Day = 1, State = "8" },
+                                    new WorkingState { Day = 2, State = "8" },
+                                    new WorkingState { Day = 3, State = "8" },
+                                    new WorkingState { Day = 4, State = "8" },
+                                    new WorkingState { Day = 5, State = "8" },
+                                    new WorkingState { Day = 6, State = "P" },
+                                    new WorkingState { Day = 7, State = "P" },
+                                    new WorkingState { Day = 8, State = "8" },
+                                    new WorkingState { Day = 9, State = "8" },
+                                    new WorkingState { Day = 10, State = "8" },
+                                    new WorkingState { Day = 11, State = "8" },
+                                    new WorkingState { Day = 12, State = "8" },
+                                    new WorkingState { Day = 13, State = "P" },
+                                    new WorkingState { Day = 14, State = "P" },
+                                    new WorkingState { Day = 15, State = "8" },
+                                    new WorkingState { Day = 16, State = "8" },
+                                    new WorkingState { Day = 17, State = "8" },
+                                    new WorkingState { Day = 18, State = "8" },
+                                    new WorkingState { Day = 19, State = "8" },
+                                    new WorkingState { Day = 20, State = "P" },
+                                    new WorkingState { Day = 21, State = "P" },
+                                    new WorkingState { Day = 22, State = "8" },
+                                    new WorkingState { Day = 23, State = "8" },
+                                    new WorkingState { Day = 24, State = "8" },
+                                    new WorkingState { Day = 25, State = "8" },
+                                    new WorkingState { Day = 26, State = "8" },
+                                    new WorkingState { Day = 27, State = "P" },
+                                    new WorkingState { Day = 28, State = "P" },
+                                    new WorkingState { Day = 29, State = "8" },
+                                    new WorkingState { Day = 30, State = "8" },
+                                }
+                            }
+                        },
+                        BusinessTrips = new List<BusinessTrip>
                         {
-                            new WorkingState { Day = 1, State = "8" },
-                            new WorkingState { Day = 2, State = "8" },
-                            new WorkingState { Day = 3, State = "8" },
-                            new WorkingState { Day = 4, State = "8" },
-                            new WorkingState { Day = 5, State = "8" },
-                            new WorkingState { Day = 6, State = "P" },
-                            new WorkingState { Day = 7, State = "P" },
-                            new WorkingState { Day = 8, State = "8" },
-                            new WorkingState { Day = 9, State = "8" },
-                            new WorkingState { Day = 10, State = "8" },
-                            new WorkingState { Day = 11, State = "8" },
-                            new WorkingState { Day = 12, State = "8" },
-                            new WorkingState { Day = 13, State = "P" },
-                            new WorkingState { Day = 14, State = "P" },
-                            new WorkingState { Day = 15, State = "8" },
-                            new WorkingState { Day = 16, State = "8" },
-                            new WorkingState { Day = 17, State = "8" },
-                            new WorkingState { Day = 18, State = "8" },
-                            new WorkingState { Day = 19, State = "8" },
-                            new WorkingState { Day = 20, State = "P" },
-                            new WorkingState { Day = 21, State = "P" },
-                            new WorkingState { Day = 22, State = "8" },
-                            new WorkingState { Day = 23, State = "8" },
-                            new WorkingState { Day = 24, State = "8" },
-                            new WorkingState { Day = 25, State = "8" },
-                            new WorkingState { Day = 26, State = "8" },
-                            new WorkingState { Day = 27, State = "P" },
-                            new WorkingState { Day = 28, State = "P" },
-                            new WorkingState { Day = 29, State = "8" },
-                            new WorkingState { Day = 30, State = "8" },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2023, 12, 1),
+                                Alga = 0m,
+                                Dienpinigai = 290.26m,
+                                Bankas = 0m,
+                                Baudos = 0m,
+                                Likutis = 290.26m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 1, 1),
+                                Alga = 884.94m,
+                                Dienpinigai = 1984m,
+                                Bankas = 956m,
+                                Baudos = 0m,
+                                Likutis = 1912.94m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 2, 1),
+                                Alga = 1035.11m,
+                                Dienpinigai = 1856m,
+                                Bankas = 2754m,
+                                Baudos = 0m,
+                                Likutis = 137.11m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 3, 1),
+                                Alga = 283.76m,
+                                Dienpinigai = 512m,
+                                Bankas = 2100m,
+                                Baudos = 180.89m,
+                                Likutis = -1485.13m,
+                            },
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Laikotarpis = new DateOnly(2024, 4, 1),
+                                Alga = 0m,
+                                Dienpinigai = 0m,
+                                Bankas = 1614m,
+                                Baudos = 0m,
+                                Likutis = -1614m,
+                            }
                         }
                     }
-                    },BusinessTrips = new List<BusinessTrip>{
-                            new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2023, 12, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 290.26m,
-                                    Bankas = 0m,
-                                    Baudos = 0m,
-                                    Likutis = 290.26m,
-                                },
-                            new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 1, 1),
-                                    Alga = 884.94m,
-                                    Dienpinigai = 1984m,
-                                    Bankas = 956m,
-                                    Baudos = 0m,
-                                    Likutis = 1912.94m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 2, 1),
-                                    Alga = 1035.11m,
-                                    Dienpinigai = 1856m,
-                                    Bankas = 2754m,
-                                    Baudos = 0m,
-                                    Likutis = 137.11m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 3, 1),
-                                    Alga = 283.76m,
-                                    Dienpinigai = 512m,
-                                    Bankas = 2100m,
-                                    Baudos = 180.89m,
-                                    Likutis = -1485.13m,
-                                },
-                                new(){
-                                    Id = Guid.NewGuid(),
-                                    Laikotarpis = new DateOnly(2024, 4, 1),
-                                    Alga = 0m,
-                                    Dienpinigai = 0m,
-                                    Bankas = 1614m,
-                                    Baudos = 0m,
-                                    Likutis = -1614m,
-                                }
-                    },
-                    },
                 };
                 await context.Employees.AddRangeAsync(employees);
                 await context.SaveChangesAsync();
