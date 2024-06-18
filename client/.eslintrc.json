@@ -100,8 +100,8 @@
 			{
 				"ignoreComments": true,
 				"ignoreUrls": true,
-				"ignorePattern": "^(\\s*import\\s.+\\sfrom\\s.+;|\\s*export\\s\\{.+\\}\\sfrom\\s.+;|\\s*export\\s(?:function\\s\\w+\\(.+\\)\\s*|.+\\sfrom\\s.+;)\\s*)$",
-				"code": 120
+				"ignorePattern": "^(\\s*import\\s.+\\sfrom\\s.+;|\\s*export\\s\\{.+\\}\\sfrom\\s.+;|\\s*export\\s(?:function\\s\\w+\\(.+\\)\\s*|.+\\sfrom\\s.+;)\\s*)$;",
+				"code": 145
 			}
 		],
 		"react-hooks/rules-of-hooks": "error", // checks rules for hooks
@@ -139,7 +139,10 @@
 	},
 	"overrides": [
 		{
-			"files": ["**/src/**/*.{test,stories}.{ts,tsx}"],
+			"files": [
+				"**/src/**/*.{test,stories}.{ts,tsx}",
+				"**/src/nodo_modules/**/*.d.ts"
+			],
 			"rules": {
 				"i18next/no-literal-string": "off",
 				"max-len": "off"

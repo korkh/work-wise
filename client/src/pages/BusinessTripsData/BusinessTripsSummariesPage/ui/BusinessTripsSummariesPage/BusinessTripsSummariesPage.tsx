@@ -1,9 +1,7 @@
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./BusinessTripsSummariesPage.module.scss";
-import { useTranslation } from "react-i18next";
 import { memo } from "react";
-import { BusinessTripsInfiniteList } from "@/pages/BusinessTripsData/BusinessTripsInfiniteList";
-import { initBusinessTripPage } from "@/pages/BusinessTripsData/model/services/initBusinessTripPage";
+import { BusinessTripsInfiniteList } from '../../../BusinessTripsInfiniteList';
+import { initBusinessTripPage } from '../../../model/services/initBusinessTripPage';
 import {
 	DynamicReducerLoader,
 	ReducersList,
@@ -11,7 +9,7 @@ import {
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
 import { useSearchParams } from "react-router-dom";
-import { businessTripPageReducer } from "@/pages/BusinessTripsData/model/slices/businessTripPageSlice";
+import { businessTripPageReducer } from '../../../model/slices/businessTripPageSlice';
 import { getRouteBusinessTripsSummaries } from "@/shared/consts/routerConsts";
 
 const reducers: ReducersList = {

@@ -40,44 +40,41 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 		setIsAuthModal(true);
 	}, []);
 
-	const dropdownItems = [
-		{
-			content: t("Business trips summaries"),
-			href: getRouteBusinessTripsSummaries(),
-			onClick: () => setActiveItem(getRouteBusinessTripsSummaries()),
-		},
-		{
-			content: t("Business trips"),
-			href: getRouteBusinessTrips(),
-			onClick: () => setActiveItem(getRouteBusinessTrips()),
-		},
-	];
-
-	const itemsList = useMemo(
-		() =>
-			navbarItemsList.map((item) => {
-				if (item.text === "Business trips" || item.text === "Komandiruotės") {
-					return (
-						<NavbarItem
-							item={item}
-							key={item.path}
-							dropDownItems={dropdownItems}
-							activeItem={activeItem}
-							setActiveItem={setActiveItem}
-						/>
-					);
-				}
+	const itemsList = useMemo(() => {
+		const dropdownItems = [
+			{
+				content: t("Business trips summaries"),
+				href: getRouteBusinessTripsSummaries(),
+				onClick: () => setActiveItem(getRouteBusinessTripsSummaries()),
+			},
+			{
+				content: t("Business trips"),
+				href: getRouteBusinessTrips(),
+				onClick: () => setActiveItem(getRouteBusinessTrips()),
+			},
+		];
+		return navbarItemsList.map((item) => {
+			if (item.text === "Business trips" || item.text === "Komandiruotės") {
 				return (
 					<NavbarItem
 						item={item}
 						key={item.path}
+						dropDownItems={dropdownItems}
 						activeItem={activeItem}
 						setActiveItem={setActiveItem}
 					/>
 				);
-			}),
-		[navbarItemsList, activeItem]
-	);
+			}
+			return (
+				<NavbarItem
+					item={item}
+					key={item.path}
+					activeItem={activeItem}
+					setActiveItem={setActiveItem}
+				/>
+			);
+		});
+	}, [activeItem, navbarItemsList, t]);
 
 	return (
 		<RowStack

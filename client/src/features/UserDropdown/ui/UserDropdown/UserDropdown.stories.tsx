@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import UserDropdown from "./UserDropdown";
+import { UserDropdown } from "./UserDropdown";
 
 const meta = {
 	title: "features/UserDropdown",

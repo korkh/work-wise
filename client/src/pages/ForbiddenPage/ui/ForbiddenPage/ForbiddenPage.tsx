@@ -2,7 +2,7 @@ import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./ForbiddenPage.module.scss";
 import { useTranslation } from "react-i18next";
 import { PageContainer } from "@/widgets/PageContainer";
-import Padlock from "@/shared/assets/icons/padlock-icon.png";
+import Padlock from "@/shared/assets/icons/padlock-icon.webp";
 import { AppImage } from "@/shared/ui/AppImage";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { ColumnStack } from "@/shared/ui/Stack";
@@ -16,7 +16,7 @@ interface ForbiddenPageProps {
 
 export const ForbiddenPage = (props: ForbiddenPageProps) => {
 	const { className } = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("translation");
 	const navigate = useNavigate();
 	const handleBack = () => {
 		navigate(getRouteMain());

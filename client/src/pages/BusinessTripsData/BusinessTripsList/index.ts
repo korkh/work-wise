@@ -1,1 +1,3 @@
-export { BusinessTripsListAsync as BusinessTripsList } from "./ui/BusinessTripsList/BusinessTripsList.async";
+import BusinessTripsList from "./ui/BusinessTripsList/BusinessTripsList";
+
+export { BusinessTripsList };

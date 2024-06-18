@@ -1,0 +1,1 @@
+function n(a){const r=new URLSearchParams(window.location.search);return Object.entries(a).forEach(([e,t])=>{t!=null&&r.set(e,t)}),`?${r.toString()}`}function o(a){window.history.pushState(null,"",n(a))}export{o as a};

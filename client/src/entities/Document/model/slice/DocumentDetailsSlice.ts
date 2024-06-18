@@ -27,10 +27,14 @@ export const documentDetailsSlice = createSlice({
 			state,
 			action: PayloadAction<Partial<EmployeeDocument>>
 		) => {
-			state.form = {
-				...state.form,
-				...action.payload,
-			};
+			const { id, ...rest } = action.payload;
+			if (state.form && id !== undefined) {
+				state.form.id = id;
+				state.form = {
+					...state.form,
+					...rest,
+				};
+			}
 		},
 	},
 	extraReducers: (builder) => {

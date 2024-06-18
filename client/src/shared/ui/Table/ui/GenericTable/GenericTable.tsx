@@ -11,8 +11,9 @@ import { Glyph } from "../../../../../shared/ui/Glyph";
 import { SortOrder } from "@/shared/types/sort";
 import { Pagination } from "../Pagination";
 import { RowStack } from "../../../../../shared/ui/Stack";
-import { Button } from "@/shared/ui/Button";
+import { Button } from "../../../Button";
 import { sortValues } from "@/shared/lib/utils/table/sorting/sorting_filtering";
+import { useTranslation } from "react-i18next";
 
 interface TableProps<T extends Identifiable> {
 	columns: Column<T>[];
@@ -53,6 +54,8 @@ export function GenericTable<T extends Identifiable>({
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
 	const paginatedData = filteredData.slice(startIndex, endIndex);
+
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		let filtered = data;
@@ -207,19 +210,19 @@ export function GenericTable<T extends Identifiable>({
 										{isEditing ? (
 											<RowStack gap="8">
 												<Button size="s" onClick={handleSave} color="success">
-													Save
+													{t("Save")}
 												</Button>
 												<Button
 													size="s"
 													onClick={handleCancelEdit}
 													color="error"
 												>
-													Cancel
+													{t("Cancel")}
 												</Button>
 											</RowStack>
 										) : (
 											<Button size="s" onClick={() => handleEdit(row)}>
-												Edit
+												{t("Edit")}
 											</Button>
 										)}
 									</td>

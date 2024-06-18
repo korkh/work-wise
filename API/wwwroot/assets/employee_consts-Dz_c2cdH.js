@@ -1,0 +1,1 @@
+var a=(_=>(_.FIRSTNAME="firstName",_.LASTNAME="lastName",_.BIRTHDAY="birthDay",_.CAPACITY="position",_.LOCATION="location",_.IS_AVAILABLE="is_available",_.IS_FIRED="is_fired",_.TWO_MONTH_EXP="2_month_exp",_.THREE_MONTH_EXP="3_month_exp",_.SIX_MONTH_EXP="6_month_exp",_))(a||{});export{a as E};

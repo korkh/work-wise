@@ -30,7 +30,7 @@ const AccountantPanelPage = (props: AccountantPanelPageProps) => {
 			>
 				<XmlReader onDataParsed={handleDataParsed} />
 				{data.length > 0 && (
-					<GenericTable<Ntry, keyof Ntry>
+					<GenericTable<Ntry>
 						title="List of XML Entries"
 						columns={ntryColumns}
 						data={data}

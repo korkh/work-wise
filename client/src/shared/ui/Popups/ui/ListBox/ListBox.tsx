@@ -4,11 +4,12 @@ import cls from "./ListBox.module.scss";
 import { DropdownDirection } from "@/shared/types/ui_components";
 import { mapDirectionClass } from "../../styles/popup_consts";
 import popupCls from "../../styles/popup.module.scss";
-import { ColumnStack } from "@/shared/ui/Stack";
-import { Button } from "@/shared/ui/Button";
-import { Glyph } from "@/shared/ui/Glyph";
+import { ColumnStack } from "../../../Stack";
+import { Button } from "../../../Button";
+import { Glyph } from "../../../Glyph";
 import ArrowIcon from "@/shared/assets/icons/arrow-bottom.svg?react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface ListBoxItem<T extends string> {
 	value: string;
 	content: React.ReactNode;

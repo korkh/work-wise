@@ -1,44 +1,42 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Theme } from "@/shared/const/Theme";
+import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import {DocumentDetailsCardContent} from "./DocumentDetailsCardContent";
+import { DocumentDetailsCardContent } from "./DocumentDetailsCardContent";
 
 const meta: Meta<typeof DocumentDetailsCardContent> = {
-  title: "shared/DocumentDetailsCardContent",
-  component: DocumentDetailsCardContent,
-  parameters: {
-    layout: "fullscreen",
-  },
-  tags: ["autodocs"],
-  args: {},
-  argTypes: {},
-  decorators: [
-    (Story) => (
-      <StoreDecorator
-        state={{}}
-      >
-        <Story />
-      </StoreDecorator>
-    ),
-  ],
+	title: "shared/DocumentDetailsCardContent",
+	component: DocumentDetailsCardContent,
+	parameters: {
+		layout: "fullscreen",
+	},
+	tags: ["autodocs"],
+	args: {},
+	argTypes: {},
+	decorators: [
+		(Story) => (
+			<StoreDecorator state={{}}>
+				<Story />
+			</StoreDecorator>
+		),
+	],
 };
 
 export default meta;
 
-type Story = StoryObj<DocumentDetailsCardContent;
+type Story = StoryObj<typeof DocumentDetailsCardContent>;
 
 export const Primary: Story = {
-  args: {},
+	args: {},
 };
 
 export const Dark: Story = {
-  args: {},
-  decorators: [
-    (Story) => (
-      <ThemeDecorator theme={Theme.DARK}>
-        <Story />
-      </ThemeDecorator>
-    ),
-  ],
+	args: {},
+	decorators: [
+		(Story) => (
+			<ThemeDecorator theme={Theme.DARK}>
+				<Story />
+			</ThemeDecorator>
+		),
+	],
 };

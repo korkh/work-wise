@@ -1,16 +1,16 @@
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
-import BusinessTripsList from "@/pages/BusinessTripsData/BusinessTripsList/ui/BusinessTripsList/BusinessTripsList";
+import BusinessTripsList from '../../../BusinessTripsList/ui/BusinessTripsList/BusinessTripsList';
 import { useSelector } from "react-redux";
-import { selectAllBusinessTrips } from "@/pages/BusinessTripsData/model/slices/businessTripPageSlice";
+import { selectAllBusinessTrips } from '../../../model/slices/businessTripPageSlice';
 import {
 	getBusinessTripPageError,
 	getBusinessTripPageIsLoading,
-} from "@/pages/BusinessTripsData/model/selectors/businessTripPageSelectors";
+} from '../../../model/selectors/businessTripPageSelectors';
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { getRouteBusinessTripsSummaries } from "@/shared/consts/routerConsts";
-import { BusinessTripsSummariesList } from "@/pages/BusinessTripsData/BusinessTripsSummariesList";
+import { BusinessTripsSummariesList } from '../../../BusinessTripsSummariesList';
 
 interface BusinessTripsInfiniteListProps {
 	className?: string;

@@ -4,9 +4,9 @@ import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
 import {
 	BusinessTrip,
 	ValidateBusinessTripError,
+	getBusinessTripForm,
+	validateBusinessTripData,
 } from "@/entities/BusinessTrip";
-import { getBusinessTripForm } from "@/entities/BusinessTrip/model/selectors/businessTrip_selectors";
-import { validateBusinessTripData } from "@/entities/BusinessTrip/model/services/validateBusinessTripData";
 
 export const updateBusinessTripData = createAsyncThunk<
 	BusinessTrip,

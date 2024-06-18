@@ -1,0 +1,1 @@
+export { DocumentsData } from "./DocumentsData";

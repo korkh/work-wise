@@ -27,6 +27,12 @@
 			"module": "CommonJS"
 		}
 	},
-	"exclude": ["**/*.spec.ts", "./cypress.config.ts"], //avoid conflict cypress & jest
+	"exclude": [
+		"**/*.spec.ts",
+		"./cypress.config.ts",
+		"node_modules",
+		"dist",
+		"build"
+	], //avoid conflict cypress & jest
 	"include": ["./**/*", "./config/jest/setupTests.ts"]
 }

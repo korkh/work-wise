@@ -23,11 +23,15 @@ export const employeeDetailsSlice = createSlice({
 			state.validateErrors = undefined;
 			state.form = state.data;
 		},
-		updateEmployee: (state, action: PayloadAction<Employee>) => {
-			state.form = {
-				...state.form,
-				...action.payload,
-			};
+		updateEmployee: (state, action: PayloadAction<Partial<Employee>>) => {
+			const { id, ...rest } = action.payload;
+			if (state.form && id !== undefined) {
+				state.form.id = id;
+				state.form = {
+					...state.form,
+					...rest,
+				};
+			}
 		},
 	},
 	extraReducers: (builder) => {

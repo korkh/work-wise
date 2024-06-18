@@ -4,12 +4,12 @@ import {
 	DynamicReducerLoader,
 	ReducersList,
 } from "@/shared/lib/DynamicReducerLoader/DynamicReducerLoader";
-import { businessTripPageReducer } from "@/pages/BusinessTripsData/model/slices/businessTripPageSlice";
+import { businessTripPageReducer } from "../../../model/slices/businessTripPageSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useSearchParams } from "react-router-dom";
 import { useInitEffect } from "@/shared/lib/hooks/useInitEffect/useInitEffect";
-import { initBusinessTripPage } from "@/pages/BusinessTripsData/model/services/initBusinessTripPage";
-import BusinessTripsInfiniteList from "@/pages/BusinessTripsData/BusinessTripsInfiniteList/ui/BusinessTripsInfiniteList/BusinessTripsInfiniteList";
+import { initBusinessTripPage } from "../../../model/services/initBusinessTripPage";
+import { BusinessTripsInfiniteList } from "../..";
 
 const reducers: ReducersList = {
 	businessTripPage: businessTripPageReducer,

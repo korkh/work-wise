@@ -24,6 +24,7 @@ export const updateBusinessTripData = createAsyncThunk<
 
 		// Excluding the employee property
 		const { employee, ...businessTripWithoutEmployee } = businessTrip;
+		console.log(employee);
 
 		const response = await extra.api.put<BusinessTrip>(
 			`/businesstrips/${businessTrip.id}`,

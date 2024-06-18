@@ -1,0 +1,55 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { signInUser } from "../services/signIn/signInUser";
+import { TOKEN_LOCALSTORAGE_KEY } from "@/shared/consts/localStorage";
+import { safeJSONParse } from "@/shared/lib/utils/safeParse/safeParse";
+const initialState = {
+    isLoading: false,
+    email: "",
+    password: "",
+    user: null,
+};
+export const signInSlice = createSlice({
+    name: "signIn",
+    initialState,
+    reducers: {
+        setEmail: (state, action) => {
+            state.email = action.payload;
+        },
+        setPassword: (state, action) => {
+            state.password = action.payload;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(signInUser.pending, (state) => {
+            state.error = undefined;
+            state.isLoading = true;
+        })
+            .addCase(signInUser.fulfilled, (state, { payload }) => {
+            state.isLoading = false;
+            const [parseError, claims] = safeJSONParse(atob(payload.token.split(".")[1]));
+            if (parseError) {
+                console.error("Failed to parse claims from token", parseError);
+                return;
+            }
+            const roles = claims["role"] ||
+                claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            const email = claims["email"] ||
+                claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+            const nameId = claims["nameid"] ||
+                claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+            state.user = {
+                ...payload,
+                id: nameId,
+                email: email,
+                roles: typeof roles === "string" ? [roles] : roles,
+            };
+            localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, JSON.stringify(state.user.token));
+        })
+            .addCase(signInUser.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        });
+    },
+});
+export const { reducer: signInReducer, actions: signInActions } = signInSlice;

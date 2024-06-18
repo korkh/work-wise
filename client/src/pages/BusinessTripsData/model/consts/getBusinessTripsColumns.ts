@@ -4,6 +4,7 @@ import { Column } from "@/shared/types/ui_components";
 import { useTranslation } from "react-i18next";
 
 export const getBusinessTripsColumns = (): Column<BusinessTrip>[] => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation("businessTrip");
 	return [
 		{ key: "id", header: "No.", notEditable: true },

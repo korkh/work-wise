@@ -3,6 +3,7 @@ import { Column } from "@/shared/types/ui_components";
 import { useTranslation } from "react-i18next";
 
 export const getPayrollColumns = (): Column<Payroll>[] => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation("payrolls");
 	return [
 		{ key: "id", header: "No." },

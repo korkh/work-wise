@@ -8,8 +8,8 @@ import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { fetchBusinessTripsList } from "@/pages/BusinessTripsData/model/services/fetchBusinessTripsList";
-import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender"; // Path to your summarizeBusinessTrips function
+import { fetchBusinessTripsList } from '../../../model/services/fetchBusinessTripsList';
+// Path to your summarizeBusinessTrips function
 import { BusinessTripSummary } from "../../model/types/businessTripsSummaries";
 import { getSummarizedBusinessTrips } from "../../model/selectors/getSummariezedBusinessTrips";
 

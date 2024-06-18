@@ -8,9 +8,9 @@ import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { updateBusinessTripData } from "@/entities/BusinessTrip/model/services/updateBusinessTripData";
-import { getBusinessTripsColumns } from "@/pages/BusinessTripsData/model/consts/getBusinessTripsColumns";
-import { fetchBusinessTripsList } from "@/pages/BusinessTripsData/model/services/fetchBusinessTripsList";
+import { updateBusinessTripData } from '@/entities/BusinessTrip';
+import { getBusinessTripsColumns } from '../../../model/consts/getBusinessTripsColumns';
+import { fetchBusinessTripsList } from '../../../model/services/fetchBusinessTripsList';
 import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
 
 interface BusinessTripsListProps {

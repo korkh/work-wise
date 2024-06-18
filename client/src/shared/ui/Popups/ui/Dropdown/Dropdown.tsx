@@ -4,8 +4,8 @@ import { ReactNode, memo, useEffect, useRef, useState } from "react";
 import { DropdownDirection } from "@/shared/types/ui_components";
 import { mapDirectionClass } from "../../styles/popup_consts";
 import popupCls from "../../styles/popup.module.scss";
-import { Button, ButtonVariant } from "@/shared/ui/Button";
-import { AppLink } from "@/shared/ui/AppLink";
+import { Button, ButtonVariant } from '../../../Button';
+import { AppLink } from '../../../AppLink';
 
 export interface DropdownItem {
 	disabled?: boolean;

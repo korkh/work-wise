@@ -1,0 +1,12 @@
+import { EmployeeSortField } from "@/entities/Employee";
+import { buildSelector } from "@/shared/lib/store";
+export const getEmployeesPageIsLoading = (state) => state.employeePage?.isLoading || false;
+export const getEmployeesPageError = (state) => state.employeePage?.error;
+export const getEmployeesPagePageNumber = (state) => state.employeePage?.pageNumber || 1;
+export const getEmployeesPageSize = (state) => state.employeePage?.pageSize || 10;
+export const getEmployeesPageHasMore = (state) => state.employeePage?.hasMore;
+export const getEmployeesPageInitited = (state) => state.employeePage?._inited;
+export const getEmployeesPageOrder = (state) => state.employeePage?.order ?? "asc";
+export const getEmployeesPageSort = (state) => state.employeePage?.sort ?? EmployeeSortField.LASTNAME;
+export const getEmployeesPageSearch = (state) => state.employeePage?.search ?? "";
+export const [useEmployeeById] = buildSelector((state, id) => state.employeePage?.entities[id]);

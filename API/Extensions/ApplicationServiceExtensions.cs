@@ -1,22 +1,23 @@
-using Application.Core;
 using Application.Employees;
+using Application.Core;
 using Application.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Email;
 using Infrastructure.Photos;
 using Infrastructure.Security;
-using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Storage;
+using Infrastructure.Services;
+
 
 namespace API.Extensions
 {
     public static class ApplicationServiceExtensions
     {
-        public static IServiceCollection AddApplicationServices(
+        public static object AddApplicationServices(
             this IServiceCollection services,
             IConfiguration config
         )
@@ -27,7 +28,14 @@ namespace API.Extensions
 
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                try
+                {
+                    options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error occured in AppServiceExtensions while configuring database context: {ex}");
+                }
             });
 
             // services.AddDbContext<DataContext>(options =>
@@ -92,10 +100,9 @@ namespace API.Extensions
             // Services for relationships
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-            services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IUserAccessor, UserAccessor>;
 
-            // Services
-            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            // services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<EmailSender>();
             services.AddScoped<ISearchExpressionBuilder, SearchExpressionBuilder>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));

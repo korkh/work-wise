@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import ExportToExcel from "./ExportToExcel";
+import { ExportToExcel } from "./ExportToExcel";
 
 const meta = {
 	title: "features/ExportToExcel",
@@ -24,7 +24,7 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ExportToExcel>;
 
 export const Primary: Story = {
 	args: {},

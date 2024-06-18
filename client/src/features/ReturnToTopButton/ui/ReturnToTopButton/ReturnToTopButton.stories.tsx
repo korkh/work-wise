@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Theme } from "@/shared/consts/Theme";
 import StoreDecorator from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import ThemeDecorator from "@/shared/config/storybook/ThemeDecorator/ThemeDecorator";
-import ReturnToTopButton from "./ReturnToTopButton";
+import { ReturnToTopButton } from "./ReturnToTopButton";
 
 const meta = {
 	title: "features/ReturnToTopButton",
