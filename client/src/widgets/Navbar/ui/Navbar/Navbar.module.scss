@@ -4,47 +4,9 @@
   position: sticky;
   top: 0;
   z-index: var(--navbar-z-index);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
   .appLogo {
     padding: 5px 20px;
-  }
-
-  .items {
-    display: flex;
-    gap: 32px;
-
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
-
-  .hamburger {
-    display: none;
-    cursor: pointer;
-
-    @media (max-width: 768px) {
-      display: block;
-    }
-  }
-
-  .dropdownMenu {
-    display: none;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-
-    &.active {
-      display: flex;
-    }
   }
 
   .actions {
@@ -58,5 +20,39 @@
   .lang {
     margin-left: 20px;
     font-weight: bold;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navItems {
+    display: flex;
+  }
+
+  .dropdownMenu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: var(--light-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+
+    .navItems {
+      display: none;
+    }
+
+    .dropdownMenu {
+      display: flex;
+    }
   }
 }

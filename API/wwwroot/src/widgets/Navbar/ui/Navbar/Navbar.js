@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import cls from "./Navbar.module.scss";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";
@@ -16,8 +16,9 @@ import { getUserAuthData } from "@/entities/User";
 import { useSelector } from "react-redux";
 import { LanguageSwitcher } from "@/features/LanguageSwitcher";
 import { getRouteBusinessTrips, getRouteBusinessTripsSummaries, } from "@/shared/consts/routerConsts";
-import { HamburgerMenu } from "@/shared/ui/HamburgerMenu";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
+import { Hamburger } from "@/shared/ui/Hamburger";
+import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
 const Navbar = memo(function Navbar({ className }) {
     const { t } = useTranslation("navbar");
     const [isAuthModal, setIsAuthModal] = useState(false);
@@ -26,6 +27,8 @@ const Navbar = memo(function Navbar({ className }) {
     const [activeItem, setActiveItem] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const navbarItemsList = useNavbarItems({ userData });
+    const dropdownRef = useRef(null);
+    const isMobile = useMobile();
     const onCloseModal = useCallback(() => {
         setIsAuthModal(false);
     }, []);
@@ -35,26 +38,50 @@ const Navbar = memo(function Navbar({ className }) {
     const toggleDropdown = () => {
         setIsOpen((prev) => !prev);
     };
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current &&
+            !dropdownRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
     const itemsList = useMemo(() => {
         const dropdownItems = [
             {
                 content: t("Business trips summaries"),
                 href: getRouteBusinessTripsSummaries(),
-                onClick: () => setActiveItem(getRouteBusinessTripsSummaries()),
+                onClick: () => {
+                    setActiveItem(getRouteBusinessTripsSummaries());
+                    setIsOpen(false);
+                },
             },
             {
                 content: t("Business trips"),
                 href: getRouteBusinessTrips(),
-                onClick: () => setActiveItem(getRouteBusinessTrips()),
+                onClick: () => {
+                    setActiveItem(getRouteBusinessTrips());
+                    setIsOpen(false);
+                },
             },
         ];
         return navbarItemsList.map((item) => {
             if (item.text === "Business trips" || item.text === "Komandiruotės") {
-                return (_jsx(NavbarItem, { item: item, dropDownItems: dropdownItems, activeItem: activeItem, setActiveItem: setActiveItem }, item.path));
+                return (_jsx(NavbarItem, { item: item, dropDownItems: dropdownItems, activeItem: activeItem, setActiveItem: (path) => {
+                        setActiveItem(path);
+                        setIsOpen(false);
+                    } }, item.path));
             }
-            return (_jsx(NavbarItem, { item: item, activeItem: activeItem, setActiveItem: setActiveItem }, item.path));
+            return (_jsx(NavbarItem, { item: item, activeItem: activeItem, setActiveItem: (path) => {
+                    setActiveItem(path);
+                    setIsOpen(false);
+                } }, item.path));
         });
     }, [activeItem, navbarItemsList, t]);
-    return (_jsxs(RowStack, { gap: "32", className: classNames(cls.navbar, [className], {}), justify: "between", align: "center", children: [_jsx(RowStack, { gap: "32", className: cls.items, children: _jsx(AppLogo, { width: 100, height: 50, className: cls.appLogo }) }), _jsx(HamburgerMenu, { isOpen: isOpen, toggle: toggleDropdown }), _jsx(RowStack, { gap: "32", className: cls.items, children: itemsList }), isOpen && (_jsx(RowStack, { gap: "32", className: classNames(cls.dropdownMenu, [], { active: isOpen }), children: itemsList })), userAuth ? (_jsxs(RowStack, { gap: "32", className: cls.actions, align: "center", children: [_jsx(ThemeSwitcher, {}), _jsx(LanguageSwitcher, { abbreviated: true, className: cls.lang }), _jsxs("span", { children: [t("Welcome"), "\u00A0", userAuth.displayName] }), _jsx(UserDropdown, {})] })) : (_jsxs(RowStack, { gap: "32", children: [_jsx(ThemeSwitcher, {}), _jsx(LanguageSwitcher, { abbreviated: true, className: cls.lang }), _jsx(Button, { variant: "clear", className: cls.links, onClick: onShowModal, children: t("Sign in") })] })), isAuthModal && (_jsx(SignInModal, { isOpen: isAuthModal, onClose: onCloseModal }))] }));
+    return (_jsxs(RowStack, { gap: "32", className: classNames(cls.navbar, [className], {}), justify: "between", align: "center", children: [_jsx(RowStack, { gap: "32", className: cls.items, children: _jsx(AppLogo, { width: 100, height: 50, className: cls.appLogo }) }), isMobile && _jsx(Hamburger, { isOpen: isOpen, toggle: toggleDropdown }), _jsx(RowStack, { gap: "32", className: cls.navItems, children: itemsList }), isOpen && (_jsx("div", { className: cls.dropdownMenu, ref: dropdownRef, children: itemsList })), userAuth ? (_jsxs(RowStack, { gap: "32", className: cls.actions, align: "center", children: [_jsx(ThemeSwitcher, {}), _jsx(LanguageSwitcher, { abbreviated: true, className: cls.lang }), _jsxs("span", { children: [t("Welcome"), "\u00A0", userAuth.displayName] }), _jsx(UserDropdown, {})] })) : (_jsxs(RowStack, { gap: "32", children: [_jsx(ThemeSwitcher, {}), _jsx(LanguageSwitcher, { abbreviated: true, className: cls.lang }), _jsx(Button, { variant: "clear", className: cls.links, onClick: onShowModal, children: t("Sign in") })] })), isAuthModal && (_jsx(SignInModal, { isOpen: isAuthModal, onClose: onCloseModal }))] }));
 });
 export default Navbar;

@@ -1,0 +1,34 @@
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  opacity: 1;
+  cursor: pointer;
+
+  .bar1,
+  .bar2,
+  .bar3 {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text);
+    transition: all 0.3s;
+  }
+
+  .bar1Open {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .bar2Open {
+    opacity: 0;
+  }
+
+  .bar3Open {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  .closed {
+    opacity: 0;
+  }
+}

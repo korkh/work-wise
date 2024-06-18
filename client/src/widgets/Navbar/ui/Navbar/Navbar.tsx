@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import cls from "./Navbar.module.scss";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";
@@ -18,8 +18,9 @@ import {
 	getRouteBusinessTrips,
 	getRouteBusinessTripsSummaries,
 } from "@/shared/consts/routerConsts";
-import { HamburgerMenu } from "@/shared/ui/HamburgerMenu";
 import { classNames } from "@/shared/lib/utils/classNames/classNames";
+import { Hamburger } from "@/shared/ui/Hamburger";
+import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
 
 interface NavbarProps {
 	className?: string;
@@ -33,6 +34,8 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	const [activeItem, setActiveItem] = useState<string | null>(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const navbarItemsList = useNavbarItems({ userData });
+	const dropdownRef = useRef<HTMLDivElement | null>(null);
+	const isMobile = useMobile();
 
 	const onCloseModal = useCallback(() => {
 		setIsAuthModal(false);
@@ -46,17 +49,39 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 		setIsOpen((prev) => !prev);
 	};
 
+	const handleClickOutside = (event: MouseEvent) => {
+		if (
+			dropdownRef.current &&
+			!dropdownRef.current.contains(event.target as Node)
+		) {
+			setIsOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+
 	const itemsList = useMemo(() => {
 		const dropdownItems = [
 			{
 				content: t("Business trips summaries"),
 				href: getRouteBusinessTripsSummaries(),
-				onClick: () => setActiveItem(getRouteBusinessTripsSummaries()),
+				onClick: () => {
+					setActiveItem(getRouteBusinessTripsSummaries());
+					setIsOpen(false);
+				},
 			},
 			{
 				content: t("Business trips"),
 				href: getRouteBusinessTrips(),
-				onClick: () => setActiveItem(getRouteBusinessTrips()),
+				onClick: () => {
+					setActiveItem(getRouteBusinessTrips());
+					setIsOpen(false);
+				},
 			},
 		];
 		return navbarItemsList.map((item) => {
@@ -67,7 +92,10 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 						key={item.path}
 						dropDownItems={dropdownItems}
 						activeItem={activeItem}
-						setActiveItem={setActiveItem}
+						setActiveItem={(path) => {
+							setActiveItem(path);
+							setIsOpen(false);
+						}}
 					/>
 				);
 			}
@@ -76,7 +104,10 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 					item={item}
 					key={item.path}
 					activeItem={activeItem}
-					setActiveItem={setActiveItem}
+					setActiveItem={(path) => {
+						setActiveItem(path);
+						setIsOpen(false);
+					}}
 				/>
 			);
 		});
@@ -92,17 +123,14 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 			<RowStack gap="32" className={cls.items}>
 				<AppLogo width={100} height={50} className={cls.appLogo} />
 			</RowStack>
-			<HamburgerMenu isOpen={isOpen} toggle={toggleDropdown} />
-			<RowStack gap="32" className={cls.items}>
+			{isMobile && <Hamburger isOpen={isOpen} toggle={toggleDropdown} />}
+			<RowStack gap="32" className={cls.navItems}>
 				{itemsList}
 			</RowStack>
 			{isOpen && (
-				<RowStack
-					gap="32"
-					className={classNames(cls.dropdownMenu, [], { active: isOpen })}
-				>
+				<div className={cls.dropdownMenu} ref={dropdownRef}>
 					{itemsList}
-				</RowStack>
+				</div>
 			)}
 			{userAuth ? (
 				<RowStack gap="32" className={cls.actions} align="center">
