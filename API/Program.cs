@@ -1,6 +1,7 @@
 using API.Extensions;
 using API.Middleware;
 using Domain.Entities;
+using Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
