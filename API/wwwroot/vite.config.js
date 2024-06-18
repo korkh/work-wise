@@ -31,7 +31,7 @@ export default defineConfig({
     define: {
         __IS_DEV__: JSON.stringify(true),
         __API__: JSON.stringify(process.env.NODE_ENV === "production"
-            ? "https://work-wise.dev/api"
+            ? "/api"
             : "https://localhost:5000/api"),
         __PROJECT__: JSON.stringify("frontend"),
         "process.env": {},
