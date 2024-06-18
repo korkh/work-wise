@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from "react";
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import cls from "./Navbar.module.scss";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";
@@ -19,6 +18,8 @@ import {
 	getRouteBusinessTrips,
 	getRouteBusinessTripsSummaries,
 } from "@/shared/consts/routerConsts";
+import { HamburgerMenu } from "@/shared/ui/HamburgerMenu";
+import { classNames } from "@/shared/lib/utils/classNames/classNames";
 
 interface NavbarProps {
 	className?: string;
@@ -30,6 +31,7 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	const userData = useAuthToken();
 	const userAuth = useSelector(getUserAuthData);
 	const [activeItem, setActiveItem] = useState<string | null>(null);
+	const [isOpen, setIsOpen] = useState(false);
 	const navbarItemsList = useNavbarItems({ userData });
 
 	const onCloseModal = useCallback(() => {
@@ -39,6 +41,10 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 	const onShowModal = useCallback(() => {
 		setIsAuthModal(true);
 	}, []);
+
+	const toggleDropdown = () => {
+		setIsOpen((prev) => !prev);
+	};
 
 	const itemsList = useMemo(() => {
 		const dropdownItems = [
@@ -86,7 +92,18 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 			<RowStack gap="32" className={cls.items}>
 				<AppLogo width={100} height={50} className={cls.appLogo} />
 			</RowStack>
-			<RowStack gap="32">{itemsList}</RowStack>
+			<HamburgerMenu isOpen={isOpen} toggle={toggleDropdown} />
+			<RowStack gap="32" className={cls.items}>
+				{itemsList}
+			</RowStack>
+			{isOpen && (
+				<RowStack
+					gap="32"
+					className={classNames(cls.dropdownMenu, [], { active: isOpen })}
+				>
+					{itemsList}
+				</RowStack>
+			)}
 			{userAuth ? (
 				<RowStack gap="32" className={cls.actions} align="center">
 					<ThemeSwitcher />

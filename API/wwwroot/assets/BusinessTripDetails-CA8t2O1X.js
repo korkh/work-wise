@@ -1,1 +1,0 @@
-import{r as t,d as a,j as n,k as r}from"./index-D5ecAOyu.js";const l="_businessTripDetails_1ntxq_1",o={businessTripDetails:l},c=s=>{const{className:i}=s,{t:e}=a();return n.jsx("div",{className:r(o.businessTripDetails,[i],{}),children:e("BusinessTripDetails")})},u=t.memo(c);export{u as default};
