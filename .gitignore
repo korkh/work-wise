@@ -474,6 +474,7 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+
 # Windows shortcuts
 *.lnk
 .vscode
@@ -482,4 +483,6 @@ $RECYCLE.BIN/
 # appsettings
 API/appsettings.json
 API/appsettings.Development.json
+API/*.db-shm
+API/*.db-wal
 
