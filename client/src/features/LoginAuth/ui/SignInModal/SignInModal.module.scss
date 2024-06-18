@@ -1,3 +1,7 @@
 .signInModal {
   font-size: inherit;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 }
