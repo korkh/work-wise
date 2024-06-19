@@ -16,16 +16,18 @@ import { signInActions, signInReducer } from "../../model/slices/signInSlice";
 import { getRouteMain } from "@/shared/consts/routerConsts";
 import { useNavigate } from "react-router-dom";
 import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
+import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
 const initialReducers = {
     signInForm: signInReducer,
 };
 const SignInForm = memo(function SignInForm({ className, onSuccess, }) {
-    const { t } = useTranslation();
+    const { t } = useTranslation("translation");
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const email = useSelector(getSignInEmail);
     const password = useSelector(getSignInPassword);
     const isLoading = useSelector(getSignInLoading);
+    const isMobile = useMobile();
     const error = useSelector(getSignInError);
     const forceUpdate = useForceUpdate();
     const onChangeUsername = useCallback((value) => {
@@ -42,6 +44,9 @@ const SignInForm = memo(function SignInForm({ className, onSuccess, }) {
             navigate(getRouteMain());
         }
     }, [dispatch, email, password, onSuccess, forceUpdate, navigate]);
-    return (_jsx(DynamicReducerLoader, { removeAfterUnmount: true, reducers: initialReducers, children: _jsxs(ColumnStack, { gap: "16", className: classNames(cls.signInForm, [className], {}), children: [_jsx(TextHolder, { title: t("Please sign in here!") }), error && (_jsx(TextHolder, { text: t("Incorrect login email or password"), variant: "error" })), _jsx(Input, { autofocus: true, type: "email", className: cls.input, placeholder: t("Email"), onChange: onChangeUsername, value: email }), _jsx(Input, { type: "password", className: cls.input, placeholder: t("Password"), onChange: onChangePassword, value: password }), _jsx(Button, { className: cls.signInBtn, onClick: onLoginClick, disabled: isLoading, children: t("Sign in") })] }) }));
+    const mods = {
+        [cls.forMobile]: isMobile,
+    };
+    return (_jsx(DynamicReducerLoader, { removeAfterUnmount: true, reducers: initialReducers, children: _jsxs(ColumnStack, { gap: "16", className: classNames(cls.signInForm, [className], mods), children: [_jsx(TextHolder, { title: `${t("Please sign in here")}!` }), error && (_jsx(TextHolder, { text: t("Incorrect login email or password"), variant: "error" })), _jsx(Input, { autofocus: true, type: "email", className: cls.input, placeholder: t("Email"), onChange: onChangeUsername, value: email }), _jsx(Input, { type: "password", className: cls.input, placeholder: t("Password"), onChange: onChangePassword, value: password }), _jsx(Button, { className: classNames(cls.signInBtn, [], mods), onClick: onLoginClick, disabled: isLoading, children: t("Sign in") })] }) }));
 });
 export default SignInForm;

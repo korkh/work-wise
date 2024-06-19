@@ -15,5 +15,10 @@
   "Settings": "Nustatymai",
   "Sign out": "Atsijungti",
   "403 FORBIDDEN": "403 UŽDRAUSTA",
-  "Back to main page": "Grįžti į pagrindinį puslapį"
+  "Back to main page": "Grįžti į pagrindinį puslapį",
+  "Please sign in here": "Prašome prisijungti čia",
+  "Incorrect login email or password": "Neteisingas prisijungimo el. paštas arba slaptažodis",
+  "Email": "El. paštas",
+  "Password": "Slaptažodis",
+  "Sign in": "Prisijungti"
 }

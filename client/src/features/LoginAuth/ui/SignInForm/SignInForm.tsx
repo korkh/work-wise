@@ -11,7 +11,7 @@ import { Button } from "@/shared/ui/Button";
 import { Input } from "@/shared/ui/Input";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { ColumnStack } from "@/shared/ui/Stack";
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
+import { Mods, classNames } from "@/shared/lib/utils/classNames/classNames";
 
 import {
 	getSignInEmail,
@@ -24,6 +24,7 @@ import { signInActions, signInReducer } from "../../model/slices/signInSlice";
 import { getRouteMain } from "@/shared/consts/routerConsts";
 import { useNavigate } from "react-router-dom";
 import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
+import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
 
 export interface SignInFormProps {
 	className?: string;
@@ -38,12 +39,13 @@ const SignInForm = memo(function SignInForm({
 	className,
 	onSuccess,
 }: SignInFormProps) {
-	const { t } = useTranslation();
+	const { t } = useTranslation("translation");
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const email = useSelector(getSignInEmail);
 	const password = useSelector(getSignInPassword);
 	const isLoading = useSelector(getSignInLoading);
+	const isMobile = useMobile();
 	const error = useSelector(getSignInError);
 	const forceUpdate = useForceUpdate();
 
@@ -70,13 +72,17 @@ const SignInForm = memo(function SignInForm({
 		}
 	}, [dispatch, email, password, onSuccess, forceUpdate, navigate]);
 
+	const mods: Mods = {
+		[cls.forMobile]: isMobile,
+	};
+
 	return (
 		<DynamicReducerLoader removeAfterUnmount reducers={initialReducers}>
 			<ColumnStack
 				gap="16"
-				className={classNames(cls.signInForm, [className], {})}
+				className={classNames(cls.signInForm, [className], mods)}
 			>
-				<TextHolder title={t("Please sign in here!")} />
+				<TextHolder title={`${t("Please sign in here")}!`} />
 				{error && (
 					<TextHolder
 						text={t("Incorrect login email or password")}
@@ -99,7 +105,7 @@ const SignInForm = memo(function SignInForm({
 					value={password}
 				/>
 				<Button
-					className={cls.signInBtn}
+					className={classNames(cls.signInBtn, [], mods)}
 					onClick={onLoginClick}
 					disabled={isLoading}
 				>

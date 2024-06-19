@@ -15,5 +15,10 @@
   "Settings": "Settings",
   "Sign out": "Sign out",
   "403 FORBIDDEN": "403 FORBIDDEN",
-  "Back to main page": "Back to main page"
+  "Back to main page": "Back to main page",
+  "Please sign in here": "Please sign in here",
+  "Incorrect login email or password": "Incorrect login email or password",
+  "Email": "Email",
+  "Password": "Password",
+  "Sign in": "Sign in"
 }

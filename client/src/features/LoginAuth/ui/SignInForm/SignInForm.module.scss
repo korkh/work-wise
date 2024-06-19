@@ -3,10 +3,6 @@
   flex-direction: column;
   width: 400px;
   margin: 0 auto;
-
-  @media (max-width: 600px) {
-    width: 90%;
-  }
 }
 
 .input {
@@ -17,9 +13,8 @@
 .signInBtn {
   margin-top: 15px;
   margin-left: auto;
-  width: 100%;
+}
 
-  @media (max-width: 600px) {
-    width: 100%;
-  }
+.forMobile {
+  width: 100%;
 }
