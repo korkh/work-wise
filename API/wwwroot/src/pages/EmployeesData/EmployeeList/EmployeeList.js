@@ -9,7 +9,7 @@ import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
 import { booleanToYesNo } from "@/shared/lib/utils/table/booleanConverter/booleanConverter";
 import { ExportToExcel } from "../../../features/ExportToExcel";
 import { getRouteEmployeeDetails } from "@/shared/consts/routerConsts";
-import { Loader } from "@/shared/ui/Loader";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 export const EmployeeList = memo(function EmployeeList(props) {
     const { className, employees, isLoading } = props;
     const { t } = useTranslation("employees");
@@ -38,7 +38,7 @@ export const EmployeeList = memo(function EmployeeList(props) {
         },
     ];
     if (isLoading) {
-        return _jsx(Loader, {});
+        return _jsx(TableLoader, {});
     }
     if (!isLoading && !employees.length) {
         return (_jsx("div", { className: classNames(cls.employeeList, [className], {}), children: _jsx(TextHolder, { size: "l", title: t("Employees not found") }) }));

@@ -5,7 +5,6 @@ export enum AppRoutes {
 	EMPLOYEES = "employees",
 	EMPLOYEE_DETAILS = "employee_details",
 	EMPLOYEE_CREATE = "employee_create",
-	EMPLOYEE_DELETE = "employee_delete",
 	EMPLOYEE_TIME_CARD = "employee_time_card",
 	DOCUMENTS = "documents",
 	DOCUMENT_DETAILS = "document_details",
@@ -31,7 +30,6 @@ export const getRouteProfile = (id: string) => `/profile/${id}`;
 export const getRouteEmployees = () => "/employees";
 export const getRouteEmployeeDetails = (id: string) => `/employees/${id}`;
 export const getRouteEmployeeCreate = () => "/employees/new";
-export const getRouteEmployeeDelete = (id: string) => `/employees/${id}`;
 export const getRouteEmployeeTimeCard = () => `/timecards`;
 export const getRouteDocuments = () => "/documents";
 export const getRouteDocumentDetails = (id: string) => `/documents/${id}`;
@@ -59,7 +57,6 @@ export const AppRouteByPathPattern: Record<string, AppRoutes> = {
 	[getRouteEmployeeDetails(":id")]: AppRoutes.EMPLOYEE_DETAILS,
 	[getRouteEmployeeTimeCard()]: AppRoutes.EMPLOYEE_TIME_CARD,
 	[getRouteEmployeeCreate()]: AppRoutes.DOCUMENT_CREATE,
-	[getRouteEmployeeDelete(":id")]: AppRoutes.DOCUMENT_DELETE,
 	[getRouteDocuments()]: AppRoutes.DOCUMENTS,
 	[getRouteDocumentDetails(":id")]: AppRoutes.DOCUMENT_DETAILS,
 	[getRouteDocumentCreate()]: AppRoutes.DOCUMENT_CREATE,

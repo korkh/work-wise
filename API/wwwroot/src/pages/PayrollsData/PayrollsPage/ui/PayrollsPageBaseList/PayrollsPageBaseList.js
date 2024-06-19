@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { selectAllPayrolls } from "../../model/slices/payrollPageSlice";
 import { getPayrollPageError, getPayrollPageIsLoading, } from "../../model/selectors/getPayrollsPageSelectors";
 import { PayrollList } from "../../../../../pages/PayrollsData/PayrollList";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 const PayrollsPageBaseList = memo(function PayrollsPageBaseList(props) {
     const { className } = props;
     const { t } = useTranslation("payrolls");
@@ -18,8 +19,11 @@ const PayrollsPageBaseList = memo(function PayrollsPageBaseList(props) {
             setPyrollsLoaded(true);
         }
     }, [payrolls]);
-    if (error || !payrollsLoaded) {
+    if (error) {
         return _jsx(TextHolder, { text: t("Pyrolls loading error") });
+    }
+    if (isLoading && !payrollsLoaded) {
+        return _jsx(TableLoader, {});
     }
     return (_jsx(PayrollList, { "data-testid": "PayrollList", payrolls: payrolls, isLoading: isLoading, className: className }));
 });

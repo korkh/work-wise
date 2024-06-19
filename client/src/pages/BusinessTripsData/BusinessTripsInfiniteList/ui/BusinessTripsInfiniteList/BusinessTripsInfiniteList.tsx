@@ -1,24 +1,23 @@
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
-import BusinessTripsList from '../../../BusinessTripsList/ui/BusinessTripsList/BusinessTripsList';
+import BusinessTripsList from "../../../BusinessTripsList/ui/BusinessTripsList/BusinessTripsList";
 import { useSelector } from "react-redux";
-import { selectAllBusinessTrips } from '../../../model/slices/businessTripPageSlice';
+import { selectAllBusinessTrips } from "../../../model/slices/businessTripPageSlice";
 import {
 	getBusinessTripPageError,
 	getBusinessTripPageIsLoading,
-} from '../../../model/selectors/businessTripPageSelectors';
+} from "../../../model/selectors/businessTripPageSelectors";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { getRouteBusinessTripsSummaries } from "@/shared/consts/routerConsts";
-import { BusinessTripsSummariesList } from '../../../BusinessTripsSummariesList';
+import { BusinessTripsSummariesList } from "../../../BusinessTripsSummariesList";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface BusinessTripsInfiniteListProps {
-	className?: string;
 	variant?: string;
 }
 
 const BusinessTripsInfiniteList = (props: BusinessTripsInfiniteListProps) => {
-	const { className, variant } = props;
+	const { variant } = props;
 	const { t } = useTranslation("businessTrip");
 
 	const bTrips = useSelector(selectAllBusinessTrips);
@@ -33,22 +32,24 @@ const BusinessTripsInfiniteList = (props: BusinessTripsInfiniteListProps) => {
 		}
 	}, [bTrips]);
 
-	if (error || !bTripsLoaded) {
+	if (error) {
 		return <TextHolder size={"l"} title={t("No business trip data found")} />;
+	}
+
+	if (!bTripsLoaded && isLoading) {
+		return <TableLoader />;
 	}
 
 	return variant === getRouteBusinessTripsSummaries() ? (
 		<BusinessTripsSummariesList
 			data-testid="BusinessTripsSummariesList"
 			isLoading={isLoading}
-			className={classNames("", [className], {})}
 			businessTrips={bTrips}
 		/>
 	) : (
 		<BusinessTripsList
 			data-testid="BusinessTripsList"
 			isLoading={isLoading}
-			className={classNames("", [className], {})}
 			businessTrips={bTrips}
 		/>
 	);

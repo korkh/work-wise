@@ -35,7 +35,7 @@ namespace Application.Employees
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result)
-                    return Result<Unit>.Failure("Failed to delete training");
+                    return Result<Unit>.Failure("Failed to delete employee");
 
                 return Result<Unit>.Success(Unit.Value);
             }

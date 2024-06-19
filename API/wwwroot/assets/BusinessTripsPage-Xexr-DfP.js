@@ -1,0 +1,1 @@
+import{r as a,e as i,p as t,q as n,k as s,t as o,v as p}from"./index-BicUTnWq.js";import{D as c}from"./DynamicReducerLoader-uIqPQuoA.js";import{i as u}from"./initBusinessTripPage-W1B75ara.js";const m={businessTripPage:p},f=()=>{const e=i(),[r]=t();return n(()=>{e(u(r))}),s.jsx(c,{reducers:m,removeAfterUnmount:!1,children:s.jsx(o,{})})},T=a.memo(f);export{T as default};

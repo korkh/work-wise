@@ -1,26 +1,23 @@
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
 import { BusinessTrip } from "@/entities/BusinessTrip";
 import { Column } from "@/shared/types/ui_components";
-import { Loader } from "@/shared/ui/Loader";
-import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { updateBusinessTripData } from '@/entities/BusinessTrip';
-import { getBusinessTripsColumns } from '../../../model/consts/getBusinessTripsColumns';
-import { fetchBusinessTripsList } from '../../../model/services/fetchBusinessTripsList';
+import { updateBusinessTripData } from "@/entities/BusinessTrip";
+import { getBusinessTripsColumns } from "../../../model/consts/getBusinessTripsColumns";
+import { fetchBusinessTripsList } from "../../../model/services/fetchBusinessTripsList";
 import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRender";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface BusinessTripsListProps {
-	className?: string;
 	businessTrips: BusinessTrip[];
 	isLoading: boolean;
 }
 
 const BusinessTripsList = (props: BusinessTripsListProps) => {
-	const { className, isLoading, businessTrips } = props;
+	const { isLoading, businessTrips } = props;
 	const { t } = useTranslation("businessTrip");
 	const [updatedBusinessTrips, setUpdatedBusinessTrips] =
 		useState(businessTrips);
@@ -47,16 +44,8 @@ const BusinessTripsList = (props: BusinessTripsListProps) => {
 		}
 	};
 
-	if (isLoading) {
-		return <Loader />;
-	}
-
-	if (!isLoading && !updatedBusinessTrips.length) {
-		return (
-			<div className={classNames("", [className], {})}>
-				<TextHolder size={"l"} title={t("No business trip data found")} />
-			</div>
-		);
+	if (isLoading || !updatedBusinessTrips) {
+		return <TableLoader />;
 	}
 
 	return (

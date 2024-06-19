@@ -8,6 +8,7 @@ import {
 	getPayrollPageIsLoading,
 } from "../../model/selectors/getPayrollsPageSelectors";
 import { PayrollList } from "../../../../../pages/PayrollsData/PayrollList";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface DocumentInfiniteListProps {
 	className?: string;
@@ -31,8 +32,12 @@ const PayrollsPageBaseList = memo(function PayrollsPageBaseList(
 		}
 	}, [payrolls]);
 
-	if (error || !payrollsLoaded) {
+	if (error) {
 		return <TextHolder text={t("Pyrolls loading error")} />;
+	}
+
+	if (isLoading && !payrollsLoaded) {
+		return <TableLoader />;
 	}
 
 	return (

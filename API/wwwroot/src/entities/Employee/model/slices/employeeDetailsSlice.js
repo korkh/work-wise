@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchEmployeeByID } from "../services/fetchEmployeeById/fetchEmployeeById";
 import { updateEmployeeData } from "../services/updateEmployeeData/updateEmployeeData";
+import { deleteEmployeeById } from "../services/deleteEmployeeById/deleteEmployeeById";
 const initialState = {
     isLoading: false,
     readonly: true,
@@ -59,6 +60,19 @@ export const employeeDetailsSlice = createSlice({
             .addCase(updateEmployeeData.rejected, (state, action) => {
             state.isLoading = false;
             state.validateErrors = action.payload;
+        })
+            .addCase(deleteEmployeeById.fulfilled, (state) => {
+            state.isLoading = false;
+            state.data = undefined;
+            state.form = undefined;
+        })
+            .addCase(deleteEmployeeById.rejected, (state, action) => {
+            state.isLoading = false;
+            state.validateErrors = action.payload;
+        })
+            .addCase(deleteEmployeeById.pending, (state) => {
+            state.validateErrors = undefined;
+            state.isLoading = true;
         });
     },
 });

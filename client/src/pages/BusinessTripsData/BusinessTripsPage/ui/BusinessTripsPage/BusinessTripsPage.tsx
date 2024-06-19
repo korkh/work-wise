@@ -1,4 +1,3 @@
-import cls from "./BusinessTripsPage.module.scss";
 import { memo } from "react";
 import {
 	DynamicReducerLoader,
@@ -25,7 +24,7 @@ const BusinessTripsPage = () => {
 
 	return (
 		<DynamicReducerLoader reducers={reducers} removeAfterUnmount={false}>
-			<BusinessTripsInfiniteList className={cls.list} />
+			<BusinessTripsInfiniteList />
 		</DynamicReducerLoader>
 	);
 };

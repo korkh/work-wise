@@ -20,5 +20,6 @@
   "Incorrect login email or password": "Neteisingas prisijungimo el. paštas arba slaptažodis",
   "Email": "El. paštas",
   "Password": "Slaptažodis",
-  "Sign in": "Prisijungti"
+  "Sign in": "Prisijungti",
+  "Information for testing application": "Informacija testavimo programai:"
 }

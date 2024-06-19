@@ -1,0 +1,1 @@
+import{r as o,d as e,k as n,P as c,m as r}from"./index-JK9OeaRB.js";const u="_aboutPage_1hknq_1",m={aboutPage:u},P=a=>{const{className:s}=a,{t}=e();return n.jsx(c,{className:r(m.aboutPage,[s],{}),children:t("AboutPage")})},b=o.memo(P);export{b as default};

@@ -1,5 +1,4 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import cls from "./BusinessTripsPage.module.scss";
 import { memo } from "react";
 import { DynamicReducerLoader, } from "@/shared/lib/DynamicReducerLoader/DynamicReducerLoader";
 import { businessTripPageReducer } from "../../../model/slices/businessTripPageSlice";
@@ -17,6 +16,6 @@ const BusinessTripsPage = () => {
     useInitEffect(() => {
         dispatch(initBusinessTripPage(searchParams));
     });
-    return (_jsx(DynamicReducerLoader, { reducers: reducers, removeAfterUnmount: false, children: _jsx(BusinessTripsInfiniteList, { className: cls.list }) }));
+    return (_jsx(DynamicReducerLoader, { reducers: reducers, removeAfterUnmount: false, children: _jsx(BusinessTripsInfiniteList, {}) }));
 };
 export default memo(BusinessTripsPage);

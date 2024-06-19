@@ -1,26 +1,22 @@
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
 import { BusinessTrip } from "@/entities/BusinessTrip";
 import { Column } from "@/shared/types/ui_components";
-import { Loader } from "@/shared/ui/Loader";
-import { TextHolder } from "@/shared/ui/TextHolder";
 import { GenericTable } from "@/shared/ui/Table";
 import { ExportToExcel } from "@/features/ExportToExcel";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { fetchBusinessTripsList } from '../../../model/services/fetchBusinessTripsList';
-// Path to your summarizeBusinessTrips function
+import { fetchBusinessTripsList } from "../../../model/services/fetchBusinessTripsList";
 import { BusinessTripSummary } from "../../model/types/businessTripsSummaries";
 import { getSummarizedBusinessTrips } from "../../model/selectors/getSummariezedBusinessTrips";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface BusinessTripsSummariesListProps {
-	className?: string;
 	businessTrips: BusinessTrip[];
 	isLoading: boolean;
 }
 
 const BusinessTripsSummariesList = (props: BusinessTripsSummariesListProps) => {
-	const { className, isLoading, businessTrips } = props;
+	const { isLoading, businessTrips } = props;
 	const { t } = useTranslation("businessTrip");
 	const [summarizedData, setSummarizedData] = useState<BusinessTripSummary[]>(
 		[]
@@ -53,15 +49,7 @@ const BusinessTripsSummariesList = (props: BusinessTripsSummariesListProps) => {
 	}, [dispatch]);
 
 	if (isLoading) {
-		return <Loader />;
-	}
-
-	if (!isLoading && !summarizedData.length) {
-		return (
-			<div className={classNames("", [className], {})}>
-				<TextHolder size={"l"} title={t("No business trip summaries found")} />
-			</div>
-		);
+		return <TableLoader />;
 	}
 
 	return (

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getDocumentsPageIsLoading, getDocumentsPageError, } from "../../model/selectors/getDocumentsPageSelectors";
 import { DocumentsList } from "../DocumentsList/DocumentsList";
 import { selectAllDocuments } from "../../model/slices/documentPageSlice";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 export const DocumentInfiniteList = memo(function DocumentInfiniteList(props) {
     const { className } = props;
     const { t } = useTranslation();
@@ -18,8 +19,11 @@ export const DocumentInfiniteList = memo(function DocumentInfiniteList(props) {
             setDocumentsLoaded(true);
         }
     }, [documents]);
-    if (error || !documentsLoaded) {
+    if (error) {
         return _jsx(TextHolder, { text: t("Documents loading error") });
+    }
+    if (isLoading || !documentsLoaded) {
+        return _jsx(TableLoader, {});
     }
     return (_jsx(DocumentsList, { "data-testid": "EmployeeList", documents: documents, isLoading: isLoading, className: className }));
 });

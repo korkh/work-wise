@@ -30,7 +30,7 @@ export const updateEmployeeData = createAsyncThunk("employeeDetails/updateEmploy
         return response.data;
     }
     catch (error) {
-        console.error("Failed to fetch employee data!", error);
+        console.error("Failed to update employee data!", error);
         return rejectWithValue([ValidateEmployeeError.SERVER_ERROR]);
     }
 });

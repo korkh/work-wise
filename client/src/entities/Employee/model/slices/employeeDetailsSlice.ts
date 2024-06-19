@@ -3,6 +3,8 @@ import { EmployeeDetailsSchema } from "../types/EmployeeSchema";
 import { fetchEmployeeByID } from "../services/fetchEmployeeById/fetchEmployeeById";
 import { Employee } from "../types/Employee";
 import { updateEmployeeData } from "../services/updateEmployeeData/updateEmployeeData";
+import { deleteEmployeeById } from "../services/deleteEmployeeById/deleteEmployeeById";
+import { ValidateEmployeeError } from "../consts/validateEmployeeError";
 
 const initialState: EmployeeDetailsSchema = {
 	isLoading: false,
@@ -50,7 +52,7 @@ export const employeeDetailsSlice = createSlice({
 			)
 			.addCase(fetchEmployeeByID.rejected, (state, action) => {
 				state.isLoading = false;
-				state.error = action.payload;
+				state.error = action.payload as string;
 			})
 			.addCase(updateEmployeeData.pending, (state) => {
 				state.validateErrors = undefined;
@@ -68,7 +70,20 @@ export const employeeDetailsSlice = createSlice({
 			)
 			.addCase(updateEmployeeData.rejected, (state, action) => {
 				state.isLoading = false;
+				state.validateErrors = action.payload as ValidateEmployeeError[];
+			})
+			.addCase(deleteEmployeeById.fulfilled, (state) => {
+				state.isLoading = false;
+				state.data = undefined;
+				state.form = undefined;
+			})
+			.addCase(deleteEmployeeById.rejected, (state, action) => {
+				state.isLoading = false;
 				state.validateErrors = action.payload;
+			})
+			.addCase(deleteEmployeeById.pending, (state) => {
+				state.validateErrors = undefined;
+				state.isLoading = true;
 			});
 	},
 });

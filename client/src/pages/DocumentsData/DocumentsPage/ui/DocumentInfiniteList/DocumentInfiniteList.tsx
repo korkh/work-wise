@@ -8,6 +8,7 @@ import {
 } from "../../model/selectors/getDocumentsPageSelectors";
 import { DocumentsList } from "../DocumentsList/DocumentsList";
 import { selectAllDocuments } from "../../model/slices/documentPageSlice";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface DocumentInfiniteListProps {
 	className?: string;
@@ -31,8 +32,12 @@ export const DocumentInfiniteList = memo(function DocumentInfiniteList(
 		}
 	}, [documents]);
 
-	if (error || !documentsLoaded) {
+	if (error) {
 		return <TextHolder text={t("Documents loading error")} />;
+	}
+
+	if (isLoading || !documentsLoaded) {
+		return <TableLoader />;
 	}
 
 	return (

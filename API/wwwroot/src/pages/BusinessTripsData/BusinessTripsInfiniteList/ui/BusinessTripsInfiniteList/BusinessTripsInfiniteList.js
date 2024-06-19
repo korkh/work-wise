@@ -1,16 +1,16 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
-import BusinessTripsList from '../../../BusinessTripsList/ui/BusinessTripsList/BusinessTripsList';
+import BusinessTripsList from "../../../BusinessTripsList/ui/BusinessTripsList/BusinessTripsList";
 import { useSelector } from "react-redux";
-import { selectAllBusinessTrips } from '../../../model/slices/businessTripPageSlice';
-import { getBusinessTripPageError, getBusinessTripPageIsLoading, } from '../../../model/selectors/businessTripPageSelectors';
+import { selectAllBusinessTrips } from "../../../model/slices/businessTripPageSlice";
+import { getBusinessTripPageError, getBusinessTripPageIsLoading, } from "../../../model/selectors/businessTripPageSelectors";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { getRouteBusinessTripsSummaries } from "@/shared/consts/routerConsts";
-import { BusinessTripsSummariesList } from '../../../BusinessTripsSummariesList';
+import { BusinessTripsSummariesList } from "../../../BusinessTripsSummariesList";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 const BusinessTripsInfiniteList = (props) => {
-    const { className, variant } = props;
+    const { variant } = props;
     const { t } = useTranslation("businessTrip");
     const bTrips = useSelector(selectAllBusinessTrips);
     const isLoading = useSelector(getBusinessTripPageIsLoading);
@@ -21,9 +21,12 @@ const BusinessTripsInfiniteList = (props) => {
             setBTripsLoaded(true);
         }
     }, [bTrips]);
-    if (error || !bTripsLoaded) {
+    if (error) {
         return _jsx(TextHolder, { size: "l", title: t("No business trip data found") });
     }
-    return variant === getRouteBusinessTripsSummaries() ? (_jsx(BusinessTripsSummariesList, { "data-testid": "BusinessTripsSummariesList", isLoading: isLoading, className: classNames("", [className], {}), businessTrips: bTrips })) : (_jsx(BusinessTripsList, { "data-testid": "BusinessTripsList", isLoading: isLoading, className: classNames("", [className], {}), businessTrips: bTrips }));
+    if (!bTripsLoaded && isLoading) {
+        return _jsx(TableLoader, {});
+    }
+    return variant === getRouteBusinessTripsSummaries() ? (_jsx(BusinessTripsSummariesList, { "data-testid": "BusinessTripsSummariesList", isLoading: isLoading, businessTrips: bTrips })) : (_jsx(BusinessTripsList, { "data-testid": "BusinessTripsList", isLoading: isLoading, businessTrips: bTrips }));
 };
 export default memo(BusinessTripsInfiniteList);

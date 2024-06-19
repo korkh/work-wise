@@ -1,0 +1,1 @@
+import{r as a,d as o,k as m,m as l}from"./index-BicUTnWq.js";const c="_employeeEditPage_fg74x_1",i={employeeEditPage:c},E=e=>{const{className:s}=e,{t}=o();return m.jsx("div",{className:l(i.employeeEditPage,[s],{}),children:t("EmployeeEditPage")})},n=a.memo(E);export{n as default};

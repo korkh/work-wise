@@ -7,6 +7,7 @@ import { ColumnStack } from "@/shared/ui/Stack";
 import { PageContainer } from "@/widgets/PageContainer";
 import { useTranslation } from "react-i18next";
 import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
+import { AppGreeting } from "@/shared/ui/AppGreeting";
 
 interface MainPageProps {
 	className?: string;
@@ -23,6 +24,7 @@ const MainPage = (props: MainPageProps) => {
 			className={classNames(cls.mainPage, [className], {})}
 			height={"80vh"}
 		>
+			<AppGreeting />
 			<ColumnStack gap="16" width={isMobile ? "100%" : "50%"}>
 				<ColumnStack align="center" max>
 					<TextHolder size="l" title={t("Welcome to Work Wise Lietuva")} />

@@ -22,7 +22,6 @@ export const fetchEmployeeByID = createAsyncThunk("employeeDetails/fetchEmployee
         if (!employee.data) {
             throw new Error();
         }
-        console.log("RESPONSE IN fetchEmployeeByID", employee.data);
         return employee.data;
     }
     catch (error) {

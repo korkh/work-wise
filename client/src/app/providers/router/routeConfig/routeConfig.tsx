@@ -18,7 +18,6 @@ import {
 	EmployeesPage,
 	EmployeeDetailsPage,
 	EmployeeCreatePage,
-	EmployeeDeletePage,
 } from "@/pages/EmployeesData";
 import { ErrorPage } from "@/pages/ErrorPage";
 
@@ -43,7 +42,6 @@ import {
 	getRouteDocumentDetails,
 	getRouteDocuments,
 	getRouteEmployeeCreate,
-	getRouteEmployeeDelete,
 	getRouteEmployeeDetails,
 	getRouteEmployeeTimeCard,
 	getRouteEmployees,
@@ -85,12 +83,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
 	[AppRoutes.EMPLOYEE_CREATE]: {
 		path: getRouteEmployeeCreate(),
 		element: <EmployeeCreatePage />,
-		authOnly: true,
-		roles: [UserRole.ADMIN],
-	},
-	[AppRoutes.EMPLOYEE_DELETE]: {
-		path: getRouteEmployeeDelete(":id"),
-		element: <EmployeeDeletePage />,
 		authOnly: true,
 		roles: [UserRole.ADMIN],
 	},

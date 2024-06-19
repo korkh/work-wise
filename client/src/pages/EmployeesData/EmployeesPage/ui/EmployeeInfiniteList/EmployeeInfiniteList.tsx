@@ -8,6 +8,7 @@ import {
 	getEmployeesPageIsLoading,
 } from "../../model/selectors/getEmployeesPageSelectors";
 import { selectAllEmployees } from "../../model/slices/employeesPageSlice";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface EmployeeInfiniteListProps {
 	className?: string;
@@ -21,6 +22,7 @@ export const EmployeeInfiniteList = memo(function EmployeeInfiniteList(
 
 	const employees = useSelector(selectAllEmployees);
 	const isLoading = useSelector(getEmployeesPageIsLoading);
+	console.log("LOADER", isLoading);
 	const error = useSelector(getEmployeesPageError);
 
 	const [employeesLoaded, setEmployeesLoaded] = useState(false);
@@ -35,7 +37,9 @@ export const EmployeeInfiniteList = memo(function EmployeeInfiniteList(
 		return <TextHolder text={t("Employees loading error")} />;
 	}
 
-	return (
+	return isLoading ? (
+		<TableLoader />
+	) : (
 		<EmployeeList
 			data-testid="EmployeeList"
 			employees={employees}

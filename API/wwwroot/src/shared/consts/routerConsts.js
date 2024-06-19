@@ -6,7 +6,6 @@ export var AppRoutes;
     AppRoutes["EMPLOYEES"] = "employees";
     AppRoutes["EMPLOYEE_DETAILS"] = "employee_details";
     AppRoutes["EMPLOYEE_CREATE"] = "employee_create";
-    AppRoutes["EMPLOYEE_DELETE"] = "employee_delete";
     AppRoutes["EMPLOYEE_TIME_CARD"] = "employee_time_card";
     AppRoutes["DOCUMENTS"] = "documents";
     AppRoutes["DOCUMENT_DETAILS"] = "document_details";
@@ -31,7 +30,6 @@ export const getRouteProfile = (id) => `/profile/${id}`;
 export const getRouteEmployees = () => "/employees";
 export const getRouteEmployeeDetails = (id) => `/employees/${id}`;
 export const getRouteEmployeeCreate = () => "/employees/new";
-export const getRouteEmployeeDelete = (id) => `/employees/${id}`;
 export const getRouteEmployeeTimeCard = () => `/timecards`;
 export const getRouteDocuments = () => "/documents";
 export const getRouteDocumentDetails = (id) => `/documents/${id}`;
@@ -57,7 +55,6 @@ export const AppRouteByPathPattern = {
     [getRouteEmployeeDetails(":id")]: AppRoutes.EMPLOYEE_DETAILS,
     [getRouteEmployeeTimeCard()]: AppRoutes.EMPLOYEE_TIME_CARD,
     [getRouteEmployeeCreate()]: AppRoutes.DOCUMENT_CREATE,
-    [getRouteEmployeeDelete(":id")]: AppRoutes.DOCUMENT_DELETE,
     [getRouteDocuments()]: AppRoutes.DOCUMENTS,
     [getRouteDocumentDetails(":id")]: AppRoutes.DOCUMENT_DETAILS,
     [getRouteDocumentCreate()]: AppRoutes.DOCUMENT_CREATE,

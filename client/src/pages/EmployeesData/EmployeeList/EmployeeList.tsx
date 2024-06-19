@@ -10,7 +10,7 @@ import { formatDate } from "@/shared/lib/utils/table/formatDate/formatDate";
 import { booleanToYesNo } from "@/shared/lib/utils/table/booleanConverter/booleanConverter";
 import { ExportToExcel } from "../../../features/ExportToExcel";
 import { getRouteEmployeeDetails } from "@/shared/consts/routerConsts";
-import { Loader } from "@/shared/ui/Loader";
+import { TableLoader } from "@/shared/ui/Table/ui/TableLoader";
 
 interface EmployeeListProps {
 	className?: string;
@@ -49,7 +49,7 @@ export const EmployeeList = memo(function EmployeeList(
 	];
 
 	if (isLoading) {
-		return <Loader />;
+		return <TableLoader />;
 	}
 
 	if (!isLoading && !employees.length) {

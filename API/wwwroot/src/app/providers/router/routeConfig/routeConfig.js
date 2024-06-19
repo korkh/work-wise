@@ -6,7 +6,7 @@ import { AdminPanelPage } from "@/pages/AdminPanelPage";
 import { BusinessTripDetails, BusinessTripsPage, BusinessTripsSummariesPage, } from "@/pages/BusinessTripsData";
 import { DocumentsPage, DocumentCreatePage, DocumentDeletePage, DocumentDetailsPage, } from "@/pages/DocumentsData";
 import { EmployeeTimeTablePage } from "@/pages/EmployeeTimeCardPage";
-import { EmployeesPage, EmployeeDetailsPage, EmployeeCreatePage, EmployeeDeletePage, } from "@/pages/EmployeesData";
+import { EmployeesPage, EmployeeDetailsPage, EmployeeCreatePage, } from "@/pages/EmployeesData";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { ForbiddenPage } from "@/pages/ForbiddenPage";
 import { MainPage } from "@/pages/MainPage";
@@ -15,7 +15,7 @@ import { NotFoundPage } from "@/pages/NotFoundPage";
 import { PayrollsPage, PayrollDetailsPage } from "@/pages/PayrollsData";
 import { ProfilePage } from "@/pages/Profiles";
 import { SettingsPage } from "@/pages/SettingsPage";
-import { AppRoutes, getRouteAbout, getRouteAccountant, getRouteAdmin, getRouteBusinessTripDetails, getRouteBusinessTrips, getRouteBusinessTripsSummaries, getRouteDocumentCreate, getRouteDocumentDelete, getRouteDocumentDetails, getRouteDocuments, getRouteEmployeeCreate, getRouteEmployeeDelete, getRouteEmployeeDetails, getRouteEmployeeTimeCard, getRouteEmployees, getRouteError, getRouteForbidden, getRouteMain, getRouteManager, getRouteNotFound, getRoutePayrollDetails, getRoutePayrolls, getRouteProfile, getRouteSettings, } from "@/shared/consts/routerConsts";
+import { AppRoutes, getRouteAbout, getRouteAccountant, getRouteAdmin, getRouteBusinessTripDetails, getRouteBusinessTrips, getRouteBusinessTripsSummaries, getRouteDocumentCreate, getRouteDocumentDelete, getRouteDocumentDetails, getRouteDocuments, getRouteEmployeeCreate, getRouteEmployeeDetails, getRouteEmployeeTimeCard, getRouteEmployees, getRouteError, getRouteForbidden, getRouteMain, getRouteManager, getRouteNotFound, getRoutePayrollDetails, getRoutePayrolls, getRouteProfile, getRouteSettings, } from "@/shared/consts/routerConsts";
 export const routeConfig = {
     [AppRoutes.MAIN]: {
         path: getRouteMain(),
@@ -42,12 +42,6 @@ export const routeConfig = {
     [AppRoutes.EMPLOYEE_CREATE]: {
         path: getRouteEmployeeCreate(),
         element: _jsx(EmployeeCreatePage, {}),
-        authOnly: true,
-        roles: [UserRole.ADMIN],
-    },
-    [AppRoutes.EMPLOYEE_DELETE]: {
-        path: getRouteEmployeeDelete(":id"),
-        element: _jsx(EmployeeDeletePage, {}),
         authOnly: true,
         roles: [UserRole.ADMIN],
     },
