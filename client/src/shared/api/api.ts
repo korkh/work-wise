@@ -2,7 +2,10 @@ import axios from "axios";
 import { TOKEN_LOCALSTORAGE_KEY } from "../consts/localStorage";
 import { User } from "../../entities/User";
 
-export const $api = axios.create({ withCredentials: true, baseURL: __API__ });
+export const $api = axios.create({
+	withCredentials: true,
+	baseURL: __API__,
+});
 
 $api.interceptors.request.use((config) => {
 	const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
@@ -20,19 +23,23 @@ $api.interceptors.response.use(
 	async (error) => {
 		const originalRequest = error.config;
 		if (
-			error.response.status == 401 &&
+			error.response.status === 401 &&
 			error.config &&
 			!error.config._isRetry
 		) {
 			originalRequest._isRetry = true;
 			try {
 				const formerJWT = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
-				const res = await axios.post<User>(`${__API__}/account/refreshToken`, {
-					headers: {
-						Authorization: `Bearer ${formerJWT}`,
-					},
-					withCredentials: true,
-				});
+				const res = await axios.post<User>(
+					`${__API__}/account/refreshToken`,
+					{},
+					{
+						headers: {
+							Authorization: `Bearer ${formerJWT}`,
+						},
+						withCredentials: true,
+					}
+				);
 				const newToken = res.data.token;
 				localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, newToken);
 				originalRequest.headers["Authorization"] = `Bearer ${newToken}`;

@@ -29,7 +29,6 @@ const Navbar = memo(function Navbar({ className }) {
     const navbarItemsList = useNavbarItems({ userData });
     const dropdownRef = useRef(null);
     const isMobile = useMobile();
-    console.log(isMobile);
     const onCloseModal = useCallback(() => {
         setIsAuthModal(false);
     }, []);
