@@ -4,7 +4,7 @@ import { User } from "../../entities/User";
 
 export const $api = axios.create({
 	withCredentials: true,
-	baseURL: __API__,
+	baseURL: import.meta.env.VITE_API,
 });
 
 $api.interceptors.request.use((config) => {
@@ -31,7 +31,7 @@ $api.interceptors.response.use(
 			try {
 				const formerJWT = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
 				const res = await axios.post<User>(
-					`${__API__}/account/refreshToken`,
+					`${import.meta.env.VITE_API}/account/refreshToken`,
 					{},
 					{
 						headers: {

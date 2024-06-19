@@ -2,7 +2,7 @@ import axios from "axios";
 import { TOKEN_LOCALSTORAGE_KEY } from "../consts/localStorage";
 export const $api = axios.create({
     withCredentials: true,
-    baseURL: __API__,
+    baseURL: import.meta.env.VITE_API,
 });
 $api.interceptors.request.use((config) => {
     const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
@@ -22,7 +22,7 @@ $api.interceptors.response.use((config) => {
         originalRequest._isRetry = true;
         try {
             const formerJWT = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
-            const res = await axios.post(`${__API__}/account/refreshToken`, {}, {
+            const res = await axios.post(`${import.meta.env.VITE_API}/account/refreshToken`, {}, {
                 headers: {
                     Authorization: `Bearer ${formerJWT}`,
                 },

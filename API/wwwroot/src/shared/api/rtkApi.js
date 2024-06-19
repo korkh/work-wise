@@ -3,7 +3,7 @@ import { TOKEN_LOCALSTORAGE_KEY } from "../consts/localStorage";
 export const rtkApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
-        baseUrl: __API__,
+        baseUrl: import.meta.env.VITE_API,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);
             if (token) {
