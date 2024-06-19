@@ -6,6 +6,7 @@ import { TextHolder } from "@/shared/ui/TextHolder";
 import { ColumnStack } from "@/shared/ui/Stack";
 import { PageContainer } from "@/widgets/PageContainer";
 import { useTranslation } from "react-i18next";
+import { useMobile } from "@/shared/lib/hooks/useMobile/useMobile";
 
 interface MainPageProps {
 	className?: string;
@@ -14,6 +15,7 @@ interface MainPageProps {
 const MainPage = (props: MainPageProps) => {
 	const { className } = props;
 	const { t } = useTranslation("main");
+	const isMobile = useMobile();
 
 	return (
 		<PageContainer
@@ -21,7 +23,7 @@ const MainPage = (props: MainPageProps) => {
 			className={classNames(cls.mainPage, [className], {})}
 			height={"80vh"}
 		>
-			<ColumnStack gap="16" width="50%">
+			<ColumnStack gap="16" width={isMobile ? "100%" : "50%"}>
 				<ColumnStack align="center" max>
 					<TextHolder size="l" title={t("Welcome to Work Wise Lietuva")} />
 					<TextHolder
