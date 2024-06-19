@@ -115,12 +115,12 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 
 	return (
 		<RowStack
-			gap="32"
+			gap={isMobile ? "16" : "32"}
 			className={classNames(cls.navbar, [className], {})}
 			justify="between"
 			align="center"
 		>
-			<RowStack gap="32" className={cls.items}>
+			<RowStack gap={isMobile ? "16" : "32"} className={cls.items}>
 				<AppLogo width={100} height={50} className={cls.appLogo} />
 				{isMobile && <Hamburger isOpen={isOpen} toggle={toggleDropdown} />}
 			</RowStack>
@@ -133,7 +133,11 @@ const Navbar = memo(function Navbar({ className }: NavbarProps) {
 				</div>
 			)}
 			{userAuth ? (
-				<RowStack gap="32" className={cls.actions} align="center">
+				<RowStack
+					gap={isMobile ? "16" : "32"}
+					className={cls.actions}
+					align="center"
+				>
 					<ThemeSwitcher />
 					<LanguageSwitcher abbreviated className={cls.lang} />
 					{!isMobile && (
