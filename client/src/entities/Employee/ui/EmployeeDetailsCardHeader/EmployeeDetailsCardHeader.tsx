@@ -2,7 +2,7 @@ import { classNames } from "@/shared/lib/utils/classNames/classNames";
 import { useTranslation } from "react-i18next";
 import { memo, useCallback, useState } from "react";
 import { Section } from "@/shared/ui/Section";
-import { RowStack } from "@/shared/ui/Stack";
+import { ColumnStack, RowStack } from "@/shared/ui/Stack";
 import { TextHolder } from "@/shared/ui/TextHolder";
 import { useAuthToken } from "@/shared/lib/hooks/useAuthToken/useAuthToken";
 import { useSelector } from "react-redux";
@@ -18,6 +18,9 @@ import { useForceUpdate } from "@/shared/lib/forceUpdateRender/foreceUpdateRende
 import { deleteEmployeeById } from "../../model/services/deleteEmployeeById/deleteEmployeeById";
 import { useNavigate } from "react-router-dom";
 import { getRouteEmployees } from "@/shared/consts/routerConsts";
+import { Modal } from "@/shared/ui/Modal";
+import BinIcon from "@/shared/assets/icons/garbage-bin.svg?react";
+import { Glyph } from "@/shared/ui/Glyph";
 
 interface EmployeeDetailsCardHeaderProps {
 	className?: string;
@@ -26,12 +29,13 @@ interface EmployeeDetailsCardHeaderProps {
 export const EmployeeDetailsCardHeader = memo(
 	function EmployeeDetailsCardHeader(props: EmployeeDetailsCardHeaderProps) {
 		const { className } = props;
-		const { t } = useTranslation();
+		const { t } = useTranslation("employees");
 		const userData = useAuthToken();
 		const allowedToEdit = userData?.role.includes("Admin");
 		const readonly = useSelector(getEmployeeReadonly);
 		const employeeForm = useSelector(getEmployeeForm);
 		const [isDeleting, setIsDeleting] = useState(false);
+		const [isOpen, setIsOpen] = useState(false);
 		const dispatch = useAppDispatch();
 		const forceUpdate = useForceUpdate();
 
@@ -44,6 +48,7 @@ export const EmployeeDetailsCardHeader = memo(
 		const onDelete = useCallback(() => {
 			dispatch(employeeDetailsActions.setReadonly(false));
 			setIsDeleting(true);
+			setIsOpen(true);
 		}, [dispatch]);
 
 		const onCancelEdit = useCallback(() => {
@@ -62,6 +67,43 @@ export const EmployeeDetailsCardHeader = memo(
 			navigate(getRouteEmployees());
 		}, [dispatch, employeeForm?.id, navigate]);
 
+		const onClose = () => setIsOpen(false);
+
+		const text = (
+			<ColumnStack gap="32" align="center">
+				<TextHolder variant="error" size="l" title={`${t("ATTENTION")}!!!`} />
+				<TextHolder
+					variant="error"
+					size="l"
+					title={t("You are about to delete employee and all data.")}
+				/>
+				<TextHolder
+					variant="error"
+					size="m"
+					text={t(
+						"Following action will effect financial data, please contact accountants before further action!"
+					)}
+				/>
+			</ColumnStack>
+		);
+
+		if (isDeleting && isOpen) {
+			return (
+				<Modal lazy isOpen={isOpen} onClose={onClose}>
+					{text}
+					<RowStack justify="end">
+						<Button
+							onClick={onClose}
+							data-testid="EditableProfileCardHeader.EditButton"
+							style={{ marginTop: 20 }}
+						>
+							{t("Close")}
+						</Button>
+					</RowStack>
+				</Modal>
+			);
+		}
+
 		return (
 			<Section padding="24" max border="partial">
 				<RowStack
@@ -73,7 +115,7 @@ export const EmployeeDetailsCardHeader = memo(
 					{allowedToEdit && (
 						<>
 							{readonly ? (
-								<>
+								<RowStack gap="8">
 									<Button
 										onClick={onEdit}
 										data-testid="EditableProfileCardHeader.EditButton"
@@ -82,11 +124,12 @@ export const EmployeeDetailsCardHeader = memo(
 									</Button>
 									<Button
 										onClick={onDelete}
+										color="error"
 										data-testid="EditableProfileCardHeader.DeleteButton"
 									>
-										{t("Delete")}
+										<Glyph SvgImage={BinIcon} />
 									</Button>
-								</>
+								</RowStack>
 							) : (
 								<RowStack gap="8">
 									<Button

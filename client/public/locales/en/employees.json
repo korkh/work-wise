@@ -8,5 +8,14 @@
   "Available": "Available",
   "Employees not found": "Employees not found",
   "List of employees": "List of employees",
-  "Location": "Location"
+  "Location": "Location",
+  "Employee details": "Employee details",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Cancel": "Cancel",
+  "Confirm": "Confirm",
+  "Close": "Close",
+  "You are about to delete employee and all data.": "You are about to delete employee and all data.",
+  "Following action will affect on financial data, please contact accountants before further action!": "Following action will affect onfinancial data, please contact accountants before further action!",
+  "ATTENTION": "ATTENTION"
 }
