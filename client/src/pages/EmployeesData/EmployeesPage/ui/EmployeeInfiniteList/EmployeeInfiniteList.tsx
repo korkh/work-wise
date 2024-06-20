@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { TextHolder } from "@/shared/ui/TextHolder";
@@ -18,11 +17,9 @@ export const EmployeeInfiniteList = memo(function EmployeeInfiniteList(
 	props: EmployeeInfiniteListProps
 ) {
 	const { className } = props;
-	const { t } = useTranslation();
 
 	const employees = useSelector(selectAllEmployees);
 	const isLoading = useSelector(getEmployeesPageIsLoading);
-	console.log("LOADER", isLoading);
 	const error = useSelector(getEmployeesPageError);
 
 	const [employeesLoaded, setEmployeesLoaded] = useState(false);
@@ -34,7 +31,7 @@ export const EmployeeInfiniteList = memo(function EmployeeInfiniteList(
 	}, [employees]);
 
 	if (error || !employeesLoaded) {
-		return <TextHolder text={t("Employees loading error")} />;
+		return <TextHolder text="Employees loading error" />;
 	}
 
 	return isLoading ? (

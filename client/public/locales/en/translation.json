@@ -21,5 +21,8 @@
   "Email": "Email",
   "Password": "Password",
   "Sign in": "Sign in",
-  "Information for testing application": "Information for testing application:"
+  "Information for testing application": "Information for testing application:",
+  "Create new employee": "Create new employee",
+  "Create new document": "Create new document",
+  "Address": "Address"
 }

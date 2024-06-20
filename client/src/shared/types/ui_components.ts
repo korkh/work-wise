@@ -22,5 +22,5 @@ export interface Column<T, K extends keyof T = keyof T> {
 }
 
 export interface Identifiable {
-	id: string | number;
+	id?: string | number;
 }

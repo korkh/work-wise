@@ -18,15 +18,15 @@ export const PersonalInformation = memo(function PersonalInformation(
 		onChangeEmail,
 		onChangePhoneNumber,
 	} = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("employees");
 	return (
 		<RowStack gap="24" max>
 			<ColumnStack gap="16" max>
-				<TextHolder title={"Personal information"} />
+				<TextHolder title={t("Personal information")} />
 				<Input
 					size="s"
 					value={data?.firstName}
-					label={t("Firstname")}
+					label={t("First Name")}
 					onChange={onChangeFirstname}
 					readonly={readonly}
 					data-testid="EmployeeDetailsCard.firstName"
@@ -34,7 +34,7 @@ export const PersonalInformation = memo(function PersonalInformation(
 				<Input
 					size="s"
 					value={data?.lastName}
-					label={t("Lastname")}
+					label={t("Last Name")}
 					onChange={onChangeLastname}
 					readonly={readonly}
 					data-testid="EmployeeDetailsCard.lastName"
@@ -59,7 +59,7 @@ export const PersonalInformation = memo(function PersonalInformation(
 					width="88%"
 					justify="between"
 					value={data?.phoneNumber}
-					label={t("Phone number")}
+					label={t("Phone Number")}
 					onChange={onChangePhoneNumber}
 					readonly={readonly}
 					data-testid="EmployeeDetailsCard.phoneNumber"

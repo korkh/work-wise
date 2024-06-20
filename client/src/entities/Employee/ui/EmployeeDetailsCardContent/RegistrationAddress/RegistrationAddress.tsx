@@ -16,11 +16,11 @@ export const RegistrationAddress = memo(function RegistrationAddress(
 		onChangeZip,
 		onChangeCountry,
 	} = props;
-	const { t } = useTranslation();
+	const { t } = useTranslation("employees");
 	return (
 		<RowStack gap="24" max>
 			<ColumnStack gap="16" max>
-				<TextHolder title={"Registration address"} />
+				<TextHolder title={t("Registration address")} />
 				<Input
 					size="s"
 					value={data?.registrationAddress?.address1}

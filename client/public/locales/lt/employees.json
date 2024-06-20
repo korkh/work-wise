@@ -1,15 +1,17 @@
 {
+  "Personal information": "Asmeninė informacija",
   "Photo": "Nuotrauka",
   "First Name": "Vardas",
   "Last Name": "Pavardė",
   "Birthday": "Gimtadienis",
   "Capacity": "Pareigos",
+  "Email": "El. Paštas",
   "Phone Number": "Telefonas",
   "Available": "Dirba",
   "Employees not found": "Darbuotojų nerasta",
   "List of employees": "Darbuotojų sąrašas",
   "Location": "Adresas",
-  "Employee details": "Išsami informacija apie darbuotojus",
+  "Employee details": "Išsami informacija apie darbuotoja",
   "Edit": "Redaguoti",
   "Delete": "Ištrinti",
   "Cancel": "Atšaukti",
@@ -17,5 +19,11 @@
   "Close": "Uždaryti",
   "You are about to delete employee and all data.": "Jūs ketinate ištrinti darbuotoją ir visus duomenis.",
   "Following action will affect on financial data, please contact accountants before further action!": "Toliau pateikiami veiksmai turės įtakos finansiniams duomenims, susisiekite su buhalteriais prieš tolesnius veiksmus!",
-  "ATTENTION": "Dėmesio"
+  "ATTENTION": "Dėmesio",
+  "Registration address": "Registracijos adresas",
+  "Address": "Adresas",
+  "City": "Miestas",
+  "ZIP": "ZIP",
+  "Country": "Šalis",
+  "Save": "Išsaugoti"
 }

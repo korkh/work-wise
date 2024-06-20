@@ -1,1 +1,4 @@
-export { employeeDetailsReducer } from "./employeeDetailsSlice";
+export {
+	employeeDetailsReducer,
+	employeeDetailsActions,
+} from "./employeeDetailsSlice";
