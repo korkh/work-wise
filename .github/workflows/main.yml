@@ -5,8 +5,10 @@ on:
   push:
     branches:
       - "master"
+
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -23,6 +25,7 @@ jobs:
         with:
           push: true
           tags: akorkh/work-wise:latest
+
   checks:
     runs-on: windows-latest
     strategy:
@@ -30,14 +33,16 @@ jobs:
         node-version: [20.x]
     steps:
       - uses: actions/checkout@v4
-      - name: Staring Node.js ${{ matrix.node-version }}
+      - name: Starting Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install modules
+      - name: Install modules
         run: npm install --force
-      - name: linting typescript
+        working-directory: ./client
+      - name: Linting typescript
         run: npm run lint:ts
+        working-directory: ./client
         if: always()
 
   deploy:
