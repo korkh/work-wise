@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# DO NOT DO HEAVY TEST & BUILDS FOR REAL PROD, USE ONLY LINT:TS, LINT:SCSS
+npx lint-staged
+npm run lint:ts
